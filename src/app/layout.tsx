@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
 import { Header } from '@/components/common/header';
+import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
-import { mainMetadata } from '@/metadata/main';
 import { BodyContainerLayout } from '@/layout/body-container';
+import { mainMetadata } from '@/metadata/main';
 
 import './globals.css';
 
@@ -50,16 +51,16 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.variable} ${fraunces.variable} font-sans bg-[var(--bg)] text-slate-900 min-h-dvh grid grid-rows-[auto_1fr_auto]`}
+        className={`${inter.variable} ${fraunces.variable} font-sans bg-[var(--bg)] text-[var(--ink)] min-h-dvh grid grid-rows-[auto_1fr_auto]`}
       >
         <header className='sticky top-0 z-40 border-b bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60'>
           <Header />
         </header>
 
         <BodyContainerLayout>
-          <section className='col-span-12 md:col-span-9 xl:col-span-10'>
-            {children}
-          </section>
+          <SocialMediaSidebar />
+
+          {children}
         </BodyContainerLayout>
 
         <footer className='border-t bg-white my-4'>
