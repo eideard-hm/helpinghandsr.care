@@ -27,7 +27,7 @@ export function Header() {
 
         <WhatsAppButton
           waLink={waHref}
-          classList='hidden! md:inline-flex'
+          classList='hidden! md:inline-flex!'
         />
 
         {/* Responsive */}
