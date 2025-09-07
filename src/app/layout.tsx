@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 
+import { Header } from '@/components/common/header';
+import { fraunces, inter } from '@/fonts';
 import { mainMetadata } from '@/metadata/main';
+import { BodyContainerLayout } from '@/layout/body-container';
 
 import './globals.css';
-import { fraunces, inter } from '@/fonts';
 
 export const metadata: Metadata = mainMetadata;
 
@@ -20,33 +22,48 @@ export default function RootLayout({
           href='https://fonts.gstatic.com'
           crossOrigin=''
         />
+
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='16x16'
+          href='/favicon-16x16.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='32x32'
+          href='/favicon-32x32.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='48x48'
+          href='/favicon-48x48.png'
+        />
+        <link
+          rel='icon'
+          type='image/png'
+          sizes='64x64'
+          href='/favicon-64x64.png'
+        />
       </head>
 
       <body
-        className={`${inter.variable} ${fraunces.variable} font-sans min-h-dvh grid grid-rows-[auto_1fr_auto] bg-slate-50 text-slate-900`}
+        className={`${inter.variable} ${fraunces.variable} font-sans bg-[var(--bg)] text-slate-900 min-h-dvh grid grid-rows-[auto_1fr_auto]`}
       >
-        <header className='sticky top-0 z-40 bg-white/80 backdrop-blur border-b'>
-          <div className='container mx-auto py-4'>
-            <h1 className='text-xl font-bold'>Helping Hands Sr Care</h1>
-          </div>
+        <header className='sticky top-0 z-40 border-b bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60'>
+          <Header />
         </header>
 
-        <main
-          id='contenido'
-          className='container mx-auto grid grid-cols-12 gap-6 px-4 py-8'
-        >
-          <aside
-            className='col-span-3 xl:col-span-2 hidden md:block'
-            aria-label='Redes sociales'
-          ></aside>
-
+        <BodyContainerLayout>
           <section className='col-span-12 md:col-span-9 xl:col-span-10'>
             {children}
           </section>
-        </main>
+        </BodyContainerLayout>
 
-        <footer className='border-t bg-white'>
-          <div className='container mx-auto px-4'></div>
+        <footer className='border-t bg-white my-4'>
+          <div className='container mx-auto px-4 max-w-7xl'>Footer</div>
         </footer>
       </body>
     </html>
