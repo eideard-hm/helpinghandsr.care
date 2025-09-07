@@ -1,4 +1,4 @@
-import { SocialMediaItems } from './docial-media-items';
+import { SocialMediaItems } from './social-media-items';
 
 export  function SocialMediaSidebar() {
    return (

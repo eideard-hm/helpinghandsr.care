@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 
+import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
-import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
+import { SocialMediaSidebar } from '@/components/ui/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
 import { BodyContainerLayout } from '@/layout/body-container';
 import { mainMetadata } from '@/metadata/main';
@@ -63,8 +64,8 @@ export default function RootLayout({
           {children}
         </BodyContainerLayout>
 
-        <footer className='border-t bg-white my-4'>
-          <div className='container mx-auto px-4 max-w-7xl'>Footer</div>
+        <footer className='bg-[color:var(--ink)] text-white py-12'>
+          <Footer />
         </footer>
       </body>
     </html>

@@ -1,0 +1,37 @@
+import { env } from '@/config/env';
+import { waLink } from '@/lib/whatsapp';
+import { NavLinks } from '../ui/nav-links';
+import { WhatsAppButton } from '../ui/whatsapp-btn';
+
+export function Footer() {
+  const year = new Date().getFullYear();
+  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+
+  return (
+    <div className='container mx-auto grid gap-8 md:grid-cols-3 px-4 max-w-7xl text-center md:text-left'>
+      <div>
+        <h3 className='text-xl font-bold'>{env.brand}</h3>
+        <p className='mt-2 text-sm text-gray-300'>Massage Therapist</p>
+        <p className='mt-4 text-sm text-gray-400'>
+          🏠 Home Visits | Personalized Treatment <br />
+          Prevent injuries & chronic pain <br />
+          Relieve muscle stiffness & tension <br />
+          Improve your Health & Wellness
+        </p>
+      </div>
+
+      <div>
+        <h4 className='font-semibold mb-3'>Links</h4>
+        <NavLinks />
+      </div>
+
+      <div>
+        <h4 className='font-semibold mb-3'>Contact</h4>
+        <WhatsAppButton waLink={waHref} />
+        <p className='mt-4 text-sm text-gray-400'>
+          © {year} {env.brand}. All rights reserved.
+        </p>
+      </div>
+    </div>
+  );
+}
