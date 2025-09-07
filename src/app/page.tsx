@@ -1,3 +1,11 @@
+import { Hero } from '@/components/ui/hero';
+import { env } from '@/config/env';
+import { waLink } from '@/lib/whatsapp';
+
 export default function Home() {
-  return <h1>Helping Hands Sr Care</h1>;
+  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+
+  return (
+    <Hero waLink={waHref} />
+  )
 }

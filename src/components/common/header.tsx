@@ -1,8 +1,12 @@
 import Image from 'next/image';
 
+import { env } from '@/config/env';
+import { waLink } from '@/lib/whatsapp';
 import { WhatsAppButton } from '../ui/whatsapp-btn';
 
 export function Header() {
+  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+
   return (
     <div className='mx-auto max-w-7xl px-4 h-28 flex items-center justify-between'>
       <a className='font-semibold tracking-tight text-[color:var(--ink)]'>
@@ -37,7 +41,7 @@ export function Header() {
         </a>
       </nav>
 
-      <WhatsAppButton />
+      <WhatsAppButton waLink={waHref} />
     </div>
   );
 }
