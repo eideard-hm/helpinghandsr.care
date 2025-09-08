@@ -26,7 +26,6 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        {/* Ícono simple */}
         <svg
           width='20'
           height='20'
@@ -51,25 +50,25 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
       >
         <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-[color:var(--ink)]'>
           <a
-            href='#servicios'
+            href='#services'
             onClick={() => setOpen(false)}
             className='py-2'
           >
-            Servicios
+            Services
           </a>
           <a
-            href='#como-funciona'
+            href='#how-it-works'
             onClick={() => setOpen(false)}
             className='py-2'
           >
-            Cómo funciona
+            How it works
           </a>
           <a
-            href='#beneficios'
+            href='#benefits'
             onClick={() => setOpen(false)}
             className='py-2'
           >
-            Beneficios
+            Benefits
           </a>
 
           <WhatsAppButton
