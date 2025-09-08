@@ -1,11 +1,11 @@
 import { env } from '@/config/env';
-import { waLink } from '@/lib/whatsapp';
+import { waLinkWithEnv } from '@/lib/whatsapp';
 import { NavLinks } from '../ui/nav-links';
-import { WhatsAppButton } from '../ui/whatsapp-btn';
+import { WhatsAppButton } from './whatsapp-btn';
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+  const waHref = waLinkWithEnv()
 
   return (
     <div className='container mx-auto grid gap-8 md:grid-cols-3 px-4 max-w-7xl text-center md:text-left'>

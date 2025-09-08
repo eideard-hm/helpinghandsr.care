@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { env } from '@/config/env';
 import { waLink } from '@/lib/whatsapp';
 import { NavLinks } from '../ui/nav-links';
-import { WhatsAppButton } from '../ui/whatsapp-btn';
+import { WhatsAppButton } from './whatsapp-btn';
 import { HeaderResponsive } from './header-responsive';
 
 export function Header() {

@@ -36,7 +36,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
           href={waHref}
           target='_blank'
           rel='noopener noreferrer'
-          className='text-[#25d366] hover:text-green-500 transition'
+          className='text-[var(--brand)] hover:text-green-500 transition'
           aria-label={`WhatsApp - ${env.whatsAppNumber}`}
         >
           <IconBrandWhatsapp

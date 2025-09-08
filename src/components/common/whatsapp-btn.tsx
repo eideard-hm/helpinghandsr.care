@@ -5,9 +5,15 @@ import { IconBrandWhatsapp } from '@tabler/icons-react';
 interface WhatsAppButtonProps {
   waLink: string;
   classList?: string;
+  label?: string;
 }
 
-export function WhatsAppButton({ waLink, classList }: WhatsAppButtonProps) {
+export function WhatsAppButton({
+  waLink,
+  classList,
+  label,
+}: WhatsAppButtonProps) {
+  label = label || 'Schedule via WhatsApp';
   return (
     <a
       href={waLink}
@@ -20,7 +26,7 @@ export function WhatsAppButton({ waLink, classList }: WhatsAppButtonProps) {
         size={24}
         className='mr-2'
       />
-      Schedule via WhatsApp
+      {label}
     </a>
   );
 }

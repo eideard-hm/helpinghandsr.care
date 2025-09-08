@@ -3,9 +3,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 
 import { fadeIn, fadeInUp } from '@/lib/motion';
-import { WhatsAppButton } from './whatsapp-btn';
-import { waLink } from '../../lib/whatsapp';
-import { env } from '@/config/env';
+import { WhatsAppButton } from '../common/whatsapp-btn';
 
 type HeroProps = { waLink: string };
 

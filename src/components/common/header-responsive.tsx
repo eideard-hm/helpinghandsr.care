@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from 'react';
 
-import { WhatsAppButton } from '../ui/whatsapp-btn';
+import { WhatsAppButton } from './whatsapp-btn';
 
 type HeaderResponsiveProps = {
   waLink: string;
