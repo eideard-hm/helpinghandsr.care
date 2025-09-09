@@ -23,7 +23,7 @@ export const mainMetadata: Metadata = {
     siteName: `${env.brand} | Massage Therapist`,
     images: [
       {
-        url: `${prodUrl}og-image.png`,
+        url: `${prodUrl}og-image.jpg`,
         width: 1200,
         height: 630,
         alt: `${env.brand} - Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.`,
@@ -34,7 +34,7 @@ export const mainMetadata: Metadata = {
     card: 'summary_large_image',
     title: `${env.brand} | Massage Therapist`,
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
-    images: [`${prodUrl}og-image.png`],
+    images: [`${prodUrl}og-image.jpg`],
   },
   alternates: { canonical: prodUrl },
 };
