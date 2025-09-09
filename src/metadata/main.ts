@@ -29,6 +29,6 @@ export const mainMetadata: Metadata = {
     card: 'summary_large_image',
     title: `${env.brand} | Massage Therapist`,
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
-    images: [`${prodUrl}/twitter-image.jpg`],
+    images: [`${prodUrl}/og-image.png`],
   },
 };
