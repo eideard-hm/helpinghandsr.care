@@ -70,6 +70,13 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
           >
             Benefits
           </a>
+          <a
+            href='#testimonials'
+            onClick={() => setOpen(false)}
+            className='py-2'
+          >
+            Testimonials
+          </a>
 
           <WhatsAppButton
             waLink={waLink}
