@@ -29,6 +29,14 @@ export function NavLinks({ classList }: NavProps) {
           Benefits
         </a>
       </li>
+      <li>
+        <a
+          href='#testimonials'
+          className='hover:text-[color:var(--brand-2)]'
+        >
+          Testimonials
+        </a>
+      </li>
     </ul>
   );
 }

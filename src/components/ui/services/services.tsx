@@ -1,4 +1,4 @@
-import { SectionTitle } from '../common/section-title';
+import { SectionTitle } from '../../common/section-title';
 import { ServicesCard } from './services-card';
 
 export function Services() {
