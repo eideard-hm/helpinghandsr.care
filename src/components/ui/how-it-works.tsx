@@ -1,6 +1,7 @@
 import { IconSquareRoundedCheck } from '@tabler/icons-react';
 
 import { waLinkWithEnv } from '@/lib/whatsapp';
+import { SectionTitle } from '../common/section-title';
 import { StepDot } from '../common/step-dot';
 import { WhatsAppButton } from '../common/whatsapp-btn';
 
@@ -14,7 +15,9 @@ export function HowItWorks() {
     >
       <div className='container mx-auto px-4 max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8'>
         <div>
-          <h2 className='text-3xl font-bold mb-8'>How It Works</h2>
+          <SectionTitle>
+            How It Works
+          </SectionTitle>
 
           <ol className='flex flex-col gap-4 mb-8'>
             <li className='flex items-center gap-3'>
@@ -72,7 +75,7 @@ export function HowItWorks() {
         </div>
 
         <div>
-          <h2 className='text-3xl font-bold mb-8'>Benefits</h2>
+          <SectionTitle>Benefits</SectionTitle>
 
           <ul className='flex flex-col gap-4'>
             <li>
