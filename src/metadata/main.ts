@@ -2,16 +2,21 @@ import type { Metadata } from 'next';
 
 import { env } from '@/config/env';
 
-const prodUrl = env.siteUrl;
+const prodUrl = new URL(env.siteUrl);
 
 export const mainMetadata: Metadata = {
-  title: `${env.brand} | Massage Therapist`,
+  metadataBase: prodUrl,
+  title: {
+    default: `${env.brand} | Massage Therapist`,
+    template: `%s | ${env.brand}`,
+  },
   description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
   keywords: ['help', 'support', 'community'],
   authors: [{ name: 'Edier Hernandez', url: 'https://edier-hm.netlify.app/' }],
   creator: 'Edier Hernandez',
   publisher: `${env.brand}`,
   openGraph: {
+    type: 'website',
     title: `${env.brand} | Massage Therapist`,
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
     url: prodUrl,
@@ -31,4 +36,5 @@ export const mainMetadata: Metadata = {
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
     images: [`${prodUrl}/og-image.png`],
   },
+  alternates: { canonical: prodUrl },
 };
