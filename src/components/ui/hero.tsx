@@ -119,7 +119,7 @@ export function Hero({
         viewport={{ once: true, amount: 0.6 }}
       >
         <h1 className='max-w-xl text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
-          Welcome to Healing Hands.R
+          Therapeutic massages at home
         </h1>
 
         <motion.p
@@ -127,7 +127,8 @@ export function Hero({
           variants={fadeInUp}
           transition={{ delay: 0.05 }}
         >
-          Schedule an appointment in minutes and receive professional care without leaving home.
+          Personalized treatments to prevent injuries and chronic pain, relieve
+          muscle stiffness, and improve your wellness.
         </motion.p>
 
         <WhatsAppButton
