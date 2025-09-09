@@ -1,47 +1,64 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AnimatePresence, motion, PanInfo, type Variants } from 'framer-motion';
 
 import type { Review } from '@/generated/prisma';
 
 const STAR = ({ filled }: { filled: boolean }) => (
-  <svg viewBox="0 0 24 24" className={`h-4 w-4 ${filled ? 'fill-yellow-400' : 'fill-gray-300'}`}>
-    <path d="M12 2l3.09 6.26 6.91.6-5 4.52 1.54 6.62L12 17.77 5.46 20l1.54-6.62-5-4.52 6.91-.6L12 2z"/>
+  <svg
+    viewBox='0 0 24 24'
+    className={`h-4 w-4 ${filled ? 'fill-yellow-400' : 'fill-gray-300'}`}
+  >
+    <path d='M12 2l3.09 6.26 6.91.6-5 4.52 1.54 6.62L12 17.77 5.46 20l1.54-6.62-5-4.52 6.91-.6L12 2z' />
   </svg>
 );
 
 const variants: Variants = {
   enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0 }),
   center: { x: 0, opacity: 1, transition: { duration: 0.35, ease: 'easeOut' } },
-  exit: (dir: number) => ({ x: dir > 0 ? -80 : 80, opacity: 0, transition: { duration: 0.25, ease: 'easeIn' } }),
+  exit: (dir: number) => ({
+    x: dir > 0 ? -80 : 80,
+    opacity: 0,
+    transition: { duration: 0.25, ease: 'easeIn' },
+  }),
 };
 
 type Props = {
   items: Review[];
-  autoPlayMs?: number;  // default 4500
+  autoPlayMs?: number; // default 4500
   className?: string;
 };
 
-export function TestimonialsSlider({ items, autoPlayMs = 4500, className = '' }: Props) {
+export function TestimonialsSlider({
+  items,
+  autoPlayMs = 4500,
+  className = '',
+}: Props) {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(0);
   const [paused, setPaused] = useState(false);
   const timer = useRef<number | null>(null);
 
-  const goTo = (next: number, direction = 1) => {
-    setDir(direction);
-    setIndex((next + items.length) % items.length);
-  };
+  const goTo = useCallback(
+    (next: number, direction = 1) => {
+      setDir(direction);
+      setIndex((next + items.length) % items.length);
+    },
+    [items.length]
+  );
 
   // autoplay con pausa al hover
   useEffect(() => {
     if (paused || items.length <= 1) return;
     timer.current = window.setTimeout(() => goTo(index + 1, 1), autoPlayMs);
-    return () => { if (timer.current) window.clearTimeout(timer.current); };
+    return () => {
+      if (timer.current) window.clearTimeout(timer.current);
+    };
   }, [index, paused, autoPlayMs, items.length]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onDragEnd = (_: any, info: PanInfo) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
