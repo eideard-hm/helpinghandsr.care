@@ -98,24 +98,34 @@ export function TestimonialsSlider({
               className='cursor-grab active:cursor-grabbing'
             >
               {/* Header: avatar + name + rating */}
-              <div className='flex items-center gap-4'>
-                <div className='size-12 rounded-full bg-[color:var(--brand)]/10' />
-                <div className='flex-1'>
-                  <div className='flex items-center gap-2'>
-                    <h4 className='font-semibold text-[color:var(--ink)]'>
-                      {r.name}
-                    </h4>
-                  </div>
-                  <div className='mt-1 flex items-center gap-1'>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <STAR
-                        key={i}
-                        filled={i < r.rating}
-                      />
-                    ))}
+              <header className='flex items-center justify-between'>
+                <div className='flex items-center gap-4'>
+                  <div className='size-12 rounded-full bg-[color:var(--brand)]/10' />
+                  <div className='flex-1'>
+                    <div className='flex items-center gap-2'>
+                      <h4 className='font-semibold text-[color:var(--ink)]'>
+                        {r.name}
+                      </h4>
+                    </div>
+                    <div className='mt-1 flex items-center gap-1'>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <STAR
+                          key={i}
+                          filled={i < r.rating}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
+
+                <span>
+                  {r.createdAt.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </span>
+              </header>
 
               {/* Content */}
               <p className='mt-4 text-[15px] leading-relaxed text-gray-700'>

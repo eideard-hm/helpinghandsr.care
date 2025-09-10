@@ -2,6 +2,9 @@
 
 import { useEffect, useId, useState } from 'react';
 
+import Link from 'next/link';
+
+import { Dialog } from './dialog';
 import { WhatsAppButton } from './whatsapp-btn';
 
 type HeaderResponsiveProps = {
@@ -43,47 +46,53 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
         <span className='sr-only'>Open Menu</span>
       </button>
 
-      <div
-        id={panelId}
-        hidden={!open}
-        className='md:hidden border-t bg-white/95 backdrop-blur absolute top-28 left-0 right-0 shadow-md'
+      <Dialog
+        panelId={panelId}
+        open={open}
       >
         <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-[color:var(--ink)]'>
-          <a
-            href='#services'
+          <Link
+            href='/'
+            className='py-2'
+          >
+            Home
+          </Link>
+
+          <Link
+            href='/#services'
             onClick={() => setOpen(false)}
             className='py-2'
           >
             Services
-          </a>
-          <a
-            href='#how-it-works'
+          </Link>
+          <Link
+            href='/#how-it-works'
             onClick={() => setOpen(false)}
             className='py-2'
           >
             How it works
-          </a>
-          <a
-            href='#benefits'
+          </Link>
+          <Link
+            href='/#benefits'
             onClick={() => setOpen(false)}
             className='py-2'
           >
             Benefits
-          </a>
-          <a
-            href='#testimonials'
+          </Link>
+          <Link
+            href='/#testimonials'
             onClick={() => setOpen(false)}
             className='py-2'
           >
             Testimonials
-          </a>
+          </Link>
 
           <WhatsAppButton
             waLink={waLink}
             classList='mt-2'
           />
         </nav>
-      </div>
+      </Dialog>
     </>
   );
 }

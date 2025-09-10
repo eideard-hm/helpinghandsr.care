@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { Toaster } from 'react-hot-toast';
+
 import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
@@ -59,6 +61,10 @@ export default function RootLayout({
 
         <main>
           <SocialMediaSidebar />
+
+          <div>
+            <Toaster />
+          </div>
 
           {children}
         </main>

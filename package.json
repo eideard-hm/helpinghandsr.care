@@ -10,6 +10,7 @@
     "phoenix": "rm -rf ./node_modules && rm -rf pnpm-lock.yaml && pnpm install"
   },
   "dependencies": {
+    "@hookform/resolvers": "5.2.1",
     "@prisma/client": "6.15.0",
     "@supabase/supabase-js": "2.57.4",
     "@tabler/icons-react": "3.34.1",
@@ -17,6 +18,8 @@
     "next": "15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-hook-form": "7.62.0",
+    "react-hot-toast": "2.6.0",
     "zod": "4.1.5"
   },
   "devDependencies": {

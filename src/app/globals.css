@@ -1,11 +1,19 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
-  --brand: #0F766E;
-  --brand-2: #2DD4BF;
-  --ink: #0F172A;
-  --bg: #F8FAFC;
-  --accent: #F97316;
+  --brand: #0f766e;
+  --brand-2: #2dd4bf;
+  --ink: #0f172a;
+  --bg: #f8fafc;
+  --accent: #f97316;
+}
+
+@theme {
+  --color-brand: var(--brand);
+  --color-brand-2: var(--brand-2);
+  --color-ink: var(--ink);
+  --color-bg: var(--bg);
+  --color-accent: var(--accent);
 }
 
 html {
@@ -16,7 +24,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-fraunces), ui-serif, Georgia, serif;
-  letter-spacing: -0.02em
+  letter-spacing: -0.02em;
 }
 
 body {
@@ -26,4 +34,10 @@ body {
 
 p {
   @apply text-pretty;
+}
+
+textarea {
+  resize: none;
+  min-height: 100px;
+  form-sizing: content;
 }

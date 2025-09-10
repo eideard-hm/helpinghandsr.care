@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 type NavProps = {
   classList?: string;
 };
@@ -6,36 +8,48 @@ export function NavLinks({ classList }: NavProps) {
   return (
     <ul className={`space-y-2 text-sm ${classList}`}>
       <li>
-        <a
-          href='#services'
+        <Link
+          href='/'
+          className='hover:text-[color:var(--brand-2)]'
+        >
+          Home
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href='/#services'
           className='hover:text-[color:var(--brand-2)]'
         >
           Services
-        </a>
+        </Link>
       </li>
+
       <li>
-        <a
-          href='#how-it-works'
+        <Link
+          href='/#how-it-works'
           className='hover:text-[color:var(--brand-2)]'
         >
           How it works
-        </a>
+        </Link>
       </li>
+
       <li>
-        <a
-          href='#benefits'
+        <Link
+          href='/#benefits'
           className='hover:text-[color:var(--brand-2)]'
         >
           Benefits
-        </a>
+        </Link>
       </li>
+
       <li>
-        <a
-          href='#testimonials'
+        <Link
+          href='/#testimonials'
           className='hover:text-[color:var(--brand-2)]'
         >
           Testimonials
-        </a>
+        </Link>
       </li>
     </ul>
   );
