@@ -15,7 +15,7 @@ export function Header() {
         <a className='font-semibold tracking-tight text-[color:var(--ink)]'>
           <Image
             className='aspect-square object-contain'
-            src='/healinghandsr.webp'
+            src='/zeinmotiontm.webp'
             alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
             width={100}
             height={100}
