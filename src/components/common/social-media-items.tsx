@@ -38,7 +38,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#D44638] hover:text-red-500 transition duration-200'
-          aria-label='Email - Healing Hands.R'
+          aria-label={`Email - ${env.brand}`}
         >
           <IconMail
             size={24}
@@ -53,7 +53,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#1877F2] hover:text-blue-700 transition duration-200'
-          aria-label='Facebook - Healing Hands.R'
+          aria-label={`Facebook - ${env.brand}`}
         >
           <IconBrandFacebook
             size={24}
@@ -68,7 +68,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#e1306c] hover:text-pink-500 transition'
-          aria-label='Instagram - Healing Hands.R'
+          aria-label={`Instagram - ${env.brand}`}
         >
           <IconBrandInstagram
             size={24}

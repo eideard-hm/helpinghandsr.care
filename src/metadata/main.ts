@@ -7,7 +7,7 @@ const prodUrl = new URL(env.siteUrl);
 export const mainMetadata: Metadata = {
   metadataBase: prodUrl,
   title: {
-    default: `${env.brand} | Massage Therapist`,
+    default: `${env.brand} | ${env.brandLogotype}`,
     template: `%s | ${env.brand}`,
   },
   description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
@@ -17,10 +17,10 @@ export const mainMetadata: Metadata = {
   publisher: `${env.brand}`,
   openGraph: {
     type: 'website',
-    title: `${env.brand} | Massage Therapist`,
+    title: `${env.brand} | ${env.brandLogotype}`,
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
     url: prodUrl,
-    siteName: `${env.brand} | Massage Therapist`,
+    siteName: `${env.brand} | ${env.brandLogotype}`,
     images: [
       {
         url: `${prodUrl}og-image.jpg`,
@@ -32,7 +32,7 @@ export const mainMetadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${env.brand} | Massage Therapist`,
+    title: `${env.brand} | ${env.brandLogotype}`,
     description: 'Home massage therapy 🏠 | Personalized treatments to prevent injuries and chronic pain, relieve muscle stiffness, and improve your overall health and wellness.',
     images: [`${prodUrl}og-image.jpg`],
   },

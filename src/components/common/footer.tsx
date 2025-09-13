@@ -5,13 +5,13 @@ import { WhatsAppButton } from './whatsapp-btn';
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const waHref = waLinkWithEnv()
+  const waHref = waLinkWithEnv();
 
   return (
     <div className='container mx-auto grid gap-8 md:grid-cols-3 px-4 max-w-7xl text-center md:text-left'>
       <div>
         <h3 className='text-xl font-bold'>{env.brand}</h3>
-        <p className='mt-2 text-sm text-gray-300'>Massage Therapist</p>
+        <p className='mt-2 text-sm text-gray-300'>{env.brandLogotype}</p>
         <p className='mt-4 text-sm text-gray-400'>
           🏠 Home Visits | Personalized Treatment <br />
           Prevent injuries & chronic pain <br />

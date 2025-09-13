@@ -16,7 +16,7 @@ export function Header() {
           <Image
             className='aspect-square object-contain'
             src='/healinghandsr.webp'
-            alt={`Logo from ${env.brand} | Massage Therapist`}
+            alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
             width={100}
             height={100}
             priority
