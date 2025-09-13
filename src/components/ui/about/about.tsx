@@ -8,7 +8,7 @@ export function About() {
       id='about'
       className='py-16 bg-bg container mx-auto px-4  max-w-7xl'
     >
-      <SectionTitle>About Me</SectionTitle>
+      <SectionTitle subTitle='Get your massage at home!'>About Me</SectionTitle>
 
       <AboutMeContent waLink={waLinkWithEnv()} />
 

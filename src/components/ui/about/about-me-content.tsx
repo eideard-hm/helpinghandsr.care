@@ -6,9 +6,8 @@ import Image from 'next/image';
 
 import { motion } from 'framer-motion';
 
-import { fadeIn, staggerChildren } from '@/lib/motion';
 import { WhatsAppButton } from '@/components/common/whatsapp-btn';
-import { waLink } from '../../../lib/whatsapp';
+import { fadeIn, staggerChildren } from '@/lib/motion';
 
 type AboutMeContentProps = {
   waLink: string;

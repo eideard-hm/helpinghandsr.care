@@ -8,7 +8,9 @@ export function Services() {
       id='services'
       className='py-16 bg-bg container mx-auto px-4  max-w-7xl'
     >
-      <SectionTitle>Our Services</SectionTitle>
+      <SectionTitle subTitle='Comprehensive care solutions tailored to your unique needs'>
+        Our Services
+      </SectionTitle>
 
       <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
         {SERVICES.map((s) => (
