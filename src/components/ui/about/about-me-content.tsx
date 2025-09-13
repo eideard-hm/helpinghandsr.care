@@ -145,11 +145,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
               </p>
               <div className='bg-teal-50 border-l-4 border-teal-500 p-4 my-6 rounded-r'>
                 <p className='text-teal-800 font-medium italic'>
-                  "I will personalize the massage treatment to meet your
+                  I will personalize the massage treatment to meet your
                   emotional and physical needs. As I understand the benefits of
                   massage therapies, it is my intention to help people take care
                   of their bodies and experience the benefits of massage in
-                  their lives."
+                  their lives.
                 </p>
               </div>
             </div>
