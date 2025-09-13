@@ -4,7 +4,6 @@ import { useEffect, useId, useState } from 'react';
 
 import Link from 'next/link';
 
-import { Dialog } from './dialog';
 import { WhatsAppButton } from './whatsapp-btn';
 
 type HeaderResponsiveProps = {
@@ -46,18 +45,15 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
         <span className='sr-only'>Open Menu</span>
       </button>
 
-      <Dialog
-        panelId={panelId}
-        open={open}
+      <div
+        id={panelId}
+        hidden={!open}
+        className='md:hidden border-t bg-white/95 backdrop-blur absolute top-28 left-0 right-0 shadow-md'
+        aria-modal='true'
+        role='dialog'
+        aria-labelledby='mobile-menu-title'
       >
         <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-[color:var(--ink)]'>
-          <Link
-            href='/'
-            className='py-2'
-          >
-            Home
-          </Link>
-
           <Link
             href='/#services'
             onClick={() => setOpen(false)}
@@ -65,6 +61,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
           >
             Services
           </Link>
+
           <Link
             href='/#how-it-works'
             onClick={() => setOpen(false)}
@@ -72,6 +69,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
           >
             How it works
           </Link>
+
           <Link
             href='/#benefits'
             onClick={() => setOpen(false)}
@@ -79,6 +77,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
           >
             Benefits
           </Link>
+
           <Link
             href='/#testimonials'
             onClick={() => setOpen(false)}
@@ -87,12 +86,20 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
             Testimonials
           </Link>
 
+          <Link
+            href='/#about'
+            onClick={() => setOpen(false)}
+            className='py-2'
+          >
+            About
+          </Link>
+
           <WhatsAppButton
             waLink={waLink}
             classList='mt-2'
           />
         </nav>
-      </Dialog>
+      </div>
     </>
   );
 }

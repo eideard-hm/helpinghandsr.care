@@ -11,7 +11,7 @@ export function HowItWorks() {
   return (
     <section
       id='how-it-works'
-      className='py-20 bg-gray-50 shadow'
+      className='py-16 bg-gray-50 shadow'
     >
       <div className='container mx-auto px-4 max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8'>
         <div>

@@ -9,15 +9,6 @@ export function NavLinks({ classList }: NavProps) {
     <ul className={`space-y-2 text-sm ${classList}`}>
       <li>
         <Link
-          href='/'
-          className='hover:text-[color:var(--brand-2)]'
-        >
-          Home
-        </Link>
-      </li>
-
-      <li>
-        <Link
           href='/#services'
           className='hover:text-[color:var(--brand-2)]'
         >
@@ -49,6 +40,15 @@ export function NavLinks({ classList }: NavProps) {
           className='hover:text-[color:var(--brand-2)]'
         >
           Testimonials
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href='/#about'
+          className='hover:text-[color:var(--brand-2)]'
+        >
+          About
         </Link>
       </li>
     </ul>

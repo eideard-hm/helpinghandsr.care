@@ -8,6 +8,7 @@ const EnvSchema = z.object({
   DATABASE_URL: z.url(),
   DIRECT_URL: z.url(),
   NEXT_PUBLIC_BRAND_LOGOTYPE: z.string(),
+  NEXT_PUBLIC_WA_MESSAGE_TEMPLATE: z.string(),  
 });
 
 const parsedEnv = EnvSchema.safeParse(process.env);
@@ -25,6 +26,7 @@ const {
   NEXT_PUBLIC_WA_MESSAGE,
   NEXT_PUBLIC_BRAND,
   NEXT_PUBLIC_BRAND_LOGOTYPE,
+  NEXT_PUBLIC_WA_MESSAGE_TEMPLATE,
 } = parsedEnv.data;
 export const env = {
   whatsAppNumber: NEXT_PUBLIC_WHATSAPP,
@@ -32,4 +34,5 @@ export const env = {
   waMessage: NEXT_PUBLIC_WA_MESSAGE,
   brand: NEXT_PUBLIC_BRAND,
   brandLogotype: NEXT_PUBLIC_BRAND_LOGOTYPE,
+  waMessageTemplate: NEXT_PUBLIC_WA_MESSAGE_TEMPLATE,
 } as const;
