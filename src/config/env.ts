@@ -8,7 +8,10 @@ const EnvSchema = z.object({
   DATABASE_URL: z.url(),
   DIRECT_URL: z.url(),
   NEXT_PUBLIC_BRAND_LOGOTYPE: z.string(),
-  NEXT_PUBLIC_WA_MESSAGE_TEMPLATE: z.string(),  
+  NEXT_PUBLIC_WA_MESSAGE_TEMPLATE: z.string(),
+  GOOGLE_CLIENT_ID: z.string().min(10),
+  GOOGLE_CLIENT_SECRET: z.string().min(10),
+  GOOGLE_REDIRECT_URI: z.url(),
 });
 
 const parsedEnv = EnvSchema.safeParse(process.env);
@@ -27,6 +30,9 @@ const {
   NEXT_PUBLIC_BRAND,
   NEXT_PUBLIC_BRAND_LOGOTYPE,
   NEXT_PUBLIC_WA_MESSAGE_TEMPLATE,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI,
 } = parsedEnv.data;
 export const env = {
   whatsAppNumber: NEXT_PUBLIC_WHATSAPP,
@@ -35,4 +41,7 @@ export const env = {
   brand: NEXT_PUBLIC_BRAND,
   brandLogotype: NEXT_PUBLIC_BRAND_LOGOTYPE,
   waMessageTemplate: NEXT_PUBLIC_WA_MESSAGE_TEMPLATE,
+  googleClientId: GOOGLE_CLIENT_ID,
+  googleClientSecret: GOOGLE_CLIENT_SECRET,
+  googleRedirectUri: GOOGLE_REDIRECT_URI,
 } as const;

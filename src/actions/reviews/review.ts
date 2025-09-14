@@ -1,7 +1,5 @@
 'use server';
 
-
-
 import type { Review } from '@/generated/prisma';
 import { prisma } from '@/lib/prisma';
 import { catchError } from '@/lib/promise';
@@ -14,7 +12,7 @@ export const getReviews = async (): Promise<Review[]> => {
       createdAt: 'desc',
     },
     where: {
-      status: 'approved'
+      status: 'APPROVED'
     },
     take: 10,
   });
