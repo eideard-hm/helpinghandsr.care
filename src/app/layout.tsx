@@ -18,7 +18,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      data-scroll-behavior='smooth'
+    >
       <head>
         <link
           rel='preconnect'
@@ -30,25 +33,25 @@ export default function RootLayout({
           rel='icon'
           type='image/png'
           sizes='16x16'
-          href='/favicon-16x16.png'
+          href='/favicon_16x16.png'
         />
         <link
           rel='icon'
           type='image/png'
           sizes='32x32'
-          href='/favicon-32x32.png'
+          href='/favicon_32x32.png'
         />
         <link
           rel='icon'
           type='image/png'
           sizes='48x48'
-          href='/favicon-48x48.png'
+          href='/favicon_48x48.png'
         />
         <link
           rel='icon'
           type='image/png'
           sizes='64x64'
-          href='/favicon-64x64.png'
+          href='/favicon_64x64.png'
         />
       </head>
 
