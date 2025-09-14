@@ -50,6 +50,7 @@ export const WhatsAppButton = forwardRef<
 
     return (
       <a
+        suppressHydrationWarning
         ref={ref}
         href={waLink}
         target='_blank'
