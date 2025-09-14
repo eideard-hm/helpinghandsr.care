@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
 import { createReview } from '@/actions/reviews/review';
-import { type ReviewFormInput, type ReviewInput, ReviewSchema } from '@/schema/review';
+import { type ReviewFormInput, ReviewSchema } from '@/schema/review';
 
 export default function AddReviewForm() {
   const [isPending, startTransition] = useTransition();

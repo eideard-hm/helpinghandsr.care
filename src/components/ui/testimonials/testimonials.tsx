@@ -2,12 +2,13 @@ import Link from 'next/link';
 
 import { getReviews } from '@/actions/reviews/review';
 import { DEFAULT_TESTIMONIALS } from '@/data/testimonials';
+import type { Review } from '@/generated/prisma';
 import { IconCirclePlus } from '@tabler/icons-react';
 import { SectionTitle } from '../../common/section-title';
 import { TestimonialsSlider } from './testimonial-slider';
 
 export async function Testimonials() {
-  let reviews = await getReviews();
+  let reviews: Review[] = await getReviews();
   if (!reviews.length) {
     reviews = DEFAULT_TESTIMONIALS;
   }
