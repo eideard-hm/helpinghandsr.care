@@ -4,10 +4,12 @@ export function FormLayout({
   children,
   formTitle,
   brand,
+  logotype,
 }: {
   children: React.ReactNode;
   formTitle?: string;
   brand: string;
+  logotype?: string;
 }) {
   return (
     <section className='flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0'>
@@ -19,7 +21,11 @@ export function FormLayout({
           src='/zeinmotiontm.webp'
           alt={`Logo of ${brand} | Message Therapist`}
         />
-        {brand}
+
+        <section>
+          <h2>{brand}</h2>
+          <p className='text-sm text-gray-500'>{logotype}</p>
+        </section>
       </div>
 
       <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
