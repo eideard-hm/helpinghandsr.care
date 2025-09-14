@@ -9,11 +9,224 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum BookingStatus {
+  REQUESTED
+  CONFIRMED
+  CANCELLED
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum MapProvider {
+  OSM
+  MAPBOX
+  MAPTILER
+  GOOGLE
+}
+
+enum NotificationLogStatus {
+  SENT
+  FAILED
+}
+
 model Review {
   id        String   @id @default(uuid())
   rating    Int
   name      String
   content   String
-  status    String   @default("pending")
+  status    ReviewStatus @default(PENDING)
   createdAt DateTime @default(now())
+
+  @@map("reviews")
+}
+
+enum UserRole {
+  CUSTOMER
+  PROFESSIONAL
+  ADMIN
+}
+
+
+model Business {
+   id                 String        @id @default(cuid())
+  name               String
+  timezone           String        @default("America/Bogota")
+  notificationEmail  String
+  whatsappNumber     String?
+  bufferMin          Int           @default(10)
+  defaultMapProvider MapProvider   @default(OSM)
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+
+  services     Service[]
+  hours        BusinessHour[]
+  timeOff      TimeOff[]
+  bookings     Booking[]
+  admins       AdminUser[]
+  googleOAuth  GoogleOAuthAccount?
+  syncState    GoogleSyncState?
+
+  @@map("businesses")
+}
+
+model AdminUser {
+  id              String   @id @default(cuid())
+  businessId      String
+  email           String
+  supabaseUserId  String?  @unique
+  role            UserRole @default(ADMIN)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  business        Business @relation(fields: [businessId], references: [id])
+
+  @@unique([businessId, email])
+
+  @@map("admin_users")
+}
+
+model Service {
+  id           String   @id @default(cuid())
+  businessId   String
+  name         String
+  durationMin  Int
+  price        Decimal  @db.Decimal(10,2)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  business     Business @relation(fields: [businessId], references: [id])
+  bookings     Booking[]
+
+  @@index([businessId, active])
+
+  @@map("services")
+}
+
+model BusinessHour {
+  id          String  @id @default(cuid())
+  businessId  String
+  weekday     Int     // 0..6 (Sun..Sat)
+  startMin    Int     // minutos desde 00:00 (ej. 09:00 -> 540)
+  endMin      Int     // exclusivo
+  isClosed    Boolean @default(false)
+
+  business    Business @relation(fields: [businessId], references: [id])
+
+  @@index([businessId, weekday])
+
+  @@map("business_hours")
+}
+
+model TimeOff {
+   id          String   @id @default(cuid())
+  businessId  String
+  date        DateTime // usa solo la parte de fecha (normaliza a 00:00Z)
+  startMin    Int?
+  endMin      Int?
+  reason      String?
+
+  business    Business @relation(fields: [businessId], references: [id])
+
+  @@index([businessId, date])
+
+  @@map("time_off")
+}
+
+model Booking {
+  id             String        @id @default(cuid())
+  businessId     String
+  serviceId      String
+  status         BookingStatus @default(REQUESTED)
+
+  // Datos del cliente (no crea cuenta)
+  customerName   String
+  phone          String
+  email          String?
+  addressText    String?
+  lat            Decimal?      @db.Decimal(9,6)
+  lng            Decimal?      @db.Decimal(9,6)
+  placeId        String?       // id del proveedor de mapas (si aplica)
+
+  // Franja reservada
+  startAt        DateTime      // timestamptz
+  endAt          DateTime
+
+  // Confirmación/cancelación sin cuenta (token firmado de un uso)
+  customerTokenHash      String?
+  customerTokenExpiresAt DateTime?
+
+  // Google Calendar
+  gcalEventId    String?
+  gcalCalendarId String?
+
+  // Auditoría y notas
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  confirmedAt    DateTime?
+  cancelledAt    DateTime?
+  cancelReason   String?
+
+  business       Business @relation(fields: [businessId], references: [id])
+  service        Service  @relation(fields: [serviceId], references: [id])
+  notificationLogs NotificationLog[]
+
+  @@index([businessId, startAt])
+  @@index([status])
+  @@unique([gcalCalendarId, gcalEventId]) // evita duplicados en el mismo calendar
+
+  @@map("bookings")
+}
+
+model NotificationLog {
+  id          String   @id @default(cuid())
+  bookingId   String
+  channel     String
+  template    String? 
+  status      NotificationLogStatus @default(SENT)
+  error       String?  
+  createdAt   DateTime @default(now())
+
+  booking     Booking  @relation(fields: [bookingId], references: [id])
+
+  @@index([bookingId, channel])
+
+  @@map("notification_logs")
+}
+
+model GoogleOAuthAccount {
+   id           String   @id @default(cuid())
+  businessId   String   @unique
+  provider     String   @default("google")
+  accessToken  String
+  refreshToken String
+  scope        String
+  tokenType    String?  // "Bearer"
+  expiryDate   DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  business       Business @relation(fields: [businessId], references: [id])
+
+  @@map("google_oauth_accounts")
+}
+
+model GoogleSyncState {
+  id             String   @id @default(cuid())
+  businessId     String   @unique
+  calendarId     String   
+  syncToken      String? 
+  lastSyncedAt   DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  business       Business @relation(fields: [businessId], references: [id])
+
+  @@map("google_sync_states")
 }
