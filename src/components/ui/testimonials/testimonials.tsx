@@ -18,12 +18,14 @@ export async function Testimonials() {
       className='py-16 bg-[color:var(--brand-2)]/20'
     >
       <div className='container mx-auto px-4 max-w-7xl'>
-        <header className='flex items-center justify-between'>
-          <SectionTitle>Testimonials</SectionTitle>
+        <header className='flex items-center justify-between flex-wrap'>
+          <SectionTitle subTitle='What Our Clients Say'>
+            Testimonials
+          </SectionTitle>
 
           <Link
             href='/testimonials'
-            className='border border-accent text-accent hover:bg-teal-50 px-6 py-3 rounded-lg font-medium transition-colors'
+            className='border border-accent text-accent hover:bg-teal-50 md:px-6 md:py-3 rounded-lg font-medium transition-colors px-3 py-1.5 text-sm'
           >
             <IconCirclePlus
               size={16}
