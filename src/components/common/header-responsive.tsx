@@ -6,7 +6,11 @@ import Link from 'next/link';
 
 import { WhatsAppButton } from './whatsapp-btn';
 
-export function HeaderResponsive() {
+type HeaderResponsiveProps = {
+  waLink: string;
+};
+
+export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -90,7 +94,10 @@ export function HeaderResponsive() {
             About
           </Link>
 
-          <WhatsAppButton classList='mt-2' />
+          <WhatsAppButton
+            waLink={waLink}
+            classList='mt-2'
+          />
         </nav>
       </div>
     </>
