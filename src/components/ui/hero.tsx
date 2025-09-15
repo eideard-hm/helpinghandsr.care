@@ -54,15 +54,15 @@ export function Hero({
           loop
           playsInline
           preload='metadata'
-          poster='/hero1.png'
+          poster='/hero.webp'
           aria-hidden
         >
           <source
-            src='/hero1.webm'
+            src='/hero.webm'
             type='video/webm'
           />
           <source
-            src='/hero1.mp4'
+            src='/hero.mp4'
             type='video/mp4'
           />
         </video>
@@ -77,24 +77,24 @@ export function Hero({
           loop
           playsInline
           preload='metadata'
-          poster='/hero1.png'
+          poster='/hero.webp'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
           <source
-            src='/hero1.webm'
+            src='/hero.webm'
             type='video/webm'
           />
           <source
-            src='/hero1.mp4'
+            src='/hero.mp4'
             type='video/mp4'
           />
         </motion.video>
       ) : (
         <motion.img
           key='hero-image'
-          src='/hero1.png'
+          src='/hero.webp'
           alt='Hero Image showing a person receiving a massage'
           className='absolute left-1/2 top-1/2 max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain'
           initial={{ scale: 1.04, opacity: 0 }}
@@ -118,12 +118,12 @@ export function Hero({
         whileInView='visible'
         viewport={{ once: true, amount: 0.6 }}
       >
-        <h1 className='max-w-xl text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
+        <h1 className='max-w-lg text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
           Therapeutic massages at home
         </h1>
 
         <motion.p
-          className='mt-4 max-w-xl text-base md:text-lg text-white/90'
+          className='mt-4 max-w-md text-base md:text-lg text-white/90'
           variants={fadeInUp}
           transition={{ delay: 0.05 }}
         >

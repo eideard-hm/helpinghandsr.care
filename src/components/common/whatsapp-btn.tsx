@@ -4,6 +4,8 @@ import { forwardRef } from 'react';
 
 import { IconBrandWhatsapp } from '@tabler/icons-react';
 
+import { waLinkWithEnv } from '@/lib/whatsapp';
+
 interface WhatsAppButtonProps {
   waLink?: string;
   classList?: string;
@@ -18,7 +20,7 @@ export const WhatsAppButton = forwardRef<
 >(
   (
     {
-      waLink,
+      waLink = waLinkWithEnv(),
       classList,
       label = 'Schedule via WhatsApp',
       size = 'medium',
