@@ -13,10 +13,18 @@ export function Footer() {
         <h3 className='text-xl font-bold'>{env.brand}</h3>
         <p className='mt-2 text-sm text-gray-300'>{env.brandLogotype}</p>
         <p className='mt-4 text-sm text-gray-400'>
-          🏠 Home Visits | Personalized Treatment <br />
-          Prevent injuries & chronic pain <br />
-          Relieve muscle stiffness & tension <br />
-          Improve your Health & Wellness
+          🏠 Home Visits | Personalized Care
+        </p>
+        <p className='mt-4 text-sm text-gray-400'>
+          💪Helping you prevent injuries & chronic pain
+        </p>
+        <p className='mt-4 text-sm text-gray-400'>
+          👐 Relieve stiffness & stress
+        </p>
+        <p className='mt-4 text-sm text-gray-400'>💆‍♂️Tailored Treatments.</p>
+        <p className='mt-4 text-sm text-gray-400'>
+          Stretching & Sports massage, Deep tissue massage, Cupping therapy,
+          Reflexology therapy, Lymphatic drainage.
         </p>
       </div>
 
