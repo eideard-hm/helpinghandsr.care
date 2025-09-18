@@ -29,7 +29,15 @@ export function Footer() {
         <h4 className='font-semibold mb-3'>Contact</h4>
         <WhatsAppButton waLink={waHref} />
         <p className='mt-4 text-sm text-gray-400'>
-          © {year} {env.brand}. All rights reserved.
+          © {year} {env.brand}. All rights reserved - Created and developed by{' '}
+          <a
+            href='https://edier-hm.netlify.app/en/'
+            target='_blank'
+            rel='noopener noreferrer'
+            className='underline'
+          >
+            Edier Hernández
+          </a>
         </p>
       </div>
     </div>
