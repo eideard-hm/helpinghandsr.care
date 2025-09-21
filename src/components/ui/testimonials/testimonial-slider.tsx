@@ -78,7 +78,6 @@ export function TestimonialsSlider({
       onTouchStart={() => setPaused(true)}
       onTouchEnd={() => setPaused(false)}
     >
-      {/* Card */}
       <div className='mx-auto max-w-3xl'>
         <div className='relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5'>
           <AnimatePresence
@@ -97,7 +96,6 @@ export function TestimonialsSlider({
               onDragEnd={onDragEnd}
               className='cursor-grab active:cursor-grabbing'
             >
-              {/* Header: avatar + name + rating */}
               <header className='flex items-center justify-between'>
                 <div className='flex items-center gap-4'>
                   <div className='size-12 rounded-full bg-[color:var(--brand)]/10' />
@@ -127,7 +125,6 @@ export function TestimonialsSlider({
                 </span>
               </header>
 
-              {/* Content */}
               <p className='mt-4 text-[15px] leading-relaxed text-gray-700'>
                 “{r.content}”
               </p>
@@ -136,11 +133,10 @@ export function TestimonialsSlider({
         </div>
       </div>
 
-      {/* Arrows */}
       {items.length > 1 && (
         <>
           <button
-            aria-label='Anterior'
+            aria-label='Previous'
             onClick={() => goTo(index - 1, -1)}
             className='absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-black/5 hover:bg-white'
           >
@@ -159,7 +155,7 @@ export function TestimonialsSlider({
             </svg>
           </button>
           <button
-            aria-label='Siguiente'
+            aria-label='Next'
             onClick={() => goTo(index + 1, 1)}
             className='absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-black/5 hover:bg-white'
           >
@@ -180,7 +176,6 @@ export function TestimonialsSlider({
         </>
       )}
 
-      {/* Dots */}
       {items.length > 1 && (
         <div className='mt-4 flex justify-center gap-2'>
           {items.map((_, i) => (
