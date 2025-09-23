@@ -6,7 +6,7 @@ import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
-import { mainMetadata } from '@/metadata/main';
+import mainMetadata from '@/metadata/main';
 
 import './globals.css';
 
