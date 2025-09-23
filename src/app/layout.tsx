@@ -28,31 +28,6 @@ export default function RootLayout({
           href='https://fonts.gstatic.com'
           crossOrigin=''
         />
-
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='16x16'
-          href='/favicon_16x16.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='32x32'
-          href='/favicon_32x32.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='48x48'
-          href='/favicon_48x48.png'
-        />
-        <link
-          rel='icon'
-          type='image/png'
-          sizes='64x64'
-          href='/favicon_64x64.png'
-        />
       </head>
 
       <body
