@@ -4,14 +4,40 @@ import { useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-export const Benefits = ({ benefits }: { benefits: string[] }) => {
+import type { Benefits as BenefitsType } from '@/data/services';
+
+export const Benefits = ({
+  benefits,
+  isMain = false,
+}: {
+    benefits: BenefitsType[];
+  isMain?: boolean;
+}) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
+  const containerStyles = isMain
+    ? 'mb-8 p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl border-2 border-green-200 shadow-lg'
+    : 'mb-6';
+  
+  const titleStyles = isMain
+    ? 'text-xl font-bold mb-4 flex items-center text-green-700'
+    : 'text-lg font-semibold mb-4 flex items-center';
+
+  const benefitItemStyles = isMain
+    ? 'bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all duration-300 border border-green-100 hover:border-green-300'
+    : 'bg-gray-50 rounded-lg p-3 cursor-pointer hover:bg-green-50 transition-colors';
+
+  const benefitTitleStyles = isMain
+    ? 'font-bold text-green-800 text-lg'
+    : 'font-medium text-gray-800';
+
   return (
-    <div className='mb-6'>
-      <h4 className='text-lg font-semibold mb-4 flex items-center'>
+    <div className={containerStyles}>
+      <h4 className={titleStyles}>
         <svg
-          className='w-5 h-5 mr-2 text-green-500'
+          className={`w-5 h-5 mr-2 ${
+            isMain ? 'text-green-600' : 'text-green-500'
+          }`}
           fill='currentColor'
           viewBox='0 0 20 20'
         >
@@ -21,10 +47,12 @@ export const Benefits = ({ benefits }: { benefits: string[] }) => {
             clipRule='evenodd'
           />
         </svg>
-        Key Benefits
+        {isMain
+          ? '🌟 Premium Benefits Included'
+          : 'What is Included / Benefits'}
       </h4>
 
-      <div className='space-y-2'>
+      <div className={isMain ? 'space-y-3' : 'space-y-2'}>
         {benefits.map((benefit, index) => (
           <motion.div
             key={index}
@@ -37,13 +65,15 @@ export const Benefits = ({ benefits }: { benefits: string[] }) => {
             }
           >
             <div className='flex items-center justify-between'>
-              <span className='font-medium text-gray-800'>{benefit}</span>
+              <span className='font-medium text-gray-800'>{benefit.title}</span>
               <motion.div
                 animate={{ rotate: expandedIndex === index ? 180 : 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <svg
-                  className='w-5 h-5 text-gray-500'
+                  className={`w-5 h-5 ${
+                    isMain ? 'text-green-600' : 'text-gray-500'
+                  }`}
                   fill='none'
                   stroke='currentColor'
                   viewBox='0 0 24 24'
@@ -67,12 +97,14 @@ export const Benefits = ({ benefits }: { benefits: string[] }) => {
                   transition={{ duration: 0.3 }}
                   className='overflow-hidden'
                 >
-                  <div className='pt-2 text-gray-600'>
-                    <p>
-                      This benefit helps you achieve better results by providing
-                      specialized expertise and personalized attention to your
-                      needs.
-                    </p>
+                  <div
+                    className={`pt-2 ${isMain ? 'text-green-700' : 'text-gray-600'}`}
+                  >
+                    <ul className='list-disc list-inside space-y-1'>
+                      {benefit.details.map((detail, detailIndex) => (
+                        <li key={detailIndex}>{detail}</li>
+                      ))}
+                    </ul>
                   </div>
                 </motion.div>
               )}

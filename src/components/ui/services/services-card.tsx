@@ -13,6 +13,7 @@ import type { Services } from '@/data/services';
 import { fadeInUp } from '@/lib/motion';
 import { Benefits } from './benefits';
 import { HowWeWork } from './how-we-work';
+import { cn } from '@/lib/cn';
 
 type ServicesCardProps = {
   services: Services;
@@ -30,35 +31,96 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
         initial='hidden'
         whileInView='visible'
         viewport={{ once: true }}
-        className='group bg-white rounded-xl shadow hover:shadow-lg overflow-hidden'
+        className={cn(
+          'group rounded-xl overflow-hidden relative border-2 transition-all duration-300 hover:-translate-y-1',
+          s.isMain
+            ? 'bg-white border-[color:var(--brand-2)] shadow-xl'
+            : 'bg-white border-gray-100 shadow hover:shadow-lg'
+        )}
+        style={{ display: s.visible ? 'block' : 'none' }}
       >
-        <div className='relative bg-gradient-to-b from-[color:var(--brand-2)] to-[color:var(--bg)] flex justify-center items-center h-48'>
-          <Image
-            width={150}
-            height={150}
-            src={s.image}
-            alt={s.title}
-            className='size-[150px] aspect-square rounded-full object-cover ring-4 ring-white shadow-lg'
-          />
-        </div>
+        {/* Elemento decorativo para servicio principal */}
+        {s.isMain && (
+          <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--accent)]'></div>
+        )}
 
-        <div className='p-6 text-center'>
-          <h3 className='text-xl font-semibold mb-2'>{s.title}</h3>
-          <p className='text-gray-600 line-clamp-3 mb-4'>{s.excerpt}</p>
-          <section className='flex justify-center gap-4 mt-5 flex-wrap'>
-            <Button
-              variant='outline'
-              size='small'
-              onClick={() => setOpen(true)}
-            >
-              Show More
-            </Button>
+        <div className='relative'>
+          {/* Header con overlay para servicio principal */}
+          <div
+            className={cn(
+              'relative flex justify-center items-center h-48 overflow-hidden',
+              s.isMain
+                ? 'bg-gradient-to-br from-[color:var(--brand)] to-[color:var(--brand-2)]'
+                : 'bg-gradient-to-b from-[color:var(--brand-2)] to-[color:var(--bg)]'
+            )}
+          >
+            {s.isMain && (
+              <>
+                <div className='absolute inset-0 bg-black/10'></div>
+                <div className='absolute top-4 left-4'>
+                  <span className='bg-white/90 text-[color:var(--brand)] px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm'>
+                    💎 Premium
+                  </span>
+                </div>
+              </>
+            )}
 
-            <WhatsAppButton
-              waLink={s.waLink}
-              label='Book Now'
+            <Image
+              width={s.isMain ? 165 : 150}
+              height={s.isMain ? 165 : 150}
+              src={s.image}
+              alt={s.title}
+              className={cn(
+                'aspect-square rounded-full object-cover border-4 z-10 shadow-xl',
+                s.isMain
+                  ? 'size-[165px] border-white/90'
+                  : 'size-[150px] border-white'
+              )}
             />
-          </section>
+          </div>
+
+          <div className='p-6 text-center'>
+            <h3
+              className={cn(
+                'font-bold mb-3',
+                s.isMain
+                  ? 'text-2xl text-[color:var(--brand)]'
+                  : 'text-xl text-[color:var(--ink)]'
+              )}
+            >
+              {s.title}
+            </h3>
+
+            <p
+              className={cn(
+                'line-clamp-3 mb-5 leading-relaxed',
+                s.isMain
+                  ? 'text-[color:var(--ink)] font-medium'
+                  : 'text-gray-600'
+              )}
+            >
+              {s.excerpt}
+            </p>
+
+            <section className='flex justify-center gap-3 mt-6 flex-wrap'>
+              <Button
+                variant={s.isMain ? 'primary' : 'outline'}
+                size='small'
+                onClick={() => setOpen(true)}
+                className={cn(
+                  s.isMain &&
+                    'bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--brand-2)] hover:from-[color:var(--brand)]/90 hover:to-[color:var(--brand-2)]/90'
+                )}
+              >
+                {s.isMain ? '✨ Learn More' : 'Show More'}
+              </Button>
+
+              <WhatsAppButton
+                waLink={s.waLink}
+                label={s.isMain ? 'Quick Book' : 'Book Now'}
+              />
+            </section>
+          </div>
         </div>
       </motion.div>
 
@@ -100,7 +162,10 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
 
           <p className='text-gray-700 leading-relaxed'>{s.excerpt}</p>
 
-          <Benefits benefits={[...s.benefits]} />
+          <Benefits
+            benefits={[...s.benefits]}
+            isMain={s.isMain}
+          />
 
           <HowWeWork details={[...s.details]} />
         </div>
