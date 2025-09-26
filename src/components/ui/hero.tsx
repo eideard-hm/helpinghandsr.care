@@ -6,6 +6,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 import { fadeIn, fadeInUp } from '@/lib/motion';
 import { WhatsAppButton } from '../common/whatsapp-btn';
+import { env } from '@/config/env';
 
 type HeroProps = {
   waLink: string;
@@ -119,7 +120,8 @@ export function Hero({
         viewport={{ once: true, amount: 0.6 }}
       >
         <h1 className='max-w-lg text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
-          Therapeutic massages at home
+          Therapeutic Home Massage in Abu Dhabi - 
+          <span className='text-[var(--brand)]'>{env.brand}</span>
         </h1>
 
         <motion.p
@@ -127,8 +129,9 @@ export function Hero({
           variants={fadeInUp}
           transition={{ delay: 0.05 }}
         >
-          Personalized treatments to prevent injuries and chronic pain, relieve
-          muscle stiffness, and improve your wellness.
+          Premium in-home massage in Abu Dhabi. Relieve pain, improve mobility,
+          and enhance performance with personalized sessions based on 20 years
+          of experience.
         </motion.p>
 
         <WhatsAppButton
