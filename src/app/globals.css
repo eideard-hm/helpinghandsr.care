@@ -1,19 +1,31 @@
 @import 'tailwindcss';
 
-:root {
-  --brand: #0f766e;
-  --brand-2: #2dd4bf;
-  --ink: #0f172a;
-  --bg: #f8fafc;
-  --accent: #f97316;
+:root{
+  /* PRIMARIO (CTA) */
+  --brand:   #2F7D6D;   /* botones, links principales */
+  --brand-2: #A7DEC1;   /* fondos suaves, chips, badges */
+
+  /* SECUNDARIOS */
+  --info:    #5FA8E5;   /* estados/info, highlights */
+  --accent:  #CFAA36;   /* detalles, iconos, dividers, estrellas */
+
+  /* NEUTROS */
+  --ink:     #0F172A;   /* texto principal */
+  --bg:      #F8FAFC;   /* fondo base */
+
+  /* Opcional para hovers/tonos */
+  --brand-600:#27695C;
+  --brand-700:#20564C;
+  --accent-700:#9A7B22;
 }
 
-@theme {
-  --color-brand: var(--brand);
+@theme{
+  --color-brand:   var(--brand);
   --color-brand-2: var(--brand-2);
-  --color-ink: var(--ink);
-  --color-bg: var(--bg);
-  --color-accent: var(--accent);
+  --color-ink:     var(--ink);
+  --color-bg:      var(--bg);
+  --color-accent:  var(--accent);
+  --color-info:    var(--info);
 }
 
 html {
