@@ -10,7 +10,7 @@ export const Benefits = ({
   benefits,
   isMain = false,
 }: {
-    benefits: BenefitsType[];
+  benefits: BenefitsType[];
   isMain?: boolean;
 }) => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -18,7 +18,7 @@ export const Benefits = ({
   const containerStyles = isMain
     ? 'mb-8 p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl border-2 border-green-200 shadow-lg'
     : 'mb-6';
-  
+
   const titleStyles = isMain
     ? 'text-xl font-bold mb-4 flex items-center text-green-700'
     : 'text-lg font-semibold mb-4 flex items-center';
@@ -98,7 +98,9 @@ export const Benefits = ({
                   className='overflow-hidden'
                 >
                   <div
-                    className={`pt-2 ${isMain ? 'text-green-700' : 'text-gray-600'}`}
+                    className={`pt-2 ${
+                      isMain ? 'text-green-700' : 'text-gray-600'
+                    }`}
                   >
                     <ul className='list-disc list-inside space-y-1'>
                       {benefit.details.map((detail, detailIndex) => (

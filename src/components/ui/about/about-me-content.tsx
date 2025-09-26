@@ -132,10 +132,10 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
 
               <div className='bg-[var(--brand-2)] border-l-4 border-[var(--brand)] p-4 my-4 rounded-r'>
                 <p className='text-[var(--brand-700)] font-medium'>
-                  "My practice integrates ancestral knowledge passed down from
-                  my grandfather, a respected massage therapist, with modern
+                  My practice integrates ancestral knowledge passed down from my
+                  grandfather, a respected massage therapist, with modern
                   evidence-based techniques from my diploma at Newton Training
-                  Center in Abu Dhabi."
+                  Center in Abu Dhabi.
                 </p>
               </div>
 
