@@ -6,61 +6,54 @@ export const SERVICES: Services[] = [
     isMain: true,
     visible: true,
     id: Date.now(),
-    title: 'ZeinMotion Therapy',
+    title: `${env.brand} Therapy`,
     image: '/services/deep-tissue-massage.webp',
     bigImage: '/services/sports-massage-big.webp',
     excerpt:
-      'ZeinMotion is a unique therapy that combines elements of massage, stretching, and movement to improve flexibility, reduce pain, and enhance overall well-being.',
+      'A premium signature massage method developed over 20+ years of clinical experience. Integrates Head Massage, Deep Tissue, Sports Massage, Assisted Stretching, and Reflexology for comprehensive pain relief and performance enhancement.',
     waLink: waLink(
       env.whatsAppNumber,
-      env.waMessageTemplate.replace('{SERVICE}', 'ZeinMotion')
+      env.waMessageTemplate.replace('{SERVICE}', `${env.brand} Therapy`)
     ),
     benefits: [
       {
-        title: 'Deep Tissue Massage',
+        title: 'Comprehensive Pain Relief',
         details: [
-          'Deep tissue massages use firm pressure and slow strokes to target deep layers of muscle and fascia.',
-          'Therapist starts with lighter pressure to warm up the muscles and then increases intensity.',
-          'Techniques include stripping and friction to break up adhesions and improve range of motion.',
+          'Targets chronic pain, muscle tension and stiffness with deep-tissue precision.',
+          'Combines stripping and cross-fiber friction to break up adhesions and scar tissue.',
+          'Promotes healthy circulation and speeds muscle recovery.'
         ],
       },
       {
-        title: 'Anti-Stress & Face Massage',
+        title: 'Mobility & Performance',
         details: [
-          'Anti-stress massage focuses on relieving tension in the neck, shoulders, and back using gentle techniques.',
-          'Face massage involves gentle strokes and pressure on the face to promote relaxation and improve circulation.',
-          'Both massages can include aromatherapy and soothing music to enhance the experience.',
+          'Integrates assisted stretching and sports massage to increase flexibility and range of motion.',
+          'Ideal for athletes, active professionals and anyone seeking better posture and movement quality.',
+          'Helps reduce risk of future injuries and supports optimal performance.'
         ],
       },
       {
-        title: 'Sports Massage',
+        title: 'Stress & Energy Balance',
         details: [
-          'Sports massage uses a combination of techniques such as deep tissue massage, stretching, and trigger point therapy to target specific muscle groups.',
-          'It can be used before or after physical activity to prepare the muscles or aid in recovery.',
-          'Therapist may also provide advice on stretching and strengthening exercises to prevent future injuries.',
+          'Anti-stress and head/face massage calm the nervous system and release mental tension.',
+          'Each session begins with gentle energy activation (quantum/energy reset) to enhance the therapeutic effect.',
+          'Leaves you feeling lighter, more relaxed and re-energized.'
         ],
       },
       {
-        title: 'Cupping Therapy',
+        title: 'Holistic Enhancements',
         details: [
-          'Cupping therapy involves placing cups on the skin to create suction, which helps to increase blood flow and promote healing.',
-          'The cups can be made of various materials, including glass, bamboo, or silicone.',
-          'Therapist may use static or moving cupping techniques depending on the desired effect.',
-        ],
-      },
-      {
-        title: 'Reflexology Therapy',
-        details: [
-          'Reflexology involves applying pressure to specific points on the hands and feet that correspond to different organs and systems in the body.',
-          'It is based on the principle that these points can influence the health of the corresponding areas.',
-          'Therapist may use techniques such as thumb walking, finger pressure, and stretching to stimulate the reflex points.',
+          'Reflexology stimulates key pressure points linked to internal organs and overall wellness.',
+          'Optional cupping improves blood flow and accelerates muscle healing when appropriate.',
+          'Tailored combinations ensure a truly personalized, whole-body approach.'
         ],
       },
     ],
     details: [
-      'ZeinMotion therapy is designed to address a variety of issues, including chronic pain, limited mobility, and stress-related conditions.',
-      'The therapy sessions are tailored to the individual needs of each client, with a focus on achieving optimal results through a combination of techniques.',
-      'Regular sessions can help to improve overall health and well-being, promoting a sense of balance and harmony in the body.',
+      `${env.brand} is the culmination of 20+ years of specialized practice and ancestral knowledge passed down through generations of therapeutic practitioners.`,
+      'Each session begins with a comprehensive assessment of your physical condition, range of motion, and specific wellness goals, ensuring completely personalized treatment.',
+      'The method seamlessly integrates multiple therapeutic disciplines in a flowing sequence designed to address pain at its source while promoting overall physical harmony.',
+      'Ideal for athletes seeking performance optimization, professionals managing stress-related tension, and individuals committed to proactive musculoskeletal health.',
     ],
   },
   {
