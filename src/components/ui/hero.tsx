@@ -105,40 +105,52 @@ export function Hero({
       )}
 
       <motion.div
-        className='absolute inset-0 bg-gradient-to-r from-black/60 via-black/25 to-transparent'
+        className='absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent'
         variants={fadeIn}
         initial='hidden'
         animate='visible'
       />
-      <div className='pointer-events-none absolute inset-y-0 left-0 w-1/3 backdrop-blur-[2px]' />
 
-      <motion.div
-        className='relative z-10 container mx-auto max-w-7xl px-4 my-4 text-white'
-        variants={fadeInUp}
-        initial='hidden'
-        whileInView='visible'
-        viewport={{ once: true, amount: 0.6 }}
-      >
-        <h1 className='max-w-lg text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
-          Therapeutic Home Massage in Abu Dhabi - 
-          <span className='text-[var(--brand)]'>{env.brand}</span>
-        </h1>
+      <div className='relative z-10 container mx-auto max-w-7xl px-4 h-full'>
+        <div className='grid h-full grid-cols-1 md:grid-cols-[minmax(0,40%)_1fr] items-start md:items-center'>
+          <motion.div
+            className='text-white'
+            variants={fadeInUp}
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, amount: 0.6 }}
+          >
+            <div className='md:bg-transparent/0 bg-black/35 backdrop-blur-[2px] rounded-2xl p-4 md:p-0 max-w-xl'>
+              <div className='pr-6'>
+                <h1 className='max-w-md text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
+                  <span className='block'>Therapeutic Home</span>
+                  <span className='block'>Massage in Abu Dhabi</span>
+                  <span className='block text-[color:var(--brand-2)]'>
+                    — {env.brand}
+                  </span>
+                </h1>
 
-        <motion.p
-          className='mt-4 max-w-md text-base md:text-lg text-white/90'
-          variants={fadeInUp}
-          transition={{ delay: 0.05 }}
-        >
-          Premium in-home massage in Abu Dhabi. Relieve pain, improve mobility,
-          and enhance performance with personalized sessions based on 20 years
-          of experience.
-        </motion.p>
+                <motion.p
+                  className='mt-4 max-w-xl text-base md:text-lg text-white/90'
+                  variants={fadeInUp}
+                  transition={{ delay: 0.05 }}
+                >
+                  Premium in-home massage. Relieve pain, improve mobility, and
+                  enhance performance with personalized sessions backed by 20
+                  years of practice.
+                </motion.p>
 
-        <WhatsAppButton
-          waLink={waLink}
-          classList='mt-4'
-        />
-      </motion.div>
+                <WhatsAppButton
+                  waLink={waLink}
+                  classList='mt-5'
+                />
+              </div>
+            </div>
+          </motion.div>
+
+          <div className='hidden md:block' />
+        </div>
+      </div>
     </section>
   );
 }
