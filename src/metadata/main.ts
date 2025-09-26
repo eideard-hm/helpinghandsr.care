@@ -77,12 +77,12 @@ export const mainMetadata: Metadata = {
     default: `Home Massage Therapy Abu Dhabi | ${env.brand} - ZeinMotion, Sports & Deep Tissue Massage`,
     template: `%s | ${env.brand} - Professional Home Massage Abu Dhabi`,
   },
-  description: `Professional home massage therapy in Abu Dhabi. Specialized in ${CORE_SERVICES.slice(
+  description: `${env.brand} - Premium in-home massage in Abu Dhabi. Specialized in ${CORE_SERVICES.slice(
     0,
     4
   ).join(
     ', '
-  )} and more. Relief chronic pain, reduce stress, improve mobility. Book your home visit today! +971 54 374 0644`,
+  )} and more. 20 years of experience. Relieve muscle pain, improve mobility. Book your home visit today! +971 54 374 0644`,
 
   keywords: generateKeywords(),
 
