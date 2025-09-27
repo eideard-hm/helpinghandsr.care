@@ -120,14 +120,12 @@ export function Hero({
             whileInView='visible'
             viewport={{ once: true, amount: 0.6 }}
           >
-            <div className='md:bg-transparent/0 bg-black/35 backdrop-blur-[2px] rounded-2xl p-4 md:p-0 max-w-xl'>
+            <div className='p-4 md:p-0 max-w-xl'>
               <div className='pr-6'>
-                <h1 className='max-w-md text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm'>
-                  <span className='block'>Therapeutic Home</span>
-                  <span className='block'>Massage in Abu Dhabi</span>
-                  <span className='block text-[color:var(--brand-2)]'>
-                    — {env.brand}
-                  </span>
+                <h1 className='max-w-md text-pretty text-4xl md:text-5xl font-extrabold leading-tight drop-shadow-sm text-brand-2'>
+                  <span className='block'>{env.brand}</span>
+                  <span className='block'>Therapeutic Home Massage</span>
+                  <span className='block'>in Abu Dhabi</span>
                 </h1>
 
                 <motion.p
@@ -135,14 +133,15 @@ export function Hero({
                   variants={fadeInUp}
                   transition={{ delay: 0.05 }}
                 >
-                  Premium in-home massage. Relieve pain, improve mobility, and
-                  enhance performance with personalized sessions backed by 20
-                  years of practice.
+                  20 years of clinical experience in pain management and
+                  mobility enhancement. Personalized sessions delivered to your
+                  home.
                 </motion.p>
 
                 <WhatsAppButton
                   waLink={waLink}
                   classList='mt-5'
+                  label='Book Your Session'
                 />
               </div>
             </div>
