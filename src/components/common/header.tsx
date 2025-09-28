@@ -11,7 +11,6 @@ export function Header() {
   const waHref = waLink(env.whatsAppNumber, env.waMessage);
 
   return (
-    <>
       <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
         <Link href='/'>
           <Image
@@ -31,9 +30,7 @@ export function Header() {
           classList='hidden! md:inline-flex!'
         />
 
-        {/* Responsive */}
         <HeaderResponsive waLink={waHref} />
       </div>
-    </>
   );
 }
