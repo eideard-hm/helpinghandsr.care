@@ -1,19 +1,15 @@
 @import 'tailwindcss';
 
 :root{
-  /* PRIMARIO (CTA) */
-  --brand:   #2F7D6D;   /* botones, links principales */
-  --brand-2: #A7DEC1;   /* fondos suaves, chips, badges */
+  --brand:   #2F7D6D;   
+  --brand-2: #A7DEC1;   
 
-  /* SECUNDARIOS */
-  --info:    #5FA8E5;   /* estados/info, highlights */
-  --accent:  #CFAA36;   /* detalles, iconos, dividers, estrellas */
+  --info:    #5FA8E5;  
+  --accent:  #CFAA36;   
 
-  /* NEUTROS */
-  --ink:     #0F172A;   /* texto principal */
-  --bg:      #F8FAFC;   /* fondo base */
+  --ink:     #0F172A;   
+  --bg:      #F8FAFC;   
 
-  /* Opcional para hovers/tonos */
   --brand-600:#27695C;
   --brand-700:#20564C;
   --accent-700:#9A7B22;
