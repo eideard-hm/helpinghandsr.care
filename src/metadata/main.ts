@@ -82,7 +82,7 @@ export const mainMetadata: Metadata = {
     4
   ).join(
     ', '
-  )} and more. 20 years of experience. Relieve muscle pain, improve mobility. Book your home visit today! +971 54 374 0644`,
+  )} and more. 20+ years of experience. Relieve muscle pain, improve mobility. Book your home visit today! +971 54 374 0644`,
 
   keywords: generateKeywords(),
 
