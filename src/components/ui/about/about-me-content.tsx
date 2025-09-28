@@ -262,7 +262,6 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
           <WhatsAppButton
             waLink={waLink}
             variant='primary'
-            label={`Schedule Your ${env.brand} Session`}
           />
         </motion.div>
       </motion.div>

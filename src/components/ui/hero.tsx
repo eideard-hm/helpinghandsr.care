@@ -133,7 +133,7 @@ export function Hero({
                   variants={fadeInUp}
                   transition={{ delay: 0.05 }}
                 >
-                  20 years of clinical experience in pain management and
+                  20+ years of clinical experience in pain management and
                   mobility enhancement. Personalized sessions delivered to your
                   home.
                 </motion.p>
@@ -141,7 +141,6 @@ export function Hero({
                 <WhatsAppButton
                   waLink={waLink}
                   classList='mt-5'
-                  label='Book Your Session'
                 />
               </div>
             </div>

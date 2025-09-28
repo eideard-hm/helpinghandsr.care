@@ -117,7 +117,6 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
 
               <WhatsAppButton
                 waLink={s.waLink}
-                label={s.isMain ? 'Quick Book' : 'Book Now'}
               />
             </section>
           </div>
@@ -136,7 +135,6 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
             <WhatsAppButton
               ref={ctaRef}
               waLink={s.waLink}
-              label='Book Now'
             />
             <Button
               variant='outline'
