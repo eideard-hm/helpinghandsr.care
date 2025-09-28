@@ -12,6 +12,13 @@ import './globals.css';
 
 export const metadata: Metadata = mainMetadata;
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#2F7D6D',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,7 +44,7 @@ export default function RootLayout({
           <Header />
         </header>
 
-        <main>
+        <main className='overflow-hidden relative'>
           <SocialMediaSidebar />
 
           <div>
