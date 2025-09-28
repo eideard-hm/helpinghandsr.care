@@ -19,7 +19,7 @@ export async function Testimonials() {
       className='py-16 bg-[color:var(--brand-2)]/20'
     >
       <div className='container mx-auto px-4 max-w-7xl'>
-        <header className='flex items-center justify-between flex-wrap'>
+        <header className='flex items-center justify-between flex-wrap mb-3'>
           <SectionTitle subTitle='What Our Clients Say'>
             Testimonials
           </SectionTitle>
