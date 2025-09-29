@@ -113,7 +113,7 @@ export const mainMetadata: Metadata = {
     locale: 'en_AE',
     siteName: `${env.brand} | Professional Home Massage Abu Dhabi`,
     title: `Home Massage Therapy Abu Dhabi | ${env.brand} - ZeinMotion & Sports Massage`,
-    description: `🏠 Professional home massage therapy in Abu Dhabi. ${CORE_SERVICES.slice(
+    description: `Professional home massage therapy in Abu Dhabi. ${CORE_SERVICES.slice(
       0,
       3
     ).join(', ')} and more. Book your home visit! +971 54 374 0644`,
