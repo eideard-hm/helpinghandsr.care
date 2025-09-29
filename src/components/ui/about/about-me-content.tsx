@@ -61,7 +61,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
       >
         <motion.h2
           variants={fadeIn}
-          className='text-4xl md:text-5xl font-bold text-[var(--ink)] mb-2'
+          className='text-4xl md:text-5xl font-bold mb-2'
         >
           Richard Mahecha
         </motion.h2>
