@@ -44,7 +44,7 @@ export function Hero({
       aria-label={`${env.brand} — Therapeutic Home Massage in Abu Dhabi`}
     >
       <h1 className='sr-only'>
-        {env.brand} — Therapeutic Home Massage in Abu Dhabi
+        {env.brand} — Therapeutic Home Massage in Abu Dhabi.
       </h1>
 
       {!reduce ? (
@@ -108,14 +108,25 @@ export function Hero({
         <div className='h-40 bg-gradient-to-t from-black/60 to-transparent' />
       </div>
 
-      <div className='absolute z-10 md:hidden left-4 top-[max(0.75rem,calc(env(safe-area-inset-top,0)+0.75rem))]'>
-        <span className='rounded-full px-3 py-1 text-[color:var(--bg)] bg-[color:var(--brand-700)]/90 ring-1 ring-[color:var(--brand-600)]/50 shadow-md shadow-black/20 text-sm font-semibold backdrop-blur'>
+      <div className='absolute z-10 md:hidden left-4 top-[max(1rem,calc(env(safe-area-inset-top,0)+3rem))]'>
+        <h2 className='text-pretty text-3xl font-extrabold leading-tight text-title-indigo drop-shadow-sm'>
           {env.brand}
-        </span>
+          <span className='block'>Premium Home Massage in Abu Dhabi</span>
+        </h2>
       </div>
 
-      <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(1rem,calc(env(safe-area-inset-bottom,0)+1rem))] px-4'>
-        <WhatsAppButton classList='w-full' />
+      <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(3rem,calc(env(safe-area-inset-bottom,0)+3rem))] px-4'>
+        <motion.p
+          className='mt-4 max-w-xl text-lg text-ink'
+          variants={fadeInUp}
+          transition={{ delay: 0.05 }}
+        >
+          Pain relief and mobility at home. 20+ years of clinical experience.
+        </motion.p>
+
+        <div className='mt-5'>
+          <WhatsAppButton classList='w-full' />
+        </div>
       </div>
 
       {!reduce && (
@@ -177,17 +188,9 @@ export function Hero({
         />
       )}
 
-      <motion.div
-        className='absolute inset-0 hidden bg-gradient-to-r from-black/70 via-black/40 to-transparent md:block'
-        variants={fadeIn}
-        initial='hidden'
-        animate='visible'
-      />
-
       <div className='relative z-10 container mx-auto hidden h-full max-w-7xl px-4 md:block'>
         <div className='grid h-full grid-cols-1 items-center md:grid-cols-[minmax(0,40%)_1fr]'>
           <motion.div
-            className='text-white'
             variants={fadeInUp}
             initial='hidden'
             whileInView='visible'
@@ -195,14 +198,14 @@ export function Hero({
           >
             <div className='p-0'>
               <div className='pr-6'>
-                <h2 className='max-w-md text-pretty text-5xl font-extrabold leading-tight drop-shadow-sm text-brand-2'>
+                <h2 className='max-w-md text-pretty text-5xl font-extrabold leading-tight drop-shadow-sm text-title-indigo'>
                   <span className='block'>{env.brand}</span>
                   <span className='block'>Therapeutic Home Massage</span>
                   <span className='block'>in Abu Dhabi</span>
                 </h2>
 
                 <motion.p
-                  className='mt-4 max-w-xl text-lg text-white/90'
+                  className='mt-4 max-w-xl text-lg text-ink'
                   variants={fadeInUp}
                   transition={{ delay: 0.05 }}
                 >
@@ -217,8 +220,6 @@ export function Hero({
               </div>
             </div>
           </motion.div>
-
-          <div />
         </div>
       </div>
     </section>
