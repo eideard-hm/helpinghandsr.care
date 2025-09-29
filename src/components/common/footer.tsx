@@ -11,18 +11,18 @@ export function Footer() {
     <div className='container mx-auto grid gap-8 md:grid-cols-3 px-4 max-w-7xl text-center md:text-left'>
       <div>
         <h3 className='text-xl font-bold'>{env.brand}</h3>
-        <p className='mt-2 text-sm text-gray-300'>{env.brandLogotype}</p>
-        <p className='mt-4 text-sm text-gray-400'>
-          🏠 Home Visits | Personalized Care
+        <p className='mt-2 text-sm text-ink/90'>{env.brandLogotype}</p>
+        <p className='mt-4 text-sm text-ink/90'>
+          Home Visits | Personalized Care
         </p>
-        <p className='mt-4 text-sm text-gray-400'>
-          💪Helping you prevent injuries & chronic pain
+        <p className='mt-4 text-sm text-ink/90'>
+          Helping you prevent injuries & chronic pain
         </p>
-        <p className='mt-4 text-sm text-gray-400'>
-          👐 Relieve stiffness & stress
+        <p className='mt-4 text-sm text-ink/90'>
+          Relieve stiffness & stress
         </p>
-        <p className='mt-4 text-sm text-gray-400'>💆‍♂️Tailored Treatments.</p>
-        <p className='mt-4 text-sm text-gray-400'>
+        <p className='mt-4 text-sm text-ink/90'>Tailored Treatments.</p>
+        <p className='mt-4 text-sm text-ink/90'>
           Stretching & Sports massage, Deep tissue massage, Cupping therapy,
           Reflexology therapy, Lymphatic drainage.
         </p>
@@ -36,7 +36,7 @@ export function Footer() {
       <div>
         <h4 className='font-semibold mb-3'>Contact</h4>
         <WhatsAppButton waLink={waHref} />
-        <p className='mt-4 text-sm text-gray-400'>
+        <p className='mt-4 text-sm text-ink/90'>
           © {year} {env.brand}. All rights reserved - Created and developed by{' '}
           <a
             href='https://edier-hm.netlify.app/en/'
