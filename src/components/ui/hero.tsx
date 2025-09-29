@@ -108,14 +108,14 @@ export function Hero({
         <div className='h-40 bg-gradient-to-t from-black/60 to-transparent' />
       </div>
 
-      <div className='absolute z-10 md:hidden left-4 top-[max(1rem,calc(env(safe-area-inset-top,0)+3rem))]'>
+      <div className='absolute z-10 md:hidden left-4 top-[max(1rem,calc(env(safe-area-inset-top,0)+1rem))]'>
         <h2 className='text-pretty text-3xl font-extrabold leading-tight text-title-indigo drop-shadow-sm'>
           {env.brand}
           <span className='block'>Premium Home Massage in Abu Dhabi</span>
         </h2>
       </div>
 
-      <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(3rem,calc(env(safe-area-inset-bottom,0)+3rem))] px-4'>
+      <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(1rem,calc(env(safe-area-inset-bottom,0)+1rem))] px-4'>
         <motion.p
           className='mt-4 max-w-xl text-lg text-ink'
           variants={fadeInUp}
