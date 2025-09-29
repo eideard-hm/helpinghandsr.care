@@ -101,13 +101,6 @@ export function Hero({
         />
       )}
 
-      <div className='absolute inset-x-0 top-0 md:hidden pointer-events-none'>
-        <div className='h-24 bg-gradient-to-b from-black/60 to-transparent' />
-      </div>
-      <div className='absolute inset-x-0 bottom-0 md:hidden pointer-events-none'>
-        <div className='h-40 bg-gradient-to-t from-black/60 to-transparent' />
-      </div>
-
       <div className='absolute z-10 md:hidden left-4 top-[max(1rem,calc(env(safe-area-inset-top,0)+1rem))]'>
         <h2 className='text-pretty text-3xl font-extrabold leading-tight text-title-indigo drop-shadow-sm'>
           {env.brand}
@@ -124,7 +117,7 @@ export function Hero({
           Pain relief and mobility at home. 20+ years of clinical experience.
         </motion.p>
 
-        <div className='mt-5'>
+        <div className='mt-2'>
           <WhatsAppButton classList='w-full' />
         </div>
       </div>
