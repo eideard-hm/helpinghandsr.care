@@ -34,7 +34,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
             <div className='w-full h-full bg-[var(--brand)] flex items-center justify-center text-white text-4xl'>
               <Image
                 src='/Richard-Mahecha.webp'
-                alt='Richard Mahecha - Physical Therapy Technician & ZeinMotion™ Creator'
+                alt={`Richard Mahecha - Physical Therapy Technician & ${env.brand} Creator`}
                 width={320}
                 height={320}
                 className='object-cover w-full h-full'
@@ -57,7 +57,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
 
       <motion.div
         variants={fadeIn}
-        className='lg:w-3/5'
+        className='w-full lg:w-3/5'
       >
         <motion.h2
           variants={fadeIn}
@@ -76,7 +76,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
 
         <motion.div
           variants={fadeIn}
-          className='mb-6'
+          className='mb-6 overflow-x-auto'
         >
           <div className='flex space-x-2 border-b border-gray-200'>
             <button

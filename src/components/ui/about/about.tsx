@@ -6,7 +6,7 @@ export function About() {
   return (
     <section
       id='about'
-      className='py-16 bg-bg container mx-auto px-4  max-w-7xl'
+      className='py-16 bg-bg container mx-auto px-4 max-w-7xl'
     >
       <SectionTitle subTitle='Get your massage at home!'>About Me</SectionTitle>
 
