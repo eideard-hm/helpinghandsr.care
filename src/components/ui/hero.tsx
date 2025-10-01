@@ -1,10 +1,13 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react'; // Añade useRef
+import { type CSSProperties, useEffect, useState } from 'react';
+
 import { motion, useReducedMotion } from 'framer-motion';
-import { fadeIn, fadeInUp } from '@/lib/motion';
-import { WhatsAppButton } from '../common/whatsapp-btn';
+
 import { env } from '@/config/env';
+import { fadeInUp } from '@/lib/motion';
+import { LocalHlsVideo } from '../common/LocalHlsVideo';
+import { WhatsAppButton } from '../common/whatsapp-btn';
 
 type HeroProps = {
   headerSelector?: string;
@@ -17,24 +20,9 @@ export function Hero({
 }: HeroProps) {
   const reduce = useReducedMotion();
   const [headerPx, setHeaderPx] = useState<number | null>(null);
-  const [isMuted, setIsMuted] = useState(true); // Estado para controlar el mute
-  const videoRefMobile = useRef<HTMLVideoElement>(null);
-  const videoRefDesktop = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
-  // Función para alternar el sonido
-  const toggleSound = () => {
-    setIsMuted(!isMuted);
-  };
-
-  // Efecto para aplicar el estado de mute a los videos
-  useEffect(() => {
-    if (videoRefMobile.current) {
-      videoRefMobile.current.muted = isMuted;
-    }
-    if (videoRefDesktop.current) {
-      videoRefDesktop.current.muted = isMuted;
-    }
-  }, [isMuted]);
+  const toggleSound = () => setIsMuted((m) => !m);
 
   useEffect(() => {
     const el = document.querySelector(headerSelector) as HTMLElement | null;
@@ -49,9 +37,12 @@ export function Hero({
     return () => ro.disconnect();
   }, [headerSelector, headerRemFallback]);
 
-  const sectionStyle = {
+  const sectionStyle: CSSProperties = {
     height: `calc(100dvh - ${headerPx ?? headerRemFallback * 16}px)`,
   } as const;
+
+  const m3u8 = '/video/hero.m3u8';
+  const poster = '/zeinmotiontm2.webp';
 
   return (
     <section
@@ -66,7 +57,7 @@ export function Hero({
       <button
         onClick={toggleSound}
         className='absolute z-30 bottom-4 right-4 md:bottom-8 md:right-8 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70 transition-all'
-        aria-label={isMuted ? 'Activar sonido' : 'Desactivar sonido'}
+        aria-label={isMuted ? 'Turn on sound' : 'Turn off sound'}
       >
         {isMuted ? (
           <svg
@@ -107,50 +98,28 @@ export function Hero({
 
       {!reduce ? (
         <>
-          <video
-            ref={videoRefMobile}
+          <LocalHlsVideo
+            src={m3u8}
+            poster={poster}
+            muted={isMuted}
             className='absolute inset-0 h-full w-full scale-110 object-cover blur-md md:hidden'
-            autoPlay
-            muted={isMuted}
-            loop
-            playsInline
-            preload='metadata'
-            poster='/zeinmotiontm2.webp'
-            aria-hidden
-          >
-            <source
-              src='/hero.webm'
-              type='video/webm'
-            />
-            <source
-              src='/hero.mp4'
-              type='video/mp4'
-            />
-          </video>
-
-          <motion.video
-            ref={videoRefMobile}
+            ariaHidden
+          />
+          <motion.div
             key='hero-video-mobile'
-            className='absolute left-1/2 top-1/2 max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain md:hidden'
-            autoPlay
-            muted={isMuted}
-            loop
-            playsInline
-            preload='metadata'
-            poster='/zeinmotiontm2.webp'
+            className='absolute left-1/2 top-1/2 md:hidden -translate-x-1/2 -translate-y-1/2 w-dvw'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
-            <source
-              src='/hero.webm'
-              type='video/webm'
+            <LocalHlsVideo
+              src={m3u8}
+              poster={poster}
+              muted={isMuted}
+              className='max-h-full max-w-full object-contain'
+              ariaLabel='Hero mobile foreground video'
             />
-            <source
-              src='/hero.mp4'
-              type='video/mp4'
-            />
-          </motion.video>
+          </motion.div>
         </>
       ) : (
         <img
@@ -167,7 +136,6 @@ export function Hero({
           <span className='block'>Premium Home Massage in Abu Dhabi</span>
         </h2>
       </div>
-
       <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(1rem,calc(env(safe-area-inset-bottom,0)+1rem))] px-4'>
         <motion.p
           className='mt-4 max-w-xl text-lg text-ink'
@@ -176,7 +144,6 @@ export function Hero({
         >
           Pain relief and mobility at home. 20+ years of clinical experience.
         </motion.p>
-
         <div className='mt-2'>
           <WhatsAppButton classList='w-full' />
         </div>
@@ -184,50 +151,28 @@ export function Hero({
 
       {!reduce && (
         <>
-          <video
-            ref={videoRefDesktop}
+          <LocalHlsVideo
+            src={m3u8}
+            poster={poster}
+            muted={isMuted}
             className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
-            autoPlay
-            muted={isMuted}
-            loop
-            playsInline
-            preload='metadata'
-            poster='/zeinmotiontm2.webp'
-            aria-hidden
-          >
-            <source
-              src='/hero.webm'
-              type='video/webm'
-            />
-            <source
-              src='/hero.mp4'
-              type='video/mp4'
-            />
-          </video>
-
-          <motion.video
-            ref={videoRefDesktop}
+            ariaHidden
+          />
+          <motion.div
             key='hero-video-desktop'
-            className='absolute left-1/2 top-1/2 hidden max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain md:block'
-            autoPlay
-            muted={isMuted}
-            loop
-            playsInline
-            preload='metadata'
-            poster='/zeinmotiontm2.webp'
+            className='absolute left-1/2 top-1/2 hidden md:block -translate-x-1/2 -translate-y-1/2'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
-            <source
-              src='/hero.webm'
-              type='video/webm'
+            <LocalHlsVideo
+              src={m3u8}
+              poster={poster}
+              muted={isMuted}
+              className='max-h-full max-w-full object-contain'
+              ariaLabel='Hero desktop foreground video'
             />
-            <source
-              src='/hero.mp4'
-              type='video/mp4'
-            />
-          </motion.video>
+          </motion.div>
         </>
       )}
 
@@ -258,7 +203,6 @@ export function Hero({
                   <span className='block'>Therapeutic Home Massage</span>
                   <span className='block'>in Abu Dhabi</span>
                 </h2>
-
                 <motion.p
                   className='mt-4 max-w-xl text-lg text-ink'
                   variants={fadeInUp}
@@ -268,7 +212,6 @@ export function Hero({
                   mobility enhancement. Personalized sessions delivered to your
                   home.
                 </motion.p>
-
                 <div className='mt-5'>
                   <WhatsAppButton />
                 </div>
