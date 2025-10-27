@@ -74,10 +74,10 @@ const generateKeywords = () => {
 export const mainMetadata: Metadata = {
   metadataBase: prodUrl,
   title: {
-    default: `Home Massage Therapy Abu Dhabi | ${env.brand} - ZeinMotion, Sports & Deep Tissue Massage`,
-    template: `%s | ${env.brand} - Professional Home Massage Abu Dhabi`,
+    default: `Home Massage Therapy Abu Dhabi | ${env.brandSEO} - ZeinMotion, Sports & Deep Tissue Massage`,
+    template: `%s | ${env.brandSEO} - Professional Home Massage Abu Dhabi`,
   },
-  description: `${env.brand} - Premium in-home massage in Abu Dhabi. Specialized in ${CORE_SERVICES.slice(
+  description: `${env.brandSEO} - Premium in-home massage in Abu Dhabi. Specialized in ${CORE_SERVICES.slice(
     0,
     4
   ).join(
@@ -94,7 +94,7 @@ export const mainMetadata: Metadata = {
   ],
 
   creator: 'Edier Hernandez',
-  publisher: `${env.brand}`,
+  publisher: `${env.brandSEO}`,
 
   robots: {
     index: true,
@@ -111,8 +111,8 @@ export const mainMetadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_AE',
-    siteName: `${env.brand} | Professional Home Massage Abu Dhabi`,
-    title: `Home Massage Therapy Abu Dhabi | ${env.brand} - ZeinMotion & Sports Massage`,
+    siteName: `${env.brandSEO} | Professional Home Massage Abu Dhabi`,
+    title: `Home Massage Therapy Abu Dhabi | ${env.brandSEO} - ZeinMotion & Sports Massage`,
     description: `Professional home massage therapy in Abu Dhabi. ${CORE_SERVICES.slice(
       0,
       3
@@ -123,7 +123,7 @@ export const mainMetadata: Metadata = {
         url: `${prodUrl}og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: `${env.brand} - Professional Home Massage Therapy in Abu Dhabi - ZeinMotion, Sports Massage & Pain Relief Services`,
+        alt: `${env.brandSEO} - Professional Home Massage Therapy in Abu Dhabi - ZeinMotion, Sports Massage & Pain Relief Services`,
       },
       {
         url: `${prodUrl}og-image-2.jpg`,
@@ -136,7 +136,7 @@ export const mainMetadata: Metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: `Home Massage Abu Dhabi | ${env.brand} - Mobile Therapy Services`,
+    title: `Home Massage Abu Dhabi | ${env.brandSEO} - Mobile Therapy Services`,
     description: `Professional home massage in Abu Dhabi: ${CORE_SERVICES.slice(
       0,
       3
@@ -177,7 +177,7 @@ export const mainMetadata: Metadata = {
 
 export const sectionMetadata = {
   services: {
-    title: `Our Massage Services in Abu Dhabi | ${env.brand} - Professional Treatments`,
+    title: `Our Massage Services in Abu Dhabi | ${env.brandSEO} - Professional Treatments`,
     description: `Explore our professional massage services in Abu Dhabi: ${CORE_SERVICES.join(
       ', '
     )}. Personalized treatments for pain relief and wellness.`,
@@ -188,7 +188,7 @@ export const sectionMetadata = {
   },
 
   booking: {
-    title: `Book Home Massage in Abu Dhabi | ${env.brand} - Schedule Your Visit`,
+    title: `Book Home Massage in Abu Dhabi | ${env.brandSEO} - Schedule Your Visit`,
     description:
       'Book your professional home massage therapy in Abu Dhabi. Easy scheduling, flexible appointments, professional service. Contact us now!',
     keywords: [
@@ -201,7 +201,7 @@ export const sectionMetadata = {
   },
 
   contact: {
-    title: `Contact Professional Massage Therapist | ${env.brand} - Abu Dhabi`,
+    title: `Contact Professional Massage Therapist | ${env.brandSEO} - Abu Dhabi`,
     description:
       'Contact our professional massage therapist in Abu Dhabi for home visits. Call +971 54 374 0644 or email services@healinghandsr.com',
     keywords: [
@@ -235,7 +235,7 @@ export const getSectionMetadata = (
 export const businessSchema = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  name: env.brand,
+  name: env.brandSEO,
   description: mainMetadata.description,
   telephone: '+971543740644',
   email: 'services@healinghandsr.com',
