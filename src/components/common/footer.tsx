@@ -18,9 +18,7 @@ export function Footer() {
         <p className='mt-4 text-sm text-ink/90'>
           Helping you prevent injuries & chronic pain
         </p>
-        <p className='mt-4 text-sm text-ink/90'>
-          Relieve stiffness & stress
-        </p>
+        <p className='mt-4 text-sm text-ink/90'>Relieve stiffness & stress</p>
         <p className='mt-4 text-sm text-ink/90'>Tailored Treatments.</p>
         <p className='mt-4 text-sm text-ink/90'>
           Stretching & Sports massage, Deep tissue massage, Cupping therapy,
@@ -30,7 +28,7 @@ export function Footer() {
 
       <div>
         <h4 className='font-semibold mb-3'>Links</h4>
-        <NavLinks />
+        <NavLinks classList='text-ink!' />
       </div>
 
       <div>

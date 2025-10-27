@@ -6,7 +6,7 @@ type NavProps = {
 
 export function NavLinks({ classList }: NavProps) {
   return (
-    <ul className={`space-y-2 text-sm ${classList} text-ink`}>
+    <ul className={`space-y-2 text-sm ${classList} text-bg`}>
       <li>
         <Link
           href='/#services'
