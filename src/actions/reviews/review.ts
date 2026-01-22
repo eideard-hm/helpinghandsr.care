@@ -1,6 +1,6 @@
 'use server';
 
-import type { Review } from '@/generated/prisma';
+import type { Review } from '@/generated/prisma/client';
 import { prisma } from '@/lib/prisma';
 import { catchError } from '@/lib/promise';
 import { ReviewSchema } from '@/schema/review';
@@ -12,7 +12,7 @@ export const getReviews = async (): Promise<Review[]> => {
       createdAt: 'desc',
     },
     where: {
-      status: 'APPROVED'
+      status: 'APPROVED',
     },
     take: 10,
   });
@@ -25,7 +25,7 @@ export const getReviews = async (): Promise<Review[]> => {
 
 export const createReview = async (
   _prev: ReviewResponse,
-  formData: FormData
+  formData: FormData,
 ): Promise<ReviewResponse> => {
   const parsedData = ReviewSchema.safeParse({
     name: formData.get('name'),
