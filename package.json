@@ -1,5 +1,5 @@
 {
-  "name": "helpinghandsr.care",
+  "name": "zeinmotion",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,30 +10,36 @@
     "phoenix": "rm -rf ./node_modules && rm -rf pnpm-lock.yaml && pnpm install"
   },
   "dependencies": {
-    "@hookform/resolvers": "5.2.1",
-    "@prisma/client": "6.15.0",
-    "@supabase/ssr": "0.7.0",
-    "@supabase/supabase-js": "2.57.4",
-    "@tabler/icons-react": "3.34.1",
-    "framer-motion": "12.23.12",
-    "googleapis": "159.0.0",
-    "next": "15.5.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-hook-form": "7.62.0",
+    "@hookform/resolvers": "5.2.2",
+    "@prisma/adapter-pg": "7.3.0",
+    "@prisma/client": "7.3.0",
+    "@supabase/ssr": "0.8.0",
+    "@supabase/supabase-js": "2.91.0",
+    "@tabler/icons-react": "3.36.1",
+    "dotenv": "17.2.3",
+    "framer-motion": "12.28.1",
+    "googleapis": "170.1.0",
+    "next": "16.1.4",
+    "pg": "8.17.2",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "7.71.1",
     "react-hot-toast": "2.6.0",
-    "zod": "4.1.5"
+    "zod": "4.3.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3",
+    "@prisma/config": "7.3.0",
     "@tailwindcss/postcss": "4",
     "@types/node": "20",
-    "@types/react": "19",
-    "@types/react-dom": "19",
-    "eslint": "9",
-    "eslint-config-next": "15.5.2",
-    "prisma": "6.15.0",
-    "tailwindcss": "4",
-    "typescript": "5"
+    "@types/pg": "8.16.0",
+    "@types/react": "19.2.9",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.2",
+    "eslint-config-next": "16.1.4",
+    "prisma": "7.3.0",
+    "tailwindcss": "4.1.18",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
   }
 }
