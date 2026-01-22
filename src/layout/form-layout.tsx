@@ -18,7 +18,7 @@ export function FormLayout({
           width={96}
           height={96}
           className='size-24 mr-2 aspect-square object-contain'
-          src='/zeinmotiontm.webp'
+          src='/zeinmotiontm2.webp'
           alt={`Logo of ${brand} | Message Therapist`}
         />
 

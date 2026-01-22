@@ -6,7 +6,7 @@ export function Services() {
   return (
     <section
       id='services'
-      className='py-16 bg-bg container mx-auto px-4  max-w-7xl'
+      className='py-16 bg-bg container mx-auto px-4 max-w-7xl'
     >
       <SectionTitle subTitle='Comprehensive care solutions tailored to your unique needs'>
         Our Services

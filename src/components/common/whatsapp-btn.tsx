@@ -22,7 +22,7 @@ export const WhatsAppButton = forwardRef<
     {
       waLink = waLinkWithEnv(),
       classList,
-      label = 'Schedule via WhatsApp',
+      label = 'WhatsApp',
       size = 'medium',
       variant = 'primary',
     }: WhatsAppButtonProps,

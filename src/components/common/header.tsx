@@ -11,15 +11,14 @@ export function Header() {
   const waHref = waLink(env.whatsAppNumber, env.waMessage);
 
   return (
-    <>
-      <div className='mx-auto max-w-7xl px-4 h-28 flex items-center justify-between'>
+      <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
         <Link href='/'>
           <Image
             className='aspect-square object-contain'
             src='/zeinmotiontm.webp'
             alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
-            width={100}
-            height={100}
+            width={120}
+            height={120}
             priority
           />
         </Link>
@@ -31,9 +30,7 @@ export function Header() {
           classList='hidden! md:inline-flex!'
         />
 
-        {/* Responsive */}
         <HeaderResponsive waLink={waHref} />
       </div>
-    </>
   );
 }
