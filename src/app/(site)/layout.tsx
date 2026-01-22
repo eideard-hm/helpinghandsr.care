@@ -5,19 +5,19 @@ import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div
-      className={`bg-[var(--bg)] text-[var(--ink)] min-h-dvh grid grid-rows-[auto_1fr_auto]`}
+      className={`bg-bg text-(--ink) min-h-dvh grid grid-rows-[auto_1fr_auto]`}
     >
-      <header className='sticky top-0 z-40 border-b bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60'>
+      <header className='sticky top-0 z-40 bg-brand backdrop-blur'>
         <Header />
       </header>
 
-      <main>
+      <main className='overflow-hidden relative'>
         <SocialMediaSidebar />
 
         {children}
       </main>
 
-      <footer className='bg-[color:var(--ink)] text-white py-12'>
+      <footer className='bg-brand-2 text-ink py-12 shadow-inner'>
         <Footer />
       </footer>
     </div>
