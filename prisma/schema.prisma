@@ -1,14 +1,14 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "postgresql"
 }
 
 enum BookingStatus {
+  HOLD
   REQUESTED
   CONFIRMED
   CANCELLED
@@ -32,200 +32,329 @@ enum NotificationLogStatus {
   FAILED
 }
 
-model Review {
-  id        String   @id @default(uuid())
-  rating    Int
-  name      String
-  content   String
-  status    ReviewStatus @default(PENDING)
-  createdAt DateTime @default(now())
-
-  @@map("reviews")
-}
-
 enum UserRole {
   CUSTOMER
   PROFESSIONAL
   ADMIN
 }
 
+enum NotificationChannel {
+  EMAIL
+  WHATSAPP
+  SMS
+}
+
+model Review {
+  id        String       @id @default(uuid())
+  rating    Int
+  name      String
+  content   String
+  status    ReviewStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+
+  @@map("reviews")
+}
 
 model Business {
-   id                 String        @id @default(cuid())
+  id                 String      @id @default(cuid())
   name               String
-  timezone           String        @default("America/Bogota")
+  timezone           String      @default("America/Bogota")
   notificationEmail  String
   whatsappNumber     String?
-  bufferMin          Int           @default(10)
-  defaultMapProvider MapProvider   @default(OSM)
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
+  bufferMin          Int         @default(10)
+  defaultMapProvider MapProvider @default(OSM)
 
-  services     Service[]
-  hours        BusinessHour[]
-  timeOff      TimeOff[]
-  bookings     Booking[]
-  admins       AdminUser[]
-  googleOAuth  GoogleOAuthAccount?
-  syncState    GoogleSyncState?
+  // FK opcional al calendario fallback del negocio
+  primaryCalendarId String?         @unique
+  primaryCalendar   GoogleCalendar? @relation("BusinessPrimaryCalendar", fields: [primaryCalendarId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  services Service[]
+  hours    BusinessHour[]
+  staff    Staff[]
+  timeOff  TimeOff[]
+  bookings Booking[]
+  admins   AdminUser[]
+
+  googleOAuth GoogleOAuthAccount[]
+  calendars   GoogleCalendar[]
 
   @@map("businesses")
 }
 
 model AdminUser {
-  id              String   @id @default(cuid())
-  businessId      String
-  email           String
-  supabaseUserId  String?  @unique
-  role            UserRole @default(ADMIN)
-  isActive        Boolean  @default(true)
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id             String   @id @default(cuid())
+  businessId     String
+  email          String
+  supabaseUserId String?  @unique
+  role           UserRole @default(ADMIN)
+  isActive       Boolean  @default(true)
 
-  business        Business @relation(fields: [businessId], references: [id])
+  // si el admin es también un staff/profesional
+  staffId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id])
+  staff    Staff?   @relation(fields: [staffId], references: [id])
 
   @@unique([businessId, email])
-
+  @@index([businessId, isActive, role])
   @@map("admin_users")
 }
 
-model Service {
-  id           String   @id @default(cuid())
-  businessId   String
-  name         String
-  durationMin  Int
-  price        Decimal  @db.Decimal(10,2)
-  active       Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+model Staff {
+  id         String  @id @default(cuid())
+  businessId String
+  name       String
+  email      String?
+  isActive   Boolean @default(true)
 
-  business     Business @relation(fields: [businessId], references: [id])
-  bookings     Booking[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id])
+
+  hours   StaffHour[]
+  timeOff TimeOff[]
+
+  services ServiceStaff[]
+  bookings Booking[]
+
+  // CAMBIO: 1 staff puede tener 0..N oauth accounts (en práctica, 0..1 STAFF)
+  googleOAuthAccounts GoogleOAuthAccount[]
+
+  adminUsers AdminUser[]
+
+  @@unique([businessId, email])
+  @@index([businessId, isActive])
+  @@map("staff")
+}
+
+model Service {
+  id          String  @id @default(cuid())
+  businessId  String
+  name        String
+  durationMin Int
+  price       Decimal @db.Decimal(10, 2)
+  active      Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business       @relation(fields: [businessId], references: [id])
+  bookings Booking[]
+  staff    ServiceStaff[]
 
   @@index([businessId, active])
-
   @@map("services")
 }
 
+model ServiceStaff {
+  serviceId String
+  staffId   String
+  isDefault Boolean @default(false)
+
+  service Service @relation(fields: [serviceId], references: [id])
+  staff   Staff   @relation(fields: [staffId], references: [id])
+
+  @@id([serviceId, staffId])
+  @@index([staffId])
+  @@map("service_staff")
+}
+
 model BusinessHour {
-  id          String  @id @default(cuid())
-  businessId  String
-  weekday     Int     // 0..6 (Sun..Sat)
-  startMin    Int     // minutos desde 00:00 (ej. 09:00 -> 540)
-  endMin      Int     // exclusivo
-  isClosed    Boolean @default(false)
+  id         String  @id @default(cuid())
+  businessId String
+  weekday    Int // 0..6 (Sun..Sat)
+  startMin   Int // minutos desde 00:00 (ej. 09:00 -> 540)
+  endMin     Int // exclusivo
+  isClosed   Boolean @default(false)
 
-  business    Business @relation(fields: [businessId], references: [id])
+  business Business @relation(fields: [businessId], references: [id])
 
-  @@index([businessId, weekday])
-
+  @@unique([businessId, weekday, startMin, endMin])
+  @@index([businessId, weekday, startMin])
   @@map("business_hours")
 }
 
-model TimeOff {
-   id          String   @id @default(cuid())
-  businessId  String
-  date        DateTime // usa solo la parte de fecha (normaliza a 00:00Z)
-  startMin    Int?
-  endMin      Int?
-  reason      String?
+model StaffHour {
+  id       String  @id @default(cuid())
+  staffId  String
+  weekday  Int
+  startMin Int
+  endMin   Int
+  isClosed Boolean @default(false)
 
-  business    Business @relation(fields: [businessId], references: [id])
+  staff Staff @relation(fields: [staffId], references: [id])
+
+  @@unique([staffId, weekday, startMin, endMin])
+  @@index([staffId, weekday, startMin])
+  @@map("staff_hours")
+}
+
+model TimeOff {
+  id         String  @id @default(cuid())
+  businessId String
+  staffId    String? // null = bloqueo general del negocio
+
+  // Normalizas al "día lógico" del negocio (00:00 en timezone del business)
+  date     DateTime
+  startMin Int?
+  endMin   Int?
+  reason   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id])
+  staff    Staff?   @relation(fields: [staffId], references: [id])
 
   @@index([businessId, date])
-
+  @@index([staffId, date])
   @@map("time_off")
 }
 
 model Booking {
-  id             String        @id @default(cuid())
-  businessId     String
-  serviceId      String
-  status         BookingStatus @default(REQUESTED)
+  id         String  @id @default(cuid())
+  businessId String
+  serviceId  String
+  staffId    String?
 
-  // Datos del cliente (no crea cuenta)
-  customerName   String
-  phone          String
-  email          String?
-  addressText    String?
-  lat            Decimal?      @db.Decimal(9,6)
-  lng            Decimal?      @db.Decimal(9,6)
-  placeId        String?       // id del proveedor de mapas (si aplica)
+  status BookingStatus @default(REQUESTED)
 
-  // Franja reservada
-  startAt        DateTime      // timestamptz
-  endAt          DateTime
+  customerName String
+  phone        String
+  email        String?
+  addressText  String?
+  lat          Decimal? @db.Decimal(9, 6)
+  lng          Decimal? @db.Decimal(9, 6)
+  placeId      String?
 
-  // Confirmación/cancelación sin cuenta (token firmado de un uso)
+  startAt DateTime
+  endAt   DateTime
+
+  // Snapshot
+  serviceNameSnapshot        String
+  serviceDurationMinSnapshot Int
+  servicePriceSnapshot       Decimal @db.Decimal(10, 2)
+
+  holdExpiresAt DateTime?
+
   customerTokenHash      String?
   customerTokenExpiresAt DateTime?
+  customerTokenUsedAt    DateTime?
 
-  // Google Calendar
-  gcalEventId    String?
-  gcalCalendarId String?
+  gcalEventId      String?
+  googleCalendarId String?
 
-  // Auditoría y notas
-  notes          String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  confirmedAt    DateTime?
-  cancelledAt    DateTime?
-  cancelReason   String?
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  confirmedAt  DateTime?
+  cancelledAt  DateTime?
+  cancelReason String?
 
-  business       Business @relation(fields: [businessId], references: [id])
-  service        Service  @relation(fields: [serviceId], references: [id])
+  business Business @relation(fields: [businessId], references: [id])
+  service  Service  @relation(fields: [serviceId], references: [id])
+  staff    Staff?   @relation(fields: [staffId], references: [id])
+
+  googleCalendar GoogleCalendar? @relation(fields: [googleCalendarId], references: [id])
+
   notificationLogs NotificationLog[]
 
   @@index([businessId, startAt])
+  @@index([staffId, startAt])
   @@index([status])
-  @@unique([gcalCalendarId, gcalEventId]) // evita duplicados en el mismo calendar
-
+  @@index([holdExpiresAt])
   @@map("bookings")
 }
 
 model NotificationLog {
-  id          String   @id @default(cuid())
-  bookingId   String
-  channel     String
-  template    String? 
-  status      NotificationLogStatus @default(SENT)
-  error       String?  
-  createdAt   DateTime @default(now())
+  id        String                @id @default(cuid())
+  bookingId String
+  channel   NotificationChannel
+  template  String?
+  status    NotificationLogStatus @default(SENT)
+  error     String?
+  createdAt DateTime              @default(now())
 
-  booking     Booking  @relation(fields: [bookingId], references: [id])
+  booking Booking @relation(fields: [bookingId], references: [id])
 
   @@index([bookingId, channel])
-
   @@map("notification_logs")
 }
 
+enum GoogleOAuthAccountType {
+  BUSINESS
+  STAFF
+}
+
 model GoogleOAuthAccount {
-   id           String   @id @default(cuid())
-  businessId   String   @unique
+  id          String                 @id @default(cuid())
+  businessId  String
+  accountType GoogleOAuthAccountType @default(BUSINESS)
+  staffId     String?
+
   provider     String   @default("google")
   accessToken  String
   refreshToken String
   scope        String
-  tokenType    String?  // "Bearer"
+  tokenType    String?
   expiryDate   DateTime
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
-  business       Business @relation(fields: [businessId], references: [id])
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id])
+  staff    Staff?   @relation(fields: [staffId], references: [id])
+
+  calendars GoogleCalendar[]
+
+  @@unique([businessId, staffId]) // evita duplicar oauth del mismo staff en el negocio
+  @@index([businessId, accountType])
   @@map("google_oauth_accounts")
 }
 
-model GoogleSyncState {
-  id             String   @id @default(cuid())
-  businessId     String   @unique
-  calendarId     String   
-  syncToken      String? 
-  lastSyncedAt   DateTime?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+model GoogleCalendar {
+  id                   String @id @default(cuid())
+  businessId           String
+  googleOAuthAccountId String
 
-  business       Business @relation(fields: [businessId], references: [id])
+  calendarId String
+  name       String?
+  isPrimary  Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  business           Business           @relation(fields: [businessId], references: [id])
+  googleOAuthAccount GoogleOAuthAccount @relation(fields: [googleOAuthAccountId], references: [id])
+
+  // Opuesto del primaryCalendar (FK en Business)
+  primaryForBusiness Business? @relation("BusinessPrimaryCalendar")
+
+  bookings  Booking[]
+  syncState GoogleSyncState?
+
+  @@unique([businessId, calendarId])
+  @@index([googleOAuthAccountId, isPrimary])
+  @@map("google_calendars")
+}
+
+model GoogleSyncState {
+  id               String    @id @default(cuid())
+  googleCalendarId String    @unique
+  syncToken        String?
+  lastSyncedAt     DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  googleCalendar GoogleCalendar @relation(fields: [googleCalendarId], references: [id])
 
   @@map("google_sync_states")
 }

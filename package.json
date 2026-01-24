@@ -7,7 +7,11 @@
     "build": "prisma generate && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "phoenix": "rm -rf ./node_modules && rm -rf pnpm-lock.yaml && pnpm install"
+    "phoenix": "rm -rf ./node_modules && rm -rf pnpm-lock.yaml && pnpm install",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "prisma:seed": "prisma db seed --preview-feature"
   },
   "dependencies": {
     "@hookform/resolvers": "5.2.2",
@@ -16,8 +20,8 @@
     "@supabase/ssr": "0.8.0",
     "@supabase/supabase-js": "2.91.0",
     "@tabler/icons-react": "3.36.1",
-    "dotenv": "17.2.3",
     "clsx": "2.1.1",
+    "dotenv": "17.2.3",
     "framer-motion": "12.28.1",
     "googleapis": "170.1.0",
     "hls.js": "1.6.13",
@@ -32,7 +36,6 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "3",
-    "@prisma/config": "7.3.0",
     "@tailwindcss/postcss": "4",
     "@types/node": "20",
     "@types/pg": "8.16.0",

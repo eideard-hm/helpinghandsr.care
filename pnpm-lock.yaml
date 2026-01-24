@@ -69,9 +69,6 @@ importers:
       '@eslint/eslintrc':
         specifier: '3'
         version: 3.3.3
-      '@prisma/config':
-        specifier: 7.3.0
-        version: 7.3.0
       '@tailwindcss/postcss':
         specifier: '4'
         version: 4.1.18
