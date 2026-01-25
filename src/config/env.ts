@@ -9,7 +9,7 @@ export const env = {
 
   susap: {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+    publishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '',
   },
 
   googleClientId: process.env.GOOGLE_CLIENT_ID || '',
