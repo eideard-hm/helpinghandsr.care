@@ -21,20 +21,37 @@ export function LoginForm() {
     formState: { errors, isSubmitting, isValid },
   } = useForm<LoginFormInput>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: { email: '' },
+    defaultValues: { email: '', password: '' },
   });
 
-  const origin = typeof window !== 'undefined' ? window.location.origin : '';
-
   const onSubmit: SubmitHandler<LoginFormInput> = async (
-    data: LoginFormInput
+    data: LoginFormInput,
   ) => {
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
-      options: { emailRedirectTo: `${origin}/auth/callback` },
+      password: data.password,
     });
+    setMsg(error ? error.message : 'You are logged in successfully.');
+
+    window.location.href = '/';
+  };
+
+  const onForgotPassword = async () => {
+    setMsg(null);
+    const origin = window.location.origin;
+
+    const email = (document.getElementById('email') as HTMLInputElement)?.value;
+    if (!email) {
+      setMsg('Enter your email to reset your password.');
+      return;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${origin}/auth/reset`,
+    });
+
     setMsg(
-      error ? error.message : 'We sent you a login link. Check your email.'
+      error ? error.message : 'Check your email for a password reset link.',
     );
   };
 
@@ -71,6 +88,34 @@ export function LoginForm() {
         )}
       </div>
 
+      <div>
+        <label
+          htmlFor='password'
+          className='block mb-2 text-sm font-medium text-gray-900'
+        >
+          Password
+        </label>
+        <input
+          id='password'
+          type='password'
+          placeholder='********'
+          {...register('password')}
+          aria-invalid={!!errors.password}
+          aria-describedby={errors.password ? 'err-password' : undefined}
+          className={`bg-gray-50 border ${
+            errors.password ? 'border-red-500' : 'border-gray-300'
+          } text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5`}
+        />
+        {errors.password && (
+          <p
+            id='err-password'
+            className='mt-1 text-sm text-red-600'
+          >
+            {errors.password.message}
+          </p>
+        )}
+      </div>
+
       {msg && <p className='text-sm text-gray-600'>{msg}</p>}
 
       <Button
@@ -82,6 +127,14 @@ export function LoginForm() {
       >
         {isSubmitting ? 'Logging in...' : 'Continue with Email'}
       </Button>
+
+      <button
+        type='button'
+        onClick={onForgotPassword}
+        className='text-sm text-gray-700 underline'
+      >
+        Forgot password?
+      </button>
 
       <SignInWithGoogle />
     </form>
