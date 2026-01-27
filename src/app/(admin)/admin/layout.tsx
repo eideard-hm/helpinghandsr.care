@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
-import { Header } from '@/components/admin/header';
-import { supabaseServerClient } from '@/lib/supabase/server';
+import { authActions } from '@/actions/auth';
+import { Header } from '@/components/common/header';
 import { guardAdminAccess } from '@/lib/auth/admin-guard';
 
 export const dynamic = 'force-dynamic';
@@ -11,11 +11,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await supabaseServerClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await authActions.getUser();
 
   if (!user) redirect('/auth/login?error=NO_SESSION');
   if (!user.email) redirect('/auth/login?error=NO_EMAIL');
@@ -26,7 +22,7 @@ export default async function AdminLayout({
   });
 
   if (!guard.ok) {
-    await supabase.auth.signOut();
+    await authActions.signOut();
     redirect(`/auth/login?error=${guard.reason}`);
   }
 
