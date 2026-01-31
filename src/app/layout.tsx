@@ -5,8 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import { fraunces, inter } from '@/fonts';
 import mainMetadata from '@/metadata/main';
 
-import './style.css';
-
 import './globals.css';
 
 export const metadata: Metadata = mainMetadata;
