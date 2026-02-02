@@ -1,8 +1,10 @@
 import { redirect } from 'next/navigation';
 
 import { authActions } from '@/actions/auth';
-import { Header } from '@/components/common/header';
 import { guardAdminAccess } from '@/lib/auth/admin-guard';
+import { Header } from '@/components/admin/header';
+
+import './style.css';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,8 +31,18 @@ export default async function AdminLayout({
   return (
     <div
       id='main-wrapper'
+      className='min-h-screen show'
       data-scope='admin'
-      className='min-h-scree'
+      data-theme-version='light'
+      data-layout='vertical'
+      data-nav-headerbg='color_1'
+      data-headerbg='color_1'
+      data-sidebar-style='full'
+      data-sibebarbg='color_1'
+      data-sidebar-position='fixed'
+      data-header-position='fixed'
+      data-container='wide'
+      data-primary='color_1'
     >
       <Header />
       <main>{children}</main>
