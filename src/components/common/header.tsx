@@ -11,26 +11,26 @@ export function Header() {
   const waHref = waLink(env.whatsAppNumber, env.waMessage);
 
   return (
-      <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
-        <Link href='/'>
-          <Image
-            className='aspect-square object-contain'
-            src='/zeinmotiontm.webp'
-            alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
-            width={120}
-            height={120}
-            priority
-          />
-        </Link>
-
-        <NavLinks classList='hidden md:flex md:gap-6' />
-
-        <WhatsAppButton
-          waLink={waHref}
-          classList='hidden! md:inline-flex!'
+    <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
+      <Link href='/'>
+        <Image
+          className='aspect-square object-contain'
+          src='/zeinmotiontm.webp'
+          alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
+          width={120}
+          height={120}
+          priority
         />
+      </Link>
 
-        <HeaderResponsive waLink={waHref} />
-      </div>
+      <NavLinks classList='hidden md:flex md:gap-6' />
+
+      <WhatsAppButton
+        waLink={waHref}
+        classList='hidden! md:inline-flex!'
+      />
+
+      <HeaderResponsive waLink={waHref} />
+    </div>
   );
 }
