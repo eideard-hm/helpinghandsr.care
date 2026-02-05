@@ -32,17 +32,6 @@ export default async function AdminLayout({
     <div
       id='main-wrapper'
       className='min-h-screen show'
-      data-scope='admin'
-      data-theme-version='light'
-      data-layout='vertical'
-      data-nav-headerbg='color_1'
-      data-headerbg='color_1'
-      data-sidebar-style='full'
-      data-sibebarbg='color_1'
-      data-sidebar-position='fixed'
-      data-header-position='fixed'
-      data-container='wide'
-      data-primary='color_1'
     >
       <Header />
       <main>{children}</main>
