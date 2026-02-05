@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 
 import { authActions } from '@/actions/auth';
 import { guardAdminAccess } from '@/lib/auth/admin-guard';
-import { Header } from '@/components/admin/header';
+import { AdminShell } from './ui/admin-shell';
 
 import './style.css';
 
@@ -28,13 +28,5 @@ export default async function AdminLayout({
     redirect(`/auth/login?error=${guard.reason}`);
   }
 
-  return (
-    <div
-      id='main-wrapper'
-      className='min-h-screen show'
-    >
-      <Header />
-      <main>{children}</main>
-    </div>
-  );
+  return <AdminShell>{children}</AdminShell>;
 }
