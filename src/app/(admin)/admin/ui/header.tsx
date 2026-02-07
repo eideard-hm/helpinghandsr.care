@@ -1,9 +1,8 @@
 import Link from 'next/link';
 
-import { IconCalendarEvent, IconClock } from '@tabler/icons-react';
-
 import { env } from '@/config/env';
 import { Head } from './head';
+import { DezNav } from './dez-nav';
 
 export function Header({
   onHamburgerClick,
@@ -44,44 +43,7 @@ export function Header({
 
       <Head />
 
-      <div className='deznav'>
-        <div className='deznav-scroll'>
-          <ul
-            className='metismenu'
-            id='menu'
-          >
-            <li>
-              <Link
-                href='/bookings'
-                aria-expanded='false'
-              >
-                <i>
-                  <IconCalendarEvent
-                    size={18}
-                    stroke={1.5}
-                  />
-                </i>
-                <span className='nav-text'>Bookings</span>
-              </Link>
-            </li>
-
-            <li className='mm-active'>
-              <Link
-                href='/schedule'
-                aria-expanded='false'
-              >
-                <i>
-                  <IconClock
-                    size={18}
-                    stroke={1.5}
-                  />
-                </i>
-                <span className='nav-text'>Schedule</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
+      <DezNav />
     </>
   );
 }
