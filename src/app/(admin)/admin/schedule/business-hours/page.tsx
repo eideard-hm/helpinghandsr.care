@@ -7,11 +7,11 @@ export default async function BusinessHoursPage() {
   return (
     <div className='space-y-4'>
       <h1 className='text-2xl font-semibold text-title-indigo'>
-        Horarios del negocio
+        Business Hours
       </h1>
       <p className='text-slate-600'>
-        Define múltiples franjas por día (ej. 09:00–12:00 y 14:00–18:00). El
-        sistema evita cruces.
+        Define multiple time slots per day (e.g., 09:00–12:00 and 14:00–18:00).
+        The system prevents overlaps.
       </p>
       <BusinessHoursPanel rows={rows} />
     </div>

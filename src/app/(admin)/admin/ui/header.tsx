@@ -26,10 +26,9 @@ export function Header({
         </Link>
 
         <div className='nav-control'>
-          {/* Cambia a button para accesibilidad */}
           <button
             type='button'
-            className={`hamburger ${isMenuOpen ? 'is-active' : ''}`}
+            className={`hamburger ${isMenuOpen ? '' : 'is-active'}`}
             onClick={onHamburgerClick}
             aria-label='Toggle navigation'
             aria-expanded={isMenuOpen}
