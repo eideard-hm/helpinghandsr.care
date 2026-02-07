@@ -1,87 +1,68 @@
+import { signOutBrowser } from '@/actions/auth/broser/actions';
+import { useHeaderTitle } from '@/app/providers/header-title.provider';
+import { getInitials } from '@/lib/get-initials';
+
 export function Head() {
+  const { title } = useHeaderTitle();
+  const initials = getInitials('Test');
+
+  const handleOptionsToggle = () => {
+    const dropdown = document.getElementById('profile-dropdown');
+    const menu = document.getElementById('dropdown-menu');
+    if (dropdown) {
+      dropdown.classList.toggle('show');
+    }
+    if (menu) {
+      menu.classList.toggle('show');
+    }
+  };
+
   return (
     <header className='header'>
       <div className='header-content'>
         <nav className='navbar navbar-expand'>
           <div className='navbar-collapse justify-content-between'>
             <div className='header-left'>
-              <h1 className='dashboard_bar'>Dashboard</h1>
+              <h1 className='dashboard_bar'>{title}</h1>
             </div>
 
             <ul className='navbar-nav header-right'>
-              <li className='nav-item dropdown header-profile'>
-                <a
+              <li
+                className='nav-item dropdown header-profile'
+                id='profile-dropdown'
+              >
+                <button
                   className='nav-link'
-                  href='javascript:void(0)'
                   role='button'
                   data-toggle='dropdown'
                   aria-expanded='true'
+                  onClick={handleOptionsToggle}
                 >
-                  <img
-                    src='images/profile/17.jpg'
-                    width='20'
-                    alt=''
-                  />
-                  <div className='header-info'>
-                    <span className='text-black'>
-                      <strong>Brian Lee</strong>
-                    </span>
-                    <p className='fs-12 mb-0'>Admin</p>
+                  <div
+                    className='flex h-9 w-9 items-center justify-center rounded-full 
+                    bg-linear-to-br from-indigo-500 to-purple-600
+                    text-sm font-semibold text-white'
+                  >
+                    {initials}
                   </div>
-                </a>
 
-                <div className='dropdown-menu dropdown-menu-right'>
-                  <a
-                    href='./app-profile.html'
-                    className='dropdown-item ai-icon'
-                  >
-                    <svg
-                      id='icon-user1'
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='text-primary'
-                      width='18'
-                      height='18'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    >
-                      <path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'></path>
-                      <circle
-                        cx='12'
-                        cy='7'
-                        r='4'
-                      ></circle>
-                    </svg>
-                    <span className='ml-2'>Profile </span>
-                  </a>
-                  <a
-                    href='./email-inbox.html'
-                    className='dropdown-item ai-icon'
-                  >
-                    <svg
-                      id='icon-inbox'
-                      xmlns='http://www.w3.org/2000/svg'
-                      className='text-success'
-                      width='18'
-                      height='18'
-                      viewBox='0 0 24 24'
-                      fill='none'
-                      stroke='currentColor'
-                      strokeWidth='2'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    >
-                      <path d='M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z'></path>
-                      <polyline points='22,6 12,13 2,6'></polyline>
-                    </svg>
-                    <span className='ml-2'>Inbox </span>
-                  </a>
-                  <a
-                    href='./page-login.html'
-                    className='dropdown-item ai-icon'
+                  <div className='flex flex-col leading-tight'>
+                    <span className='text-sm font-semibold text-gray-900'>
+                      Test
+                    </span>
+                    <span className='text-xs font-medium uppercase text-gray-500'>
+                      ADMIN
+                    </span>
+                  </div>
+                </button>
+
+                <div
+                  className='dropdown-menu dropdown-menu-right'
+                  id='dropdown-menu'
+                >
+                  <button
+                    onClick={signOutBrowser}
+                    className='dropdown-item flex'
                   >
                     <svg
                       id='icon-logout'
@@ -105,8 +86,8 @@ export function Head() {
                         y2='12'
                       ></line>
                     </svg>
-                    <span className='ml-2'>Logout </span>
-                  </a>
+                    <span className='ml-2'>Logout</span>
+                  </button>
                 </div>
               </li>
             </ul>

@@ -1,16 +1,20 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import toast from 'react-hot-toast';
+
 import {
   deleteBusinessHourAction,
   upsertBusinessHourAction,
 } from '../_actions';
 import { hhmmToMin, minToHHMM } from '../_helpers';
 import { WEEKDAYS } from './_data';
+import { useHeaderTitle } from '@/app/providers/header-title.provider';
 
 export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
+  const { setTitle } = useHeaderTitle();
+
   const grouped = useMemo(() => {
     const map = new Map<number, Row[]>();
     for (let i = 0; i < 7; i++) map.set(i, []);
@@ -23,6 +27,10 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
   }, [rows]);
 
   const [editing, setEditing] = useState<EditingState | null>(null);
+
+  useEffect(() => {
+    setTitle('Business Hours');
+  }, [setTitle]);
 
   const handleAddTimeSlot = (weekday: number) => {
     setEditing({

@@ -6,6 +6,7 @@ import { fraunces, inter } from '@/fonts';
 import mainMetadata from '@/metadata/main';
 
 import './globals.css';
+import { HeaderTitleProvider } from './providers/header-title.provider';
 
 export const metadata: Metadata = mainMetadata;
 
@@ -48,11 +49,12 @@ export default function RootLayout({
         data-container='wide'
         data-primary='color_1'
       >
-        {children}
-
-        <div>
-          <Toaster />
-        </div>
+        <HeaderTitleProvider>
+          {children}
+          <div>
+            <Toaster />
+          </div>
+        </HeaderTitleProvider>
       </body>
     </html>
   );
