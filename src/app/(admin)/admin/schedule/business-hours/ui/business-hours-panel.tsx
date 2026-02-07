@@ -57,6 +57,8 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
       fd.set('isClosed', 'on');
       const res = await upsertBusinessHourAction(fd);
       if (!res.ok) toast.error((res.errors as any)?._form?.[0] ?? 'Error');
+
+      toast.success('Marked as closed');
     })();
   };
 
@@ -261,6 +263,7 @@ function InlineEditor({
             return;
           }
           onSaved();
+          toast.success('Saved');
         }}
         className='grid grid-cols-1 sm:grid-cols-3 gap-3 items-end'
       >
