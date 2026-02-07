@@ -15,6 +15,12 @@ export const menuItems: MenuItem[] = [
     icon: IconClock,
     match: (path: string) => path.startsWith('/admin/schedule'),
   },
+  {
+    label: 'Time Off',
+    href: '/admin/schedule/time-off',
+    icon: IconClock,
+    match: (path: string) => path.startsWith('/admin/schedule/time-off'),
+  },
 ] as const;
 
 type MenuItem = {

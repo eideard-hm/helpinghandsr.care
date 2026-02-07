@@ -8,7 +8,7 @@ import {
   deleteBusinessHourAction,
   upsertBusinessHourAction,
 } from '../_actions';
-import { hhmmToMin, minToHHMM } from '../_helpers';
+import { hhmmToMin, minToHHMM } from '../../../_helpers';
 import { WEEKDAYS } from './_data';
 import { useHeaderTitle } from '@/app/providers/header-title.provider';
 

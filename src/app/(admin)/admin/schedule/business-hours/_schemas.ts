@@ -17,7 +17,8 @@ export const upsertBusinessHourSchema = z
     isClosed: z.coerce.boolean().optional().default(false),
   })
   .refine((v) => v.isClosed || v.endMin > v.startMin, {
-    message: 'La hora fin debe ser mayor que la hora inicio',
+    message:
+      'The end time must be greater than the start time unless the day is marked as closed.',
     path: ['endMin'],
   });
 
