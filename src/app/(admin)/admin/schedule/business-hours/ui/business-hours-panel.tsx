@@ -1,48 +1,17 @@
-// src/app/(admin)/admin/schedule/business-hours/ui/business-hours-panel.tsx
 'use client';
 
-import * as React from 'react';
+import { useMemo, useState } from 'react';
+
+import toast from 'react-hot-toast';
 import {
-  upsertBusinessHourAction,
   deleteBusinessHourAction,
+  upsertBusinessHourAction,
 } from '../_actions';
-
-const WEEKDAYS = [
-  { label: 'Domingo', short: 'Dom' },
-  { label: 'Lunes', short: 'Lun' },
-  { label: 'Martes', short: 'Mar' },
-  { label: 'Miércoles', short: 'Mié' },
-  { label: 'Jueves', short: 'Jue' },
-  { label: 'Viernes', short: 'Vie' },
-  { label: 'Sábado', short: 'Sáb' },
-];
-
-function minToHHMM(min: number) {
-  const h = String(Math.floor(min / 60)).padStart(2, '0');
-  const m = String(min % 60).padStart(2, '0');
-  return `${h}:${m}`;
-}
-
-function hhmmToMin(v: string) {
-  const [h, m] = v.split(':').map(Number);
-  return (h || 0) * 60 + (m || 0);
-}
-
-type Row = {
-  id: string;
-  weekday: number;
-  startMin: number;
-  endMin: number;
-  isClosed: boolean;
-};
-
-type EditingState =
-  | { mode: 'create'; weekday: number; startHHMM: string; endHHMM: string }
-  | { mode: 'edit'; row: Row; startHHMM: string; endHHMM: string };
+import { hhmmToMin, minToHHMM } from '../_helpers';
+import { WEEKDAYS } from './_data';
 
 export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
-  // agrupar por weekday
-  const grouped = React.useMemo(() => {
+  const grouped = useMemo(() => {
     const map = new Map<number, Row[]>();
     for (let i = 0; i < 7; i++) map.set(i, []);
     rows.forEach((r) => map.get(r.weekday)!.push(r));
@@ -53,7 +22,35 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
     return map;
   }, [rows]);
 
-  const [editing, setEditing] = React.useState<EditingState | null>(null);
+  const [editing, setEditing] = useState<EditingState | null>(null);
+
+  const handleAddTimeSlot = (weekday: number) => {
+    setEditing({
+      mode: 'create',
+      weekday,
+      startHHMM: '09:00',
+      endHHMM: '17:00',
+    });
+  };
+
+  const handleMarkClosed = async (list: Row[], weekday: number) => {
+    setEditing(null);
+    void (async () => {
+      for (const r of list) {
+        const fd = new FormData();
+        fd.set('id', r.id);
+        await deleteBusinessHourAction(fd);
+      }
+
+      const fd = new FormData();
+      fd.set('weekday', String(weekday));
+      fd.set('startMin', '0');
+      fd.set('endMin', '0');
+      fd.set('isClosed', 'on');
+      const res = await upsertBusinessHourAction(fd);
+      if (!res.ok) toast.error((res.errors as any)?._form?.[0] ?? 'Error');
+    })();
+  };
 
   return (
     <div className='space-y-4'>
@@ -72,53 +69,28 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
                   {day.label}
                 </div>
                 <div className='text-sm text-slate-500'>
-                  {isClosedDay ? 'Cerrado' : `${list.length} franja(s)`}
+                  {isClosedDay ? 'Closed' : `${list.length} time slot(s)`}
                 </div>
               </div>
 
               <div className='flex gap-2'>
                 <button
                   type='button'
-                  className='h-10 px-4 rounded-xl bg-brand text-white hover:bg-[color:var(--brand-600)] disabled:opacity-50'
+                  className='h-10 px-4 rounded-xl bg-brand text-white hover:bg-(--brand-600) disabled:opacity-50'
                   disabled={isClosedDay}
-                  onClick={() =>
-                    setEditing({
-                      mode: 'create',
-                      weekday,
-                      startHHMM: '09:00',
-                      endHHMM: '17:00',
-                    })
-                  }
+                  onClick={() => handleAddTimeSlot(weekday)}
                 >
-                  + Agregar franja
+                  + Add Time Slot
                 </button>
 
                 <button
                   type='button'
                   className='h-10 px-4 rounded-xl border border-slate-200 hover:bg-slate-50'
                   onClick={() => {
-                    // “Cerrar todo el día”: creamos (o aseguramos) un registro isClosed=true para ese weekday.
-                    // Si ya hay franjas, las eliminamos primero (para evitar inconsistencias).
-                    setEditing(null);
-                    void (async () => {
-                      // borrar franjas existentes
-                      for (const r of list) {
-                        const fd = new FormData();
-                        fd.set('id', r.id);
-                        await deleteBusinessHourAction(fd);
-                      }
-                      // crear registro isClosed
-                      const fd = new FormData();
-                      fd.set('weekday', String(weekday));
-                      fd.set('startMin', '0');
-                      fd.set('endMin', '0');
-                      fd.set('isClosed', 'on');
-                      const res = await upsertBusinessHourAction(fd);
-                      if (!res.ok) alert(res.errors?._form?.[0] ?? 'Error');
-                    })();
+                    handleMarkClosed(list, weekday);
                   }}
                 >
-                  Marcar cerrado
+                  Mark Closed
                 </button>
 
                 {isClosedDay && (
@@ -126,27 +98,28 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
                     type='button'
                     className='h-10 px-4 rounded-xl border border-slate-200 hover:bg-slate-50'
                     onClick={() => {
-                      // quitar cerrado => eliminar el registro isClosed
                       const closed = list.find((r) => r.isClosed);
                       if (!closed) return;
                       void (async () => {
                         const fd = new FormData();
                         fd.set('id', closed.id);
                         const res = await deleteBusinessHourAction(fd);
-                        if (!res.ok) alert(res.errors?._form?.[0] ?? 'Error');
+                        if (!res.ok)
+                          toast.error(
+                            (res.errors as any)?._form?.[0] ?? 'Error',
+                          );
                       })();
                     }}
                   >
-                    Reabrir
+                    Reopen
                   </button>
                 )}
               </div>
             </div>
 
-            {/* Editor inline SOLO para el día actual */}
             {editing &&
-              editing.weekday === weekday &&
-              editing.mode === 'create' && (
+              editing.mode === 'create' &&
+              editing?.weekday === weekday && (
                 <InlineEditor
                   key={`create-${weekday}`}
                   title='Nueva franja'
@@ -161,7 +134,7 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
             <div className='divide-y divide-slate-100'>
               {!list.length && !isClosedDay && (
                 <div className='p-4 text-sm text-slate-500'>
-                  Sin franjas. Agrega una o marca cerrado.
+                  No time slots. Add one or mark closed.
                 </div>
               )}
 
@@ -184,7 +157,6 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
                           {startHHMM} – {endHHMM}
                         </span>
                       </div>
-
                       <div className='flex gap-2'>
                         <button
                           type='button'
@@ -198,7 +170,7 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
                             })
                           }
                         >
-                          Editar
+                          Edit
                         </button>
 
                         <form
@@ -206,14 +178,16 @@ export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
                             fd.set('id', r.id);
                             const res = await deleteBusinessHourAction(fd);
                             if (!res.ok)
-                              alert(res.errors?._form?.[0] ?? 'Error');
+                              toast.error(
+                                (res.errors as any)?._form?.[0] ?? 'Error',
+                              );
                           }}
                         >
                           <button
                             type='submit'
                             className='h-9 px-3 rounded-xl border border-slate-200 hover:bg-slate-50'
                           >
-                            Eliminar
+                            Delete
                           </button>
                         </form>
                       </div>
@@ -275,7 +249,7 @@ function InlineEditor({
 
           const res = await upsertBusinessHourAction(fd);
           if (!res.ok) {
-            alert(res.errors?._form?.[0] ?? 'Error');
+            toast.error((res.errors as any)?._form?.[0] ?? 'Error');
             return;
           }
           onSaved();
@@ -283,7 +257,7 @@ function InlineEditor({
         className='grid grid-cols-1 sm:grid-cols-3 gap-3 items-end'
       >
         <label className='grid gap-1 text-sm'>
-          Inicio
+          Start
           <input
             name='startHHMM'
             type='time'
@@ -293,7 +267,7 @@ function InlineEditor({
         </label>
 
         <label className='grid gap-1 text-sm'>
-          Fin
+          End
           <input
             name='endHHMM'
             type='time'
@@ -307,18 +281,17 @@ function InlineEditor({
             className='h-10 px-4 rounded-xl bg-brand text-white hover:bg-(--brand-600)'
             type='submit'
           >
-            Guardar
+            Save
           </button>
           <button
             className='h-10 px-4 rounded-xl border border-slate-200 hover:bg-slate-50'
             type='button'
             onClick={onCancel}
           >
-            Cancelar
+            Cancel
           </button>
         </div>
 
-        {/* Hidden para action */}
         <input
           type='hidden'
           name='startMin'
