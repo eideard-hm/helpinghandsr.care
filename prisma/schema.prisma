@@ -142,6 +142,14 @@ model Service {
   price       Decimal @db.Decimal(10, 2)
   active      Boolean @default(true)
 
+  isMain      Boolean  @default(false)
+  image       String?    
+  bigImage    String?
+  excerpt     String?
+  waLink      String?
+  benefits    Json?    @db.JsonB
+  details     Json?    @db.JsonB   
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
