@@ -6,13 +6,15 @@ import { motion, useReducedMotion } from 'framer-motion';
 
 import { env } from '@/config/env';
 import { fadeInUp } from '@/lib/motion';
+import { BookingButton } from '../common/booking-btn';
 import { LocalHlsVideo } from '../common/LocalHlsVideo';
-import { WhatsAppButton } from '../common/whatsapp-btn';
 
 type HeroProps = {
   headerSelector?: string;
   headerRemFallback?: number;
 };
+
+const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
 export function Hero({
   headerSelector = 'header',
@@ -46,7 +48,7 @@ export function Hero({
 
   return (
     <section
-      className='relative flex items-center overflow-hidden bg-[color:var(--bg)]'
+      className='relative flex items-center overflow-hidden bg-(--bg)'
       style={sectionStyle}
       aria-label={`${env.brandSEO} — Therapeutic Home Massage in Abu Dhabi`}
     >
@@ -145,7 +147,10 @@ export function Hero({
           Pain relief and mobility at home. 20+ years of clinical experience.
         </motion.p>
         <div className='mt-2'>
-          <WhatsAppButton classList='w-full' />
+          <BookingButton
+            bookingUrl={BOOKING_URL}
+            classList='w-full'
+          />
         </div>
       </div>
 
@@ -213,7 +218,7 @@ export function Hero({
                   home.
                 </motion.p>
                 <div className='mt-5'>
-                  <WhatsAppButton />
+                  <BookingButton bookingUrl={BOOKING_URL} />
                 </div>
               </div>
             </div>

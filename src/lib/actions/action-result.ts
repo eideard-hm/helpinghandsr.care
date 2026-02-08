@@ -3,4 +3,6 @@ export type ActionErrors = {
   fields?: Record<string, string[]>;
 };
 
-export type ActionResult = { ok: true } | { ok: false; errors: ActionErrors };
+export type ActionResult<T = unknown> =
+  | { ok: true; data: T }
+  | { ok: false; errors: ActionErrors };
