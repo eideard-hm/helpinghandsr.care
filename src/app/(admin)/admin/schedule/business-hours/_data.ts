@@ -13,7 +13,7 @@ export const menuItems: MenuItem[] = [
     label: 'Business Hours',
     href: '/admin/schedule/business-hours',
     icon: IconClock,
-    match: (path: string) => path.startsWith('/admin/schedule'),
+    match: (path: string) => path.startsWith('/admin/schedule/business-hours'),
   },
   {
     label: 'Time Off',
