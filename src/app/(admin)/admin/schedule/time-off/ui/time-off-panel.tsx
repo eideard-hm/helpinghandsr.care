@@ -44,6 +44,8 @@ export function TimeOffPanel({
               toast.error(res.errors.form?.[0] ?? 'Something went wrong.');
               return;
             }
+
+            (document.activeElement as HTMLElement | null)?.blur();
           }}
           className='grid grid-cols-1 md:grid-cols-6 gap-3 items-end'
         >
@@ -58,7 +60,7 @@ export function TimeOffPanel({
           </label>
 
           <label className='grid gap-1 text-sm md:col-span-2'>
-            Applies to (optional)
+            Applies to
             <select
               name='staffId'
               className='h-10 rounded-xl border border-slate-200 px-3'
@@ -127,13 +129,13 @@ export function TimeOffPanel({
 
           <div className='md:col-span-6'>
             <button className='h-10 px-4 rounded-xl bg-brand text-white hover:bg-(--brand-600)'>
-              Save block
+              Save time off
             </button>
           </div>
         </form>
       </div>
 
-      <div className='p-4 font-medium'>Blocks</div>
+      <div className='p-4 font-medium'>Upcoming time off</div>
 
       <div className='divide-y divide-slate-100'>
         {rows.map((r) => (
@@ -172,7 +174,7 @@ export function TimeOffPanel({
         ))}
         {!rows.length && (
           <div className='p-6 text-center text-slate-500'>
-            There are no blocks yet.
+            No time off entries yet.
           </div>
         )}
       </div>
