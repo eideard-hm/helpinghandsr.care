@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from 'react';
 
 import toast from 'react-hot-toast';
 
+import { useHeaderTitle } from '@/app/providers/header-title.provider';
+import { WEEKDAYS } from '../../../_data';
+import { hhmmToMin, minToHHMM } from '../../../_helpers';
 import {
   deleteBusinessHourAction,
   upsertBusinessHourAction,
 } from '../_actions';
-import { hhmmToMin, minToHHMM } from '../../../_helpers';
-import { WEEKDAYS } from './_data';
-import { useHeaderTitle } from '@/app/providers/header-title.provider';
 
 export function BusinessHoursPanel({ rows }: { rows: Row[] }) {
   const { setTitle } = useHeaderTitle();
