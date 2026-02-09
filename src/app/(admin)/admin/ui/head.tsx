@@ -1,8 +1,12 @@
-import { signOutBrowser } from '@/actions/auth/broser/actions';
+import { useRouter } from 'next/navigation';
+
+import { signOutBrowser } from '@/actions/auth/browser/actions';
 import { useHeaderTitle } from '@/app/providers/header-title.provider';
 import { getInitials } from '@/lib/get-initials';
 
 export function Head() {
+  const router = useRouter();
+
   const { title } = useHeaderTitle();
   const initials = getInitials('Test');
 
@@ -15,6 +19,12 @@ export function Head() {
     if (menu) {
       menu.classList.toggle('show');
     }
+  };
+
+  const handleLogout = async () => {
+    await signOutBrowser();
+    router.replace('/auth/login');
+    router.refresh();
   };
 
   return (
@@ -61,7 +71,7 @@ export function Head() {
                   id='dropdown-menu'
                 >
                   <button
-                    onClick={signOutBrowser}
+                    onClick={handleLogout}
                     className='dropdown-item flex'
                   >
                     <svg
