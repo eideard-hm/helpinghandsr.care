@@ -2,6 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 
+import z from 'zod';
+
 import { prisma } from '@/lib/prisma';
 import { assertAdminBusiness } from '@/lib/auth/assert-admin';
 import { upsertStaffHourSchema, deleteStaffHourSchema } from './_schemas';
@@ -39,7 +41,6 @@ export async function upsertStaffHourAction(
 
   const { id, staffId, weekday, startMin, endMin, isClosed } = parsed.data;
 
-  // Safety: ensure staff belongs to this business
   const staff = await prisma.staff.findFirst({
     where: { id: staffId, businessId },
     select: { id: true },
@@ -83,7 +84,7 @@ export async function upsertStaffHourAction(
   }
 
   revalidatePath('/admin/schedule/staff-hours');
-  return { ok: true };
+  return { ok: true, data: null };
 }
 
 export async function deleteStaffHourAction(
@@ -96,12 +97,15 @@ export async function deleteStaffHourAction(
     return {
       ok: false,
       errors: {
-        fields: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+        fields: z.flattenError(parsed.error).fieldErrors as Record<
+          string,
+          string[]
+        >,
       },
     };
   }
 
   await prisma.staffHour.delete({ where: { id: parsed.data.id } });
   revalidatePath('/admin/schedule/staff-hours');
-  return { ok: true };
+  return { ok: true, data: null };
 }
