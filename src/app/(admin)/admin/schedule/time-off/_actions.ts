@@ -2,6 +2,8 @@
 
 import { revalidatePath } from 'next/cache';
 
+import z from 'zod';
+
 import { prisma } from '@/lib/prisma';
 import { assertAdminBusiness } from '@/lib/auth/assert-admin';
 import { createTimeOffSchema, deleteTimeOffSchema } from './_schemas';
@@ -26,7 +28,10 @@ export async function createTimeOffAction(
     return {
       ok: false,
       errors: {
-        fields: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+        fields: z.flattenError(parsed.error).fieldErrors as Record<
+          string,
+          string[]
+        >,
       },
     };
   }
@@ -54,7 +59,7 @@ export async function createTimeOffAction(
   });
 
   revalidatePath('/admin/schedule/time-off');
-  return { ok: true };
+  return { ok: true, data: undefined };
 }
 
 export async function deleteTimeOffAction(
@@ -67,12 +72,15 @@ export async function deleteTimeOffAction(
     return {
       ok: false,
       errors: {
-        fields: parsed.error.flatten().fieldErrors as Record<string, string[]>,
+        fields: z.flattenError(parsed.error).fieldErrors as Record<
+          string,
+          string[]
+        >,
       },
     };
   }
 
   await prisma.timeOff.delete({ where: { id: parsed.data.id } });
   revalidatePath('/admin/schedule/time-off');
-  return { ok: true };
+  return { ok: true, data: undefined };
 }
