@@ -1,6 +1,12 @@
 'use client';
 
-import { Fragment, type ReactNode, useEffect, useState } from 'react';
+import {
+  Fragment,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 
 import dynamic from 'next/dynamic';
 
@@ -52,7 +58,6 @@ export function BookingWizard({
 
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
-  // Step 1
   const [serviceId, setServiceId] = useState(servicesParsed[0]?.id ?? '');
   const [staffId, setStaffId] = useState<string>('');
   const [date, setDate] = useState(todayISO());
@@ -60,12 +65,10 @@ export function BookingWizard({
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
 
-  // Step 2
   const [customerName, setCustomerName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
-  // Step 3 (address)
   const [addressText, setAddressText] = useState('');
   const [coords, setCoords] = useState<{
     lat: number;
@@ -73,13 +76,33 @@ export function BookingWizard({
   } | null>(null);
   const [placeId, setPlaceId] = useState<string | null>(null);
 
-  // Submission state
   const [error, setError] = useState<string | null>(null);
   const [hold, setHold] = useState<{
     bookingId: string;
     holdExpiresAtISO: string;
   } | null>(null);
   const [submitting, setSubmitting] = useState(false);
+
+  const handleAddressPick = useCallback(
+    (payload: {
+      addressText: string;
+      lat: number;
+      lng: number;
+      placeId?: string | null;
+    }) => {
+      setAddressText(payload.addressText);
+      setCoords({ lat: payload.lat, lng: payload.lng });
+      setPlaceId(payload.placeId ?? null);
+    },
+    [],
+  );
+
+  const handleCoordsChange = useCallback(
+    (latlng: { lat: number; lng: number }) => {
+      setCoords(latlng);
+    },
+    [],
+  );
 
   async function loadSlots() {
     if (!serviceId || !date) return;
@@ -301,12 +324,8 @@ export function BookingWizard({
 
             <MapPicker
               addressText={addressText}
-              onAddressPick={(payload) => {
-                setAddressText(payload.addressText);
-                setCoords({ lat: payload.lat, lng: payload.lng });
-                setPlaceId(payload.placeId ?? null);
-              }}
-              onCoordsChange={(latlng) => setCoords(latlng)}
+              onAddressPick={handleAddressPick}
+              onCoordsChange={handleCoordsChange}
             />
 
             {coords && (

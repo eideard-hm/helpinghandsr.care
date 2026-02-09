@@ -4,9 +4,9 @@ import { Toaster } from 'react-hot-toast';
 
 import { fraunces, inter } from '@/fonts';
 import mainMetadata from '@/metadata/main';
+import { HeaderTitleProvider } from './providers/header-title.provider';
 
 import './globals.css';
-import { HeaderTitleProvider } from './providers/header-title.provider';
 
 export const metadata: Metadata = mainMetadata;
 

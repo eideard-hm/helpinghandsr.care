@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import L from 'leaflet';
 
+import 'leaflet-defaulticon-compatibility';
+
 type PickPayload = {
   addressText: string;
   lat: number;
@@ -30,57 +32,75 @@ export function MapPicker({
     Array<{ displayName: string; lat: number; lng: number; placeId: string }>
   >([]);
 
+  const onAddressPickRef = useRef(onAddressPick);
+  const onCoordsChangeRef = useRef(onCoordsChange);
+
   useEffect(() => {
-    setQuery(addressText);
+    onAddressPickRef.current = onAddressPick;
+  }, [onAddressPick]);
+
+  useEffect(() => {
+    onCoordsChangeRef.current = onCoordsChange;
+  }, [onCoordsChange]);
+
+  useEffect(() => {
+    setQuery((prev) => (prev === addressText ? prev : addressText));
   }, [addressText]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
 
-    // Load Leaflet CSS (simple runtime link)
-    const id = 'leaflet-css';
-    if (!document.getElementById(id)) {
-      const link = document.createElement('link');
-      link.id = id;
-      link.rel = 'stylesheet';
-      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-      document.head.appendChild(link);
-    }
+    const initial = { lat: 4.711, lng: -74.0721 };
 
     const map = L.map(containerRef.current, {
       zoomControl: true,
       attributionControl: true,
-    }).setView([4.711, -74.0721], 12);
+      scrollWheelZoom: false,
+    }).setView([initial.lat, initial.lng], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
 
-    const marker = L.marker([4.711, -74.0721], { draggable: true }).addTo(map);
+    const marker = L.marker([initial.lat, initial.lng], {
+      draggable: true,
+    }).addTo(map);
 
-    marker.on('dragend', () => {
+    const emitCoords = (lat: number, lng: number) => {
+      onCoordsChangeRef.current({ lat, lng });
+    };
+
+    const onDragEnd = () => {
       const latlng = marker.getLatLng();
-      onCoordsChange({ lat: latlng.lat, lng: latlng.lng });
-    });
+      emitCoords(latlng.lat, latlng.lng);
+    };
 
-    map.on('click', (e) => {
+    const onMapClick = (e: L.LeafletMouseEvent) => {
       marker.setLatLng(e.latlng);
-      onCoordsChange({ lat: e.latlng.lat, lng: e.latlng.lng });
-    });
+      emitCoords(e.latlng.lat, e.latlng.lng);
+    };
+
+    marker.on('dragend', onDragEnd);
+    map.on('click', onMapClick);
 
     mapRef.current = map;
     markerRef.current = marker;
 
-    // initial coords
-    onCoordsChange({ lat: 4.711, lng: -74.0721 });
+    setTimeout(() => map.invalidateSize(), 0);
+
+    emitCoords(initial.lat, initial.lng);
 
     return () => {
+      marker.off('dragend', onDragEnd);
+      map.off('click', onMapClick);
+      map.off();
       map.remove();
+
       mapRef.current = null;
       markerRef.current = null;
     };
-  }, [onCoordsChange]);
+  }, []);
 
   async function findOnMap() {
     const q = query.trim();
