@@ -23,7 +23,7 @@ export const BookingButton = forwardRef<
 >(
   (
     {
-      bookingUrl = '/booking',
+      bookingUrl = '/zz',
       classList,
       label = 'Book Now',
       size = 'medium',

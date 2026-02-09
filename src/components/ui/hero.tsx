@@ -12,13 +12,13 @@ import { LocalHlsVideo } from '../common/LocalHlsVideo';
 type HeroProps = {
   headerSelector?: string;
   headerRemFallback?: number;
+  BOOKING_URL: string;
 };
-
-const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
 export function Hero({
   headerSelector = 'header',
   headerRemFallback = 7,
+  BOOKING_URL,
 }: HeroProps) {
   const reduce = useReducedMotion();
   const [headerPx, setHeaderPx] = useState<number | null>(null);

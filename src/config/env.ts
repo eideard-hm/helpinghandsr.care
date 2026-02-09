@@ -1,4 +1,4 @@
-const { BOOKING_BUSINESS_ID } = process.env;
+const { NEXT_PUBLIC_BOOKING_BUSINESS_ID } = process.env;
 
 export const env = {
   whatsAppNumber: process.env.NEXT_PUBLIC_WHATSAPP || '',
@@ -18,5 +18,5 @@ export const env = {
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
   googleRedirectUri: process.env.GOOGLE_REDIRECT_URI || '',
 
-  bookingBusinessId: BOOKING_BUSINESS_ID || '',
+  bookingBusinessId: NEXT_PUBLIC_BOOKING_BUSINESS_ID || '',
 } as const;
