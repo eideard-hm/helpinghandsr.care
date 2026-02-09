@@ -72,7 +72,7 @@ export function Head() {
                 >
                   <button
                     onClick={handleLogout}
-                    className='dropdown-item flex'
+                    className='dropdown-item flex!'
                   >
                     <svg
                       id='icon-logout'

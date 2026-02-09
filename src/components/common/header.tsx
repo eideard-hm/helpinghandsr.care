@@ -6,9 +6,10 @@ import { waLink } from '@/lib/whatsapp';
 import { NavLinks } from '../ui/nav-links';
 import { HeaderResponsive } from './header-responsive';
 import { WhatsAppButton } from './whatsapp-btn';
+import { BookingButton } from './booking-btn';
 
 export function Header() {
-  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+  const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
   return (
     <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
@@ -25,12 +26,12 @@ export function Header() {
 
       <NavLinks classList='hidden md:flex md:gap-6' />
 
-      <WhatsAppButton
-        waLink={waHref}
+      <BookingButton
+        bookingUrl={BOOKING_URL}
         classList='hidden! md:inline-flex!'
       />
 
-      <HeaderResponsive waLink={waHref} />
+      <HeaderResponsive bookingUrl={BOOKING_URL} />
     </div>
   );
 }

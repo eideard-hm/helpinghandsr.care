@@ -50,7 +50,7 @@ export function MapPicker({
     const map = L.map(containerRef.current, {
       zoomControl: true,
       attributionControl: true,
-    }).setView([4.711, -74.0721], 12); // default Bogotá; you can change
+    }).setView([4.711, -74.0721], 12);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,

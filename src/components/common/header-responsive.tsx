@@ -4,13 +4,13 @@ import { useEffect, useId, useState } from 'react';
 
 import Link from 'next/link';
 
-import { WhatsAppButton } from './whatsapp-btn';
+import { BookingButton } from './booking-btn';
 
 type HeaderResponsiveProps = {
-  waLink: string;
+  bookingUrl: string;
 };
 
-export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
+export function HeaderResponsive({ bookingUrl }: HeaderResponsiveProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -23,7 +23,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
   return (
     <>
       <button
-        className='md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border text-[color:var(--ink)]/80'
+        className='md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border text-(--ink)/80'
         aria-controls={panelId}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -53,7 +53,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
         role='dialog'
         aria-labelledby='mobile-menu-title'
       >
-        <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-[color:var(--ink)]'>
+        <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-(--ink)'>
           <Link
             href='/#services'
             onClick={() => setOpen(false)}
@@ -94,8 +94,8 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
             About
           </Link>
 
-          <WhatsAppButton
-            waLink={waLink}
+          <BookingButton
+            bookingUrl={bookingUrl}
             classList='mt-2'
           />
         </nav>
