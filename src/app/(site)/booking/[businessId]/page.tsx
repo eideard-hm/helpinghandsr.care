@@ -1,5 +1,26 @@
+import type { Metadata } from 'next';
+
 import { prisma } from '@/lib/prisma';
 import { BookingWizard } from './ui/booking-wizard';
+
+export const metadata: Metadata = {
+  title: 'Book an appointment',
+  description:
+    'Schedule your appointment with us easily and quickly using our online booking system.',
+  keywords: [
+    'appointment scheduling',
+    'online booking',
+    'schedule appointment',
+    'book appointment',
+    'appointment calendar',
+    'service booking',
+    'staff scheduling',
+    'customer booking',
+    'online appointment',
+    'appointment management',
+    'booking system',
+  ],
+};
 
 export default async function PublicBookingPage({
   params,
