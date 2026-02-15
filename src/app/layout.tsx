@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Toaster } from 'react-hot-toast';
 
@@ -10,7 +10,7 @@ import './globals.css';
 
 export const metadata: Metadata = mainMetadata;
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
