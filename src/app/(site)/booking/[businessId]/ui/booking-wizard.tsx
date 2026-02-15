@@ -10,6 +10,8 @@ import {
 
 import dynamic from 'next/dynamic';
 
+import toast from 'react-hot-toast';
+
 import { confirmBookingAction, createBookingHoldAction } from '../../_actions';
 
 const MapPicker = dynamic(
@@ -386,7 +388,6 @@ export function BookingWizard({
                     holdExpiresAtISO: res.data.holdExpiresAtISO,
                   });
 
-                  // MVP: confirm right away (or you can ask for a final "Confirm" click)
                   const res2 = await confirmBookingAction({
                     bookingId: res.data.bookingId,
                   });
@@ -399,7 +400,8 @@ export function BookingWizard({
                   }
 
                   setSubmitting(false);
-                  alert('Booking confirmed!');
+                  toast.success('Booking confirmed!');
+                  window.location.href = `/booking/confirmed/${res.data.bookingId}`;
                 }}
                 className='h-10 px-4 rounded-xl bg-ink text-white hover:opacity-90 disabled:opacity-50'
               >
