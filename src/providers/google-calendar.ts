@@ -9,8 +9,27 @@ export class GoogleCalendarProvider {
     this.oauth2Client = new google.auth.OAuth2(
       env.googleClientId,
       env.googleClientSecret,
-      env.googleRedirectUri
+      env.googleRedirectUri,
     );
+  }
+
+  getOAuthClientForStoredTokens(tokens: {
+    accessToken?: string;
+    refreshToken?: string;
+    expiryDate?: Date;
+  }) {
+    this.oauth2Client.setCredentials({
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      expiry_date: tokens?.expiryDate?.getTime(),
+    });
+    return this.oauth2Client;
+  }
+
+  async listCalendars(auth: any) {
+    const calendar = google.calendar({ version: 'v3', auth });
+    const res = await calendar.calendarList.list();
+    return res.data.items ?? [];
   }
 
   getGoogleAuthUrl() {
@@ -20,12 +39,6 @@ export class GoogleCalendarProvider {
       prompt: 'consent',
     });
     return authUrl;
-  }
-
-  getGoogleAuthClient(accessToken: string) {
-    const auth = new google.auth.OAuth2();
-    auth.setCredentials({ access_token: accessToken });
-    return auth;
   }
 
   async exchangesCodeForTokens(code: string) {
@@ -46,9 +59,11 @@ export class GoogleCalendarProvider {
       start: { dateTime: string; timeZone?: string };
       end: { dateTime: string; timeZone?: string };
       attendees?: { email: string }[];
-    }
+    },
   ) {
-    const auth = this.getGoogleAuthClient(accessToken);
+    const auth = this.getOAuthClientForStoredTokens({
+      accessToken,
+    });
     const calendar = google.calendar({ version: 'v3', auth });
     try {
       const response = await calendar.events.insert({
@@ -63,7 +78,9 @@ export class GoogleCalendarProvider {
   }
 
   async checkAvailability(accessToken: string, startTime: Date, endTime: Date) {
-    const auth = this.getGoogleAuthClient(accessToken);
+    const auth = this.getOAuthClientForStoredTokens({
+      accessToken,
+    });
     const calendar = google.calendar({ version: 'v3', auth });
     try {
       const response = await calendar.freebusy.query({
