@@ -51,26 +51,25 @@ export class GoogleCalendarProvider {
     }
   }
 
-  async createCalendarEvent(
-    accessToken: string,
+  async createCalendarEvent(params: {
+    auth: any;
+    calendarId: string;
     event: {
       summary: string;
-      description: string;
-      start: { dateTime: string; timeZone?: string };
-      end: { dateTime: string; timeZone?: string };
+      description?: string;
+      location?: string;
+      start: { dateTime: string; timeZone: string };
+      end: { dateTime: string; timeZone: string };
       attendees?: { email: string }[];
-    },
-  ) {
-    const auth = this.getOAuthClientForStoredTokens({
-      accessToken,
-    });
-    const calendar = google.calendar({ version: 'v3', auth });
+    };
+  }) {
     try {
-      const response = await calendar.events.insert({
-        calendarId: 'primary',
-        requestBody: event,
+      const calendar = google.calendar({ version: 'v3', auth: params.auth });
+      const res = await calendar.events.insert({
+        calendarId: params.calendarId,
+        requestBody: params.event,
       });
-      return response.data;
+      return res.data;
     } catch (error) {
       console.error('Error creating calendar event:', error);
       throw new Error('Failed to create calendar event');

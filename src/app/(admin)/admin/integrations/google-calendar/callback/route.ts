@@ -13,29 +13,26 @@ export async function GET(req: Request) {
   const provider = new GoogleCalendarProvider();
   const tokens = await provider.exchangesCodeForTokens(code);
 
-  // tokens may contain refresh_token only the first time.
   if (!tokens.access_token || !tokens.expiry_date) {
     return NextResponse.redirect('/admin/integrations?error=NO_ACCESS_TOKEN');
   }
   if (!tokens.refresh_token) {
-    // This is common if consent was already granted without prompt=consent.
+    // Common when user already granted consent earlier without forced consent.
     return NextResponse.redirect('/admin/integrations?error=NO_REFRESH_TOKEN');
   }
 
-  // Pilot: single business
   const businessId = env.bookingBusinessId;
+  if (!businessId)
+    return NextResponse.redirect('/admin/integrations?error=NO_BUSINESS');
 
-  // Store tokens
   const oauth = await prisma.googleOAuthAccount.upsert({
     where: {
-      // your schema: @@unique([businessId, staffId])
-      // use staffId=null for business-level account
-      businessId_staffId: { businessId, staffId: null },
+      businessId_staffId: { businessId, staffId: '' },
     },
     create: {
       businessId,
       accountType: 'BUSINESS',
-      staffId: null,
+      staffId: '',
       provider: 'google',
       accessToken: tokens.access_token,
       refreshToken: tokens.refresh_token,
@@ -58,7 +55,7 @@ export async function GET(req: Request) {
     },
   });
 
-  // List calendars and pick a default (primary)
+  // Pick a calendar (pilot: primary if exists)
   const auth = provider.getOAuthClientForStoredTokens({
     accessToken: oauth.accessToken,
     refreshToken: oauth.refreshToken,

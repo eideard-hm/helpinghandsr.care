@@ -1,8 +1,18 @@
 import type { ComponentType } from 'react';
 
-import { IconCalendarEvent, IconClock } from '@tabler/icons-react';
+import {
+  IconCalendarEvent,
+  IconClock,
+  IconSettings,
+} from '@tabler/icons-react';
 
 export const menuItems: MenuItem[] = [
+  {
+    label: 'Integrations',
+    href: '/admin/integrations',
+    icon: IconSettings,
+    match: (path: string) => path.startsWith('/admin/integrations'),
+  },
   {
     label: 'Bookings',
     href: '/admin/bookings',

@@ -7,6 +7,8 @@ import {
   cancelBookingSchema,
 } from './_schema';
 import { prisma } from '@/lib/prisma';
+import { catchError } from '@/lib/promise';
+import { createBusinessCalendarEvent } from '@/lib/actions/bookings/actions';
 
 // Minimal: hold expires after 10 minutes
 const HOLD_MINUTES = 10;
@@ -216,14 +218,18 @@ export async function confirmBookingAction(
       }
     }
 
-    await prisma.booking.update({
-      where: { id: booking.id },
-      data: {
-        status: 'CONFIRMED',
-        confirmedAt: now,
-        holdExpiresAt: null,
-      },
-    });
+    await catchError(
+      prisma.booking.update({
+        where: { id: booking.id },
+        data: {
+          status: 'CONFIRMED',
+          confirmedAt: now,
+          holdExpiresAt: null,
+        },
+      }),
+    );
+
+    await catchError(createBusinessCalendarEvent(booking.id));
 
     return { ok: true, data: { bookingId: booking.id } };
   } catch {
