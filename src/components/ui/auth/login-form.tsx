@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Button } from '@/components/common/button';
-import SignInWithGoogle from '@/components/common/sign-in-with-google';
 import { supabaseBrowserClient } from '@/lib/supabase/client';
 import { LoginSchema, type LoginFormInput } from '@/schema/login.schema';
 
@@ -31,9 +30,11 @@ export function LoginForm() {
       email: data.email,
       password: data.password,
     });
+
+    console.log({ error });
     setMsg(error ? error.message : 'You are logged in successfully.');
 
-    window.location.href = '/';
+    window.location.href = '/admin';
   };
 
   const onForgotPassword = async () => {
@@ -136,7 +137,7 @@ export function LoginForm() {
         Forgot password?
       </button>
 
-      <SignInWithGoogle />
+      {/* <SignInWithGoogle /> */}
     </form>
   );
 }

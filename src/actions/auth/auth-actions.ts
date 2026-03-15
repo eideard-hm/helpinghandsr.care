@@ -80,3 +80,19 @@ export const getMe = async (): Promise<Me | null> => {
     return null;
   }
 };
+
+export const signupUser = async (email: string, password: string) => {
+  const supabaseServer = await supabaseServerClient();
+
+  const { data, error } = await supabaseServer.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error('Error al registrar el usuario:', error.message);
+    return { error: error.message };
+  }
+
+  return { user: data.user };
+};
