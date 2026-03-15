@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import toast from 'react-hot-toast';
 
 import { confirmBookingAction, createBookingHoldAction } from '../../_actions';
+import { getTodayInTimeZone } from '@/lib/time/date-helper';
 
 const MapPicker = dynamic(
   () => import('./map-picker').then((m) => m.MapPicker),
@@ -147,6 +148,10 @@ export function BookingWizard({
     );
   }
 
+  const minDate = getTodayInTimeZone(
+    businessParsed.timezone ?? 'America/Bogota',
+  );
+
   return (
     <div className='space-y-4'>
       <Stepper step={step} />
@@ -198,6 +203,7 @@ export function BookingWizard({
                 className='h-10 rounded-xl border border-slate-200 px-3'
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
+                min={minDate}
               />
             </label>
           </div>
