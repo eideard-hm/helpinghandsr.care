@@ -1,14 +1,13 @@
 'use server';
 
 import { ActionResult } from '@/lib/actions/action-result';
-import {
-  createBookingHoldSchema,
-  confirmBookingSchema,
-  cancelBookingSchema,
-} from './_schema';
 import { prisma } from '@/lib/prisma';
-import { catchError } from '@/lib/promise';
-import { createBusinessCalendarEvent } from '@/lib/actions/bookings/actions';
+import { GoogleCalendarProvider } from '@/providers/google-calendar';
+import {
+  cancelBookingSchema,
+  confirmBookingSchema,
+  createBookingHoldSchema,
+} from './_schema';
 
 // Minimal: hold expires after 10 minutes
 const HOLD_MINUTES = 10;
@@ -189,6 +188,7 @@ export async function confirmBookingAction(
   input: unknown,
 ): Promise<ActionResult<{ bookingId: string }>> {
   const parsed = confirmBookingSchema.safeParse(input);
+
   if (!parsed.success) {
     return {
       ok: false,
@@ -203,11 +203,17 @@ export async function confirmBookingAction(
   try {
     const booking = await prisma.booking.findUnique({
       where: { id: parsed.data.bookingId },
-      select: { id: true, status: true, holdExpiresAt: true },
+      select: {
+        id: true,
+        status: true,
+        holdExpiresAt: true,
+        gcalEventId: true,
+      },
     });
 
-    if (!booking)
+    if (!booking) {
       return { ok: false, errors: { form: ['Booking not found.'] } };
+    }
 
     if (booking.status === 'HOLD') {
       if (!booking.holdExpiresAt || booking.holdExpiresAt <= now) {
@@ -218,18 +224,24 @@ export async function confirmBookingAction(
       }
     }
 
-    await catchError(
-      prisma.booking.update({
+    if (booking.status !== 'CONFIRMED') {
+      await prisma.booking.update({
         where: { id: booking.id },
         data: {
           status: 'CONFIRMED',
           confirmedAt: now,
           holdExpiresAt: null,
         },
-      }),
-    );
+      });
+    }
 
-    await catchError(createBusinessCalendarEvent(booking.id));
+    if (!booking.gcalEventId) {
+      try {
+        await createBusinessCalendarEvent(booking.id);
+      } catch (error) {
+        console.error('Failed to create business calendar event:', error);
+      }
+    }
 
     return { ok: true, data: { bookingId: booking.id } };
   } catch {
@@ -275,4 +287,112 @@ export async function cancelBookingAction(
   } catch {
     return { ok: false, errors: { form: ['Could not cancel booking.'] } };
   }
+}
+
+export async function createBusinessCalendarEvent(bookingId: string) {
+  const booking = await prisma.booking.findUnique({
+    where: { id: bookingId },
+    select: {
+      id: true,
+      businessId: true,
+      serviceNameSnapshot: true,
+      notes: true,
+      customerName: true,
+      email: true,
+      phone: true,
+      addressText: true,
+      startAt: true,
+      endAt: true,
+      status: true,
+      business: {
+        select: {
+          id: true,
+          name: true,
+          timezone: true,
+          primaryCalendarId: true,
+        },
+      },
+    },
+  });
+
+  if (!booking) {
+    throw new Error('Booking not found.');
+  }
+
+  if (booking.status !== 'CONFIRMED') {
+    throw new Error('Only confirmed bookings can be added to calendar.');
+  }
+
+  if (!booking.business.primaryCalendarId) {
+    throw new Error('Business has no primary calendar configured.');
+  }
+
+  const googleCalendar = await prisma.googleCalendar.findUnique({
+    where: { id: booking.business.primaryCalendarId },
+    select: {
+      id: true,
+      calendarId: true,
+      googleOAuthAccount: {
+        select: {
+          accessToken: true,
+          refreshToken: true,
+          expiryDate: true,
+        },
+      },
+    },
+  });
+
+  if (!googleCalendar) {
+    throw new Error('Primary Google Calendar not found.');
+  }
+
+  const provider = new GoogleCalendarProvider();
+
+  const auth = provider.getOAuthClientForStoredTokens({
+    accessToken: googleCalendar.googleOAuthAccount.accessToken,
+    refreshToken: googleCalendar.googleOAuthAccount.refreshToken,
+    expiryDate: googleCalendar.googleOAuthAccount.expiryDate,
+  });
+
+  const descriptionLines = [
+    `Booking ID: ${booking.id}`,
+    `Customer: ${booking.customerName}`,
+    booking.email ? `Email: ${booking.email}` : null,
+    booking.phone ? `Phone: ${booking.phone}` : null,
+    booking.addressText ? `Address: ${booking.addressText}` : null,
+    booking.notes ? `Notes: ${booking.notes}` : null,
+  ].filter(Boolean);
+
+  const event = await provider.createCalendarEvent({
+    auth,
+    calendarId: googleCalendar.calendarId,
+    event: {
+      summary: `${booking.serviceNameSnapshot} - ${booking.customerName}`,
+      description: descriptionLines.join('\n'),
+      location: booking.addressText ?? undefined,
+      start: {
+        dateTime: booking.startAt.toISOString(),
+        timeZone: booking.business.timezone,
+      },
+      end: {
+        dateTime: booking.endAt.toISOString(),
+        timeZone: booking.business.timezone,
+      },
+      attendees: booking.email ? [{ email: booking.email }] : undefined,
+    },
+  });
+
+  if (!event.id) {
+    throw new Error('Google Calendar event was created without an id.');
+  }
+
+  await prisma.booking.update({
+    where: { id: booking.id },
+    data: {
+      gcalEventId: event.id,
+      googleCalendarId: googleCalendar.id,
+    },
+  });
+
+  return event;
 }
