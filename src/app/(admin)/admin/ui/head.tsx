@@ -4,11 +4,18 @@ import { signOutBrowser } from '@/actions/auth/browser/actions';
 import { useHeaderTitle } from '@/app/providers/header-title.provider';
 import { getInitials } from '@/lib/get-initials';
 
-export function Head() {
+type HeadProps = {
+  user: { name: string; role: string } | null;
+};
+
+export function Head({ user }: HeadProps) {
   const router = useRouter();
 
   const { title } = useHeaderTitle();
-  const initials = getInitials('Test');
+
+  const name = user?.name ?? '—';
+  const role = user?.role ?? '—';
+  const initials = getInitials(name);
 
   const handleOptionsToggle = () => {
     const dropdown = document.getElementById('profile-dropdown');
@@ -58,10 +65,10 @@ export function Head() {
 
                   <div className='flex flex-col leading-tight'>
                     <span className='text-sm font-semibold text-gray-900'>
-                      Test
+                      {name}
                     </span>
                     <span className='text-xs font-medium uppercase text-gray-500'>
-                      ADMIN
+                      {role}
                     </span>
                   </div>
                 </button>

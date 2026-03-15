@@ -28,5 +28,7 @@ export default async function AdminLayout({
     redirect(`/auth/login?error=${guard.reason}`);
   }
 
-  return <AdminShell>{children}</AdminShell>;
+  const me = await authActions.getMe();
+
+  return <AdminShell me={me}>{children}</AdminShell>;
 }

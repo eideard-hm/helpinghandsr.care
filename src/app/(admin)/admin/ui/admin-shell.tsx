@@ -4,12 +4,14 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { Header } from './header';
 import { env } from '@/config/env';
+import type { Me } from '@/actions/auth/auth.type';
 
 type Props = {
+  me: Me | null;
   children: React.ReactNode;
 };
 
-export function AdminShell({ children }: Props) {
+export function AdminShell({ children, me }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
 
   const onHamburgerClick = useCallback(() => {
@@ -31,6 +33,7 @@ export function AdminShell({ children }: Props) {
       <Header
         onHamburgerClick={onHamburgerClick}
         isMenuOpen={isMenuOpen}
+        me={me}
       />
 
       <main className='content-body'>

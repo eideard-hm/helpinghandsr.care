@@ -1,15 +1,18 @@
 import Link from 'next/link';
 
+import type { Me } from '@/actions/auth/auth.type';
 import { env } from '@/config/env';
-import { Head } from './head';
 import { DezNav } from './dez-nav';
+import { Head } from './head';
 
 export function Header({
   onHamburgerClick,
   isMenuOpen,
+  me,
 }: {
   onHamburgerClick: () => void;
   isMenuOpen: boolean;
+  me: Me | null;
 }) {
   return (
     <>
@@ -40,7 +43,7 @@ export function Header({
         </div>
       </div>
 
-      <Head />
+      <Head user={me} />
 
       <DezNav />
     </>
