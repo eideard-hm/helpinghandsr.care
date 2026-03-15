@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+import { IconCalendarEvent } from '@tabler/icons-react';
+
 export default function IntegrationsPage() {
   return (
     <div className='space-y-4'>
@@ -14,8 +16,9 @@ export default function IntegrationsPage() {
 
         <Link
           href='/admin/integrations/google-calendar/connect'
-          className='inline-flex h-10 items-center px-4 rounded-xl bg-brand text-white hover:bg-(--brand-600)'
+          className='inline-flex h-10 items-center px-4 rounded-xl text-white hover:bg-(--brand-600) bg-brand! focus:ring-2 focus:ring-(--brand-600) focus:ring-offset-2'
         >
+          <IconCalendarEvent className='mr-2' />
           Connect Google Calendar
         </Link>
       </div>
