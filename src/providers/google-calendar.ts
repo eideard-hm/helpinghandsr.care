@@ -3,47 +3,43 @@ import { google } from 'googleapis';
 import { env } from '@/config/env';
 
 export class GoogleCalendarProvider {
-  private readonly oauth2Client;
-
-  constructor() {
-    this.oauth2Client = new google.auth.OAuth2(
-      env.googleClientId,
-      env.googleClientSecret,
-      env.googleRedirectUri,
-    );
-  }
-
   getOAuthClientForStoredTokens(tokens: {
     accessToken?: string;
     refreshToken?: string;
     expiryDate?: Date;
   }) {
-    this.oauth2Client.setCredentials({
+    const client = this.createOAuthClient();
+
+    client.setCredentials({
       access_token: tokens.accessToken,
       refresh_token: tokens.refreshToken,
       expiry_date: tokens?.expiryDate?.getTime(),
     });
-    return this.oauth2Client;
+    return client;
   }
 
-  async listCalendars(auth: any) {
+  async listCalendars(auth: InstanceType<typeof google.auth.OAuth2>) {
     const calendar = google.calendar({ version: 'v3', auth });
     const res = await calendar.calendarList.list();
     return res.data.items ?? [];
   }
 
-  getGoogleAuthUrl() {
-    const authUrl = this.oauth2Client.generateAuthUrl({
+  getGoogleAuthUrl(state: string) {
+    const client = this.createOAuthClient();
+
+    return client.generateAuthUrl({
       access_type: 'offline',
-      scope: ['https://www.googleapis.com/auth/calendar'],
       prompt: 'consent',
+      scope: ['https://www.googleapis.com/auth/calendar'],
+      include_granted_scopes: true,
+      state,
     });
-    return authUrl;
   }
 
   async exchangesCodeForTokens(code: string) {
     try {
-      const { tokens } = await this.oauth2Client.getToken(code);
+      const client = this.createOAuthClient();
+      const { tokens } = await client.getToken(code);
       return tokens;
     } catch (error) {
       console.error('Error exchanging code for tokens:', error);
@@ -76,24 +72,39 @@ export class GoogleCalendarProvider {
     }
   }
 
-  async checkAvailability(accessToken: string, startTime: Date, endTime: Date) {
+  async checkAvailability(params: {
+    accessToken?: string;
+    refreshToken?: string;
+    expiryDate?: Date;
+    calendarId: string;
+    startTime: Date;
+    endTime: Date;
+  }) {
     const auth = this.getOAuthClientForStoredTokens({
-      accessToken,
+      accessToken: params.accessToken,
+      refreshToken: params.refreshToken,
+      expiryDate: params.expiryDate,
     });
+
     const calendar = google.calendar({ version: 'v3', auth });
-    try {
-      const response = await calendar.freebusy.query({
-        requestBody: {
-          timeMin: startTime.toISOString(),
-          timeMax: endTime.toISOString(),
-          timeZone: 'UTC',
-          items: [{ id: 'primary' }],
-        },
-      });
-      return response.data.calendars?.primary?.busy || [];
-    } catch (error) {
-      console.error('Error checking availability:', error);
-      throw new Error('Failed to check availability');
-    }
+
+    const response = await calendar.freebusy.query({
+      requestBody: {
+        timeMin: params.startTime.toISOString(),
+        timeMax: params.endTime.toISOString(),
+        timeZone: 'UTC',
+        items: [{ id: params.calendarId }],
+      },
+    });
+
+    return response.data.calendars?.[params.calendarId]?.busy ?? [];
+  }
+
+  private createOAuthClient() {
+    return new google.auth.OAuth2(
+      env.googleClientId,
+      env.googleClientSecret,
+      env.googleRedirectUri,
+    );
   }
 }
