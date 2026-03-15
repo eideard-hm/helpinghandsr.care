@@ -15,8 +15,6 @@ export default function SignInWithGoogle() {
       provider: 'google',
       options: {
         redirectTo: `${origin}/auth/callback`,
-        scopes: 'https://www.googleapis.com/auth/calendar',
-        queryParams: { access_type: 'offline', prompt: 'consent' },
       },
     });
   };
