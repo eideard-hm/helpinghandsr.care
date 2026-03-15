@@ -24,7 +24,7 @@ export function Head() {
   const handleLogout = async () => {
     await signOutBrowser();
     router.replace('/auth/login');
-    router.refresh();
+    window.location.reload();
   };
 
   return (
