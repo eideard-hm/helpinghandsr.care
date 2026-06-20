@@ -27,10 +27,12 @@ export const createReview = async (
   _prev: ReviewResponse,
   formData: FormData
 ): Promise<ReviewResponse> => {
+  const rating = formData.get('rating');
+
   const parsedData = ReviewSchema.safeParse({
     name: formData.get('name'),
     content: formData.get('content'),
-    rating: formData.get('rating'),
+    rating: typeof rating === 'string' ? Number(rating) : rating,
   });
 
   if (!parsedData.success) {
