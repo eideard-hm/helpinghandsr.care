@@ -5,6 +5,7 @@ import { type CSSProperties, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { motion, useReducedMotion } from 'framer-motion';
+import { IconVolume, IconVolumeOff } from '@tabler/icons-react';
 
 import { env } from '@/config/env';
 import { fadeInUp } from '@/lib/motion';
@@ -40,7 +41,7 @@ export function Hero({
   }, [headerSelector, headerRemFallback]);
 
   const sectionStyle: CSSProperties = {
-    height: `calc(100dvh - ${headerPx ?? headerRemFallback * 16}px)`,
+    minHeight: `calc(76dvh - ${headerPx ?? headerRemFallback * 16}px)`,
   } as const;
 
   const m3u8 = '/video/hero.m3u8';
@@ -48,53 +49,27 @@ export function Hero({
 
   return (
     <section
-      className='relative flex items-center overflow-hidden bg-[color:var(--bg)]'
+      className='relative overflow-hidden bg-[color:var(--bg)]'
       style={sectionStyle}
       aria-label={`${env.brandSEO} - Therapeutic Home Massage in Abu Dhabi`}
     >
-      <h1 className='sr-only'>
-        {env.brandSEO} - Therapeutic Home Massage in Abu Dhabi.
-      </h1>
-
       <button
         onClick={toggleSound}
-        className='absolute z-30 bottom-4 right-4 md:bottom-8 md:right-8 bg-black/50 text-white p-2 rounded-full backdrop-blur-sm hover:bg-black/70 transition-all'
+        className='absolute right-4 top-4 z-30 inline-flex size-11 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white md:bottom-8 md:right-8 md:top-auto'
         aria-label={isMuted ? 'Turn on sound' : 'Turn off sound'}
+        aria-pressed={!isMuted}
+        type='button'
       >
         {isMuted ? (
-          <svg
-            className='w-6 h-6'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z'
-            />
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2'
-            />
-          </svg>
+          <IconVolumeOff
+            size={24}
+            aria-hidden
+          />
         ) : (
-          <svg
-            className='w-6 h-6'
-            fill='none'
-            stroke='currentColor'
-            viewBox='0 0 24 24'
-          >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M15.536 8.464a5 5 0 010 7.072M12 6a9 9 0 010 12m-4.5-9.5L12 3v18l-4.5-4.5H4a1 1 0 01-1-1v-7a1 1 0 011-1h3.5z'
-            />
-          </svg>
+          <IconVolume
+            size={24}
+            aria-hidden
+          />
         )}
       </button>
 
@@ -104,24 +79,9 @@ export function Hero({
             src={m3u8}
             poster={poster}
             muted={isMuted}
-            className='absolute inset-0 h-full w-full scale-110 object-cover blur-md md:hidden'
+            className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
             ariaHidden
           />
-          <motion.div
-            key='hero-video-mobile'
-            className='absolute left-1/2 top-1/2 md:hidden -translate-x-1/2 -translate-y-1/2 w-dvw'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-          >
-            <LocalHlsVideo
-              src={m3u8}
-              poster={poster}
-              muted={isMuted}
-              className='max-h-full max-w-full object-contain'
-              ariaLabel='Hero mobile foreground video'
-            />
-          </motion.div>
         </>
       ) : (
         <Image
@@ -129,50 +89,24 @@ export function Hero({
           alt='Massage brand video keyframe'
           fill
           sizes='100vw'
-          className='absolute inset-0 h-full w-full object-cover object-[center_32%] md:hidden'
+          className='absolute inset-0 hidden h-full w-full object-cover object-[center_32%] md:block'
         />
       )}
 
-      <div className='absolute z-10 md:hidden left-4 top-[max(1rem,calc(env(safe-area-inset-top,0)+1rem))]'>
-        <h2 className='text-pretty text-3xl font-extrabold leading-tight text-title-indigo drop-shadow-sm'>
-          {env.brand}
-          <span className='block'>Premium Home Massage in Abu Dhabi</span>
-        </h2>
-      </div>
-      <div className='absolute z-10 md:hidden inset-x-0 bottom-[max(1rem,calc(env(safe-area-inset-bottom,0)+1rem))] px-4'>
-        <motion.p
-          className='mt-4 max-w-xl text-lg text-ink'
-          variants={fadeInUp}
-          transition={{ delay: 0.05 }}
-        >
-          Pain relief and mobility at home. 20+ years of clinical experience.
-        </motion.p>
-        <div className='mt-2'>
-          <WhatsAppButton classList='w-full' />
-        </div>
-      </div>
-
       {!reduce && (
         <>
-          <LocalHlsVideo
-            src={m3u8}
-            poster={poster}
-            muted={isMuted}
-            className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
-            ariaHidden
-          />
           <motion.div
             key='hero-video-desktop'
-            className='absolute left-1/2 top-1/2 hidden md:block -translate-x-1/2 -translate-y-1/2'
+            className='absolute -right-[2vw] top-1/2 z-[2] hidden h-full w-[56vw] -translate-y-1/2 items-center justify-center opacity-85 md:flex'
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            animate={{ opacity: 0.85 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
           >
             <LocalHlsVideo
               src={m3u8}
               poster={poster}
               muted={isMuted}
-              className='max-h-full max-w-full object-contain'
+              className='max-h-[78%] max-w-full object-contain'
               ariaLabel='Hero desktop foreground video'
             />
           </motion.div>
@@ -184,15 +118,17 @@ export function Hero({
           key='hero-image-desktop'
           src='/zeinmotiontm2.webp'
           alt='Hero Image showing a person receiving a massage'
-          className='absolute left-1/2 top-1/2 hidden max-h-full max-w-full -translate-x-1/2 -translate-y-1/2 object-contain md:block'
+          className='absolute -right-[2vw] top-1/2 z-[2] hidden max-h-[78%] w-[56vw] -translate-y-1/2 object-contain opacity-85 md:block'
           initial={{ scale: 1.04, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 0.85 }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         />
       )}
 
-      <div className='relative z-10 container mx-auto hidden h-full max-w-7xl px-4 md:block'>
-        <div className='grid h-full grid-cols-1 items-center md:grid-cols-[minmax(0,40%)_1fr]'>
+      <div className='absolute inset-0 z-[3] hidden bg-gradient-to-r from-[color:var(--bg)] via-[color:var(--bg)]/90 to-transparent md:block' />
+
+      <div className='relative z-10 container mx-auto max-w-7xl px-4'>
+        <div className='grid min-h-[calc(76dvh-6rem)] grid-cols-1 items-start gap-5 pb-24 pt-7 md:min-h-[calc(82dvh-7rem)] md:grid-cols-[minmax(0,34rem)_1fr] md:items-center md:gap-0 md:pb-0 md:pt-0'>
           <motion.div
             variants={fadeInUp}
             initial='hidden'
@@ -200,14 +136,15 @@ export function Hero({
             viewport={{ once: true, amount: 0.6 }}
           >
             <div className='p-0'>
-              <div className='pr-6'>
-                <h2 className='max-w-md text-pretty text-5xl font-extrabold leading-tight drop-shadow-sm text-title-indigo'>
-                  <span className='block'>{env.brand}</span>
-                  <span className='block'>Therapeutic Home Massage</span>
-                  <span className='block'>in Abu Dhabi</span>
-                </h2>
+              <div className='max-w-lg pr-14 md:pr-6'>
+                <p className='mb-3 text-sm font-semibold uppercase tracking-wide text-[color:var(--brand)]'>
+                  {env.brand}
+                </p>
+                <h1 className='text-pretty text-3xl font-extrabold leading-tight drop-shadow-sm text-title-indigo sm:text-4xl lg:text-5xl'>
+                  Therapeutic Home Massage in Abu Dhabi
+                </h1>
                 <motion.p
-                  className='mt-4 max-w-xl text-lg text-ink'
+                  className='mt-3 max-w-md text-base leading-7 text-ink sm:mt-4 sm:text-lg'
                   variants={fadeInUp}
                   transition={{ delay: 0.05 }}
                 >
@@ -215,11 +152,37 @@ export function Hero({
                   mobility enhancement. Personalized sessions delivered to your
                   home.
                 </motion.p>
-                <div className='mt-5'>
-                  <WhatsAppButton />
+                <div className='mt-5 hidden md:block'>
+                  <WhatsAppButton label='Book via WhatsApp' />
                 </div>
               </div>
             </div>
+          </motion.div>
+
+          <motion.div
+            key='hero-media-mobile'
+            className='relative mx-auto flex aspect-[16/10] w-full max-w-xs justify-center overflow-hidden rounded-2xl bg-white/50 shadow-sm sm:max-w-sm md:hidden'
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, ease: 'easeOut' }}
+          >
+            {!reduce ? (
+              <LocalHlsVideo
+                src={m3u8}
+                poster={poster}
+                muted={isMuted}
+                className='h-full w-full object-contain'
+                ariaLabel='Hero mobile foreground video'
+              />
+            ) : (
+              <Image
+                src='/zeinmotiontm2.webp'
+                alt='Hero Image showing a person receiving a massage'
+                fill
+                sizes='(max-width: 767px) 100vw, 0vw'
+                className='object-contain'
+              />
+            )}
           </motion.div>
         </div>
       </div>

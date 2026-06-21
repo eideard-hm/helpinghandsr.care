@@ -23,10 +23,11 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
   return (
     <>
       <button
-        className='md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border text-[color:var(--ink)]/80'
+        className='inline-flex h-10 w-10 items-center justify-center rounded-lg border text-[color:var(--ink)]/80 md:hidden'
         aria-controls={panelId}
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
+        type='button'
       >
         <svg
           width='20'
@@ -48,12 +49,12 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
       <div
         id={panelId}
         hidden={!open}
-        className='md:hidden border-t bg-white/95 backdrop-blur absolute top-28 left-0 right-0 shadow-md'
+        className='absolute left-0 right-0 top-24 border-t bg-white/95 shadow-md backdrop-blur md:hidden'
         aria-modal='true'
         role='dialog'
-        aria-labelledby='mobile-menu-title'
+        aria-label='Mobile menu'
       >
-        <nav className='mx-auto max-w-7xl px-4 py-3 flex flex-col gap-3 text-[color:var(--ink)]'>
+        <nav className='mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 text-[color:var(--ink)]'>
           <Link
             href='/#services'
             onClick={() => setOpen(false)}

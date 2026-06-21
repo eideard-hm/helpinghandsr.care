@@ -12,7 +12,7 @@ export const getReviews = async (): Promise<Review[]> => {
       createdAt: 'desc',
     },
     where: {
-      status: 'APPROVED'
+      status: 'APPROVED',
     },
     take: 10,
   });
@@ -36,9 +36,11 @@ export const createReview = async (
   });
 
   if (!parsedData.success) {
+    const [firstError] = parsedData.error.issues;
+
     return {
       ok: false,
-      error: parsedData.error.message,
+      error: firstError?.message ?? 'Please check the testimonial form.',
     };
   }
 
