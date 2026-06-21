@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 
 import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
+import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
 import mainMetadata from '@/metadata/main';
@@ -52,6 +53,8 @@ export default function RootLayout({
           </div>
 
           {children}
+
+          <MobileWhatsAppCta />
         </main>
 
         <footer className='bg-brand-2 text-ink py-12 shadow-inner'>
