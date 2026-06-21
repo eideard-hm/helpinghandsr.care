@@ -2,8 +2,6 @@
 
 import { useActionState, useEffect, useTransition } from 'react';
 
-import { useRouter } from 'next/navigation';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
@@ -18,8 +16,6 @@ export default function AddReviewForm() {
     error: null,
     review: null,
   });
-
-  const router = useRouter();
 
   const {
     register,
@@ -44,9 +40,8 @@ export default function AddReviewForm() {
   useEffect(() => {
     if (state?.ok) {
       reset();
-      router.push('/');
     }
-  }, [state, reset, router]);
+  }, [state, reset]);
 
   return (
     <form
@@ -144,6 +139,12 @@ export default function AddReviewForm() {
           </p>
         )}
       </div>
+
+      {state?.ok && (
+        <p className='rounded-lg bg-green-50 px-3 py-2 text-sm text-green-700'>
+          Thank you. Your testimonial was submitted for review.
+        </p>
+      )}
 
       {state?.error && <p className='text-red-600 mt-2'>{state.error}</p>}
 
