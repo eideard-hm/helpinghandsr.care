@@ -2,6 +2,8 @@
 
 import { type CSSProperties, useEffect, useState } from 'react';
 
+import Image from 'next/image';
+
 import { motion, useReducedMotion } from 'framer-motion';
 
 import { env } from '@/config/env';
@@ -122,11 +124,12 @@ export function Hero({
           </motion.div>
         </>
       ) : (
-        <img
+        <Image
           src='/zeinmotiontm.webp'
           alt='Massage brand video keyframe'
+          fill
+          sizes='100vw'
           className='absolute inset-0 h-full w-full object-cover object-[center_32%] md:hidden'
-          decoding='async'
         />
       )}
 

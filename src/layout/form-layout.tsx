@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export function FormLayout({
   children,
   formTitle,
@@ -14,12 +16,12 @@ export function FormLayout({
   return (
     <section className='flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0'>
       <div className='flex items-center mb-3 text-2xl font-semibold text-gray-900'>
-        <img
+        <Image
           width={96}
           height={96}
           className='size-24 mr-2 aspect-square object-contain'
           src='/zeinmotiontm2.webp'
-          alt={`Logo of ${brand} | Message Therapist`}
+          alt={`Logo of ${brand} | Massage Therapist`}
         />
 
         <section>

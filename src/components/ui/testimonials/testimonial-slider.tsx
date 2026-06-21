@@ -56,7 +56,7 @@ export function TestimonialsSlider({
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
-  }, [index, paused, autoPlayMs, items.length]);
+  }, [index, paused, autoPlayMs, items.length, goTo]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onDragEnd = (_: any, info: PanInfo) => {
@@ -126,7 +126,7 @@ export function TestimonialsSlider({
               </header>
 
               <p className='mt-4 text-[15px] leading-relaxed text-gray-700'>
-                “{r.content}”
+                &quot;{r.content}&quot;
               </p>
             </motion.div>
           </AnimatePresence>
