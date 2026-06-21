@@ -7,7 +7,7 @@ export const env = {
   brandLogotype: process.env.NEXT_PUBLIC_BRAND_LOGOTYPE || '',
   waMessageTemplate: process.env.NEXT_PUBLIC_WA_MESSAGE_TEMPLATE || '',
 
-  susap: {
+  supabase: {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
   },

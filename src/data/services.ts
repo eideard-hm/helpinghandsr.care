@@ -19,7 +19,7 @@ export const SERVICES: Services[] = [
       {
         title: 'Comprehensive Pain Relief',
         details: [
-          'Targets chronic pain, muscle tension and stiffness with deep-tissue precision.',
+          'Targets chronic pain, muscle tension, and stiffness with deep-tissue precision.',
           'Combines stripping and cross-fiber friction to break up adhesions and scar tissue.',
           'Promotes healthy circulation and speeds muscle recovery.'
         ],
@@ -28,7 +28,7 @@ export const SERVICES: Services[] = [
         title: 'Mobility & Performance',
         details: [
           'Integrates assisted stretching and sports massage to increase flexibility and range of motion.',
-          'Ideal for athletes, active professionals and anyone seeking better posture and movement quality.',
+          'Ideal for athletes, active professionals, and anyone seeking better posture and movement quality.',
           'Helps reduce risk of future injuries and supports optimal performance.'
         ],
       },
@@ -37,7 +37,7 @@ export const SERVICES: Services[] = [
         details: [
           'Anti-stress and head/face massage calm the nervous system and release mental tension.',
           'Each session begins with gentle energy activation (quantum/energy reset) to enhance the therapeutic effect.',
-          'Leaves you feeling lighter, more relaxed and re-energized.'
+          'Leaves you feeling lighter, more relaxed, and re-energized.'
         ],
       },
       {
@@ -96,8 +96,8 @@ export const SERVICES: Services[] = [
       },
     ],
     details: [
-      'Deep tissue massages use firm pressure and slow strokes to target deep layers of muscle and fascia.',
-      'Therapist starts with lighter pressure to warm up the muscles and then increases intensity.',
+      'Deep tissue massage uses firm pressure and slow strokes to target deep layers of muscle and fascia.',
+      'The therapist starts with lighter pressure to warm up the muscles and then increases intensity.',
       'Techniques include stripping and friction to break up adhesions and improve range of motion.',
     ],
   },
@@ -134,9 +134,9 @@ export const SERVICES: Services[] = [
         ],
       },
       {
-        title: 'Decreases muscle spasms and cramp',
+        title: 'Decreases muscle spasms and cramps',
         details: [
-          'This benefit helps to relax tight muscles and reduce the frequency and intensity of spasms.',
+          'This benefit helps relax tight muscles and reduce the frequency and intensity of cramps.',
         ],
       },
     ],
@@ -154,7 +154,7 @@ export const SERVICES: Services[] = [
     image: '/services/sports-massage.webp',
     bigImage: '/services/sports-massage-big.webp',
     excerpt:
-      'Sports Massage is focused at systematic, targeting muscles that are used in gym or in a specific sport.',
+      'Sports Massage systematically targets muscles used in the gym or in a specific sport.',
     waLink: waLink(
       env.whatsAppNumber,
       env.waMessageTemplate.replace('{SERVICE}', 'Sports Massage')
@@ -188,7 +188,7 @@ export const SERVICES: Services[] = [
     details: [
       'Sports massage uses a combination of techniques such as deep tissue massage, stretching, and trigger point therapy to target specific muscle groups.',
       'It can be used before or after physical activity to prepare the muscles or aid in recovery.',
-      'Therapist may also provide advice on stretching and strengthening exercises to prevent future injuries.',
+      'The therapist may also provide advice on stretching and strengthening exercises to prevent future injuries.',
     ],
   },
   {
@@ -212,7 +212,7 @@ export const SERVICES: Services[] = [
         ],
       },
       {
-        title: 'Encourage whole-body comfort and relaxation',
+        title: 'Supports whole-body comfort and relaxation',
         details: [
           'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
         ],
@@ -239,7 +239,7 @@ export const SERVICES: Services[] = [
     details: [
       'Cupping therapy involves placing cups on the skin to create suction, which helps to increase blood flow and promote healing.',
       'The cups can be made of various materials, including glass, bamboo, or silicone.',
-      'Therapist may use static or moving cupping techniques depending on the desired effect.',
+      'The therapist may use static or moving cupping techniques depending on the desired effect.',
     ],
   },
   {
@@ -284,7 +284,7 @@ export const SERVICES: Services[] = [
     details: [
       'Reflexology involves applying pressure to specific points on the hands and feet that correspond to different organs and systems in the body.',
       'It is based on the principle that these points can influence the health of the corresponding areas.',
-      'Therapist may use techniques such as thumb walking, finger pressure, and stretching to stimulate the reflex points.',
+      'The therapist may use techniques such as thumb walking, finger pressure, and stretching to stimulate reflex points.',
     ],
   },
   {
@@ -328,7 +328,7 @@ export const SERVICES: Services[] = [
     ],
     details: [
       'Lymphatic Drainage Massage involves gentle, rhythmic strokes that follow the natural flow of the lymphatic system.',
-      'Therapist uses light pressure to stimulate the lymphatic vessels and promote the movement of lymph fluid.',
+      'The therapist uses light pressure to stimulate the lymphatic vessels and promote the movement of lymph fluid.',
       "The massage can be performed on the entire body or focused on specific areas, depending on the client's needs.",
     ],
   },
@@ -373,7 +373,7 @@ export const SERVICES: Services[] = [
     ],
     details: [
       'Anti-Cellulite Massage involves a combination of techniques, including deep tissue massage, lymphatic drainage, and skin rolling.',
-      'Therapist uses firm pressure and rhythmic strokes to target areas affected by cellulite, promoting better circulation and lymphatic flow.',
+      'The therapist uses firm pressure and rhythmic strokes to target areas affected by cellulite, promoting better circulation and lymphatic flow.',
       'The massage can be performed on the thighs, buttocks, abdomen, and other areas where cellulite is commonly found.',
     ],
   },

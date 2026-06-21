@@ -48,8 +48,8 @@ export const Benefits = ({
           />
         </svg>
         {isMain
-          ? '🌟 Premium Benefits Included'
-          : 'What is Included / Benefits'}
+          ? 'Premium Benefits Included'
+          : 'What Is Included / Benefits'}
       </h4>
 
       <div className={isMain ? 'space-y-3' : 'space-y-2'}>

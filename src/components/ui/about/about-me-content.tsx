@@ -152,7 +152,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
           {activeTab === 'zeinmotion' && (
             <div className='space-y-4 text-[var(--ink)]'>
               <p>
-                <strong>ZeinMotion™</strong> is my premium signature massage
+                <strong>ZeinMotion(TM)</strong> is my premium signature massage
                 method, developed from nearly 20 years of hands-on experience.
                 This integrated approach combines time-tested techniques with a
                 thoughtful, human-centered methodology.
@@ -163,12 +163,12 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   <h4 className='font-semibold text-[var(--brand)] mb-2'>
                     Techniques Integrated
                   </h4>
-                  <ul className='space-y-1 text-sm'>
-                    <li>• Head & Neck Massage</li>
-                    <li>• Deep Tissue & Sports Massage</li>
-                    <li>• Assisted Stretching</li>
-                    <li>• Reflexology Therapy</li>
-                    <li>• Cupping (when appropriate)</li>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>Head & Neck Massage</li>
+                    <li>Deep Tissue & Sports Massage</li>
+                    <li>Assisted Stretching</li>
+                    <li>Reflexology Therapy</li>
+                    <li>Cupping (when appropriate)</li>
                   </ul>
                 </div>
 
@@ -176,11 +176,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   <h4 className='font-semibold text-[var(--brand)] mb-2'>
                     Session Approach
                   </h4>
-                  <ul className='space-y-1 text-sm'>
-                    <li>• Fully personalized assessments</li>
-                    <li>• Real-time pressure adjustment</li>
-                    <li>• Focus on specific need areas</li>
-                    <li>• Continuous feedback integration</li>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>Fully personalized assessments</li>
+                    <li>Real-time pressure adjustment</li>
+                    <li>Focus on specific areas of need</li>
+                    <li>Continuous feedback integration</li>
                   </ul>
                 </div>
               </div>
@@ -202,7 +202,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
 
               <ul className='space-y-3'>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>✓</span>
+                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
                   <span>
                     <strong>Pain Relief & Management:</strong> Targeted
                     treatment for chronic pain, muscle tension, and discomfort
@@ -210,7 +210,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>✓</span>
+                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
                   <span>
                     <strong>Enhanced Mobility & Flexibility:</strong>{' '}
                     Restoration of proper joint function and increased range of
@@ -218,7 +218,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>✓</span>
+                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
                   <span>
                     <strong>Performance Optimization:</strong> Support for
                     athletes and active individuals in recovery, injury
@@ -226,7 +226,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>✓</span>
+                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
                   <span>
                     <strong>Stress Reduction & Relaxation:</strong>{' '}
                     Downregulation of nervous system activity promoting deep
@@ -234,7 +234,7 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>✓</span>
+                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
                   <span>
                     <strong>Injury Prevention & Recovery:</strong>{' '}
                     Identification of musculoskeletal imbalances and support for

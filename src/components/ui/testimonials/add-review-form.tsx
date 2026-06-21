@@ -63,7 +63,7 @@ export default function AddReviewForm() {
         <input
           id='name'
           type='text'
-          placeholder='Eg. John Doe'
+          placeholder='e.g., John Doe'
           {...register('name')}
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? 'err-name' : undefined}
@@ -152,7 +152,7 @@ export default function AddReviewForm() {
         disabled={isSubmitting || isPending}
         className='w-full px-4 py-2 text-sm font-medium text-center text-white bg-brand-2 rounded-lg hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 cursor-pointer'
       >
-        {isSubmitting || isPending ? 'Sending…' : 'Submit Review'}
+        {isSubmitting || isPending ? 'Sending...' : 'Submit Review'}
       </button>
     </form>
   );

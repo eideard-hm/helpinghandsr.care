@@ -129,7 +129,7 @@ export const mainMetadata: Metadata = {
         url: `${prodUrl}og-image-2.jpg`,
         width: 800,
         height: 600,
-        alt: `Mobile Massage Therapist providing ${CORE_SERVICES[0]} in Abu Dhabi home`,
+        alt: `Mobile Massage Therapist providing ${CORE_SERVICES[0]} at home in Abu Dhabi`,
       },
     ],
   },

@@ -48,10 +48,10 @@ export function Hero({
     <section
       className='relative flex items-center overflow-hidden bg-[color:var(--bg)]'
       style={sectionStyle}
-      aria-label={`${env.brandSEO} — Therapeutic Home Massage in Abu Dhabi`}
+      aria-label={`${env.brandSEO} - Therapeutic Home Massage in Abu Dhabi`}
     >
       <h1 className='sr-only'>
-        {env.brandSEO} — Therapeutic Home Massage in Abu Dhabi.
+        {env.brandSEO} - Therapeutic Home Massage in Abu Dhabi.
       </h1>
 
       <button

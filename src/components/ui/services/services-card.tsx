@@ -59,7 +59,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
                 <div className='absolute inset-0 bg-black/10'></div>
                 <div className='absolute top-4 left-4'>
                   <span className='bg-white/90 text-[color:var(--brand)] px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm'>
-                    💎 Premium
+                    Premium
                   </span>
                 </div>
               </>
@@ -112,7 +112,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
                     'bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--brand-2)] hover:from-[color:var(--brand)]/90 hover:to-[color:var(--brand-2)]/90'
                 )}
               >
-                {s.isMain ? '✨ Learn More' : 'Show More'}
+                {s.isMain ? 'Learn More' : 'Show More'}
               </Button>
 
               <WhatsAppButton
