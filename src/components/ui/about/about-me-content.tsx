@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
+import { IconCheck } from '@tabler/icons-react';
 
 import { WhatsAppButton } from '@/components/common/whatsapp-btn';
 import { env } from '@/config/env';
@@ -202,7 +203,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
 
               <ul className='space-y-3'>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Pain Relief & Management:</strong> Targeted
                     treatment for chronic pain, muscle tension, and discomfort
@@ -210,7 +215,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Enhanced Mobility & Flexibility:</strong>{' '}
                     Restoration of proper joint function and increased range of
@@ -218,7 +227,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Performance Optimization:</strong> Support for
                     athletes and active individuals in recovery, injury
@@ -226,7 +239,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Stress Reduction & Relaxation:</strong>{' '}
                     Downregulation of nervous system activity promoting deep
@@ -234,7 +251,11 @@ export function AboutMeContent({ waLink }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-[var(--brand)] mr-2 mt-1'>+</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Injury Prevention & Recovery:</strong>{' '}
                     Identification of musculoskeletal imbalances and support for
