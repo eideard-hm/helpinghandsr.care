@@ -32,6 +32,9 @@ const generateKeywords = () => {
     'Khalifa City',
     'Al Raha',
     'Saadiyat Island',
+    'Al Maryah Island',
+    'Corniche',
+    'Mohammed Bin Zayed City',
   ];
 
   const painReliefKeywords = [
@@ -53,6 +56,8 @@ const generateKeywords = () => {
     'massage at home service',
     'wellness therapy Abu Dhabi',
     'professional massage therapist',
+    'home massage prices Abu Dhabi',
+    'WhatsApp massage booking Abu Dhabi',
 
     ...painReliefKeywords.flatMap((keyword) => [
       `${keyword} Abu Dhabi`,
@@ -82,7 +87,7 @@ export const mainMetadata: Metadata = {
     4
   ).join(
     ', '
-  )} and more. 20+ years of experience. Relieve muscle pain, improve mobility. Book your home visit today! +971 54 374 0644`,
+  )} and more. 20+ years of experience. Relieve muscle pain, improve mobility, and book home visits by WhatsApp. +971 54 374 0644`,
 
   keywords: generateKeywords(),
 
@@ -113,7 +118,7 @@ export const mainMetadata: Metadata = {
     locale: 'en_AE',
     siteName: `${env.brandSEO} | Professional Home Massage Abu Dhabi`,
     title: `Home Massage Therapy Abu Dhabi | ${env.brandSEO} - ZeinMotion & Sports Massage`,
-    description: `Professional home massage therapy in Abu Dhabi. ${CORE_SERVICES.slice(
+    description: `Professional home massage therapy in Abu Dhabi with WhatsApp booking. ${CORE_SERVICES.slice(
       0,
       3
     ).join(', ')} and more. Book your home visit! +971 54 374 0644`,
