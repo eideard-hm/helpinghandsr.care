@@ -23,7 +23,6 @@ export function Hero({
 }: HeroProps) {
   const reduce = useReducedMotion();
   const [headerPx, setHeaderPx] = useState<number | null>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
 
   const toggleSound = () => setIsMuted((m) => !m);
@@ -41,22 +40,12 @@ export function Hero({
     return () => ro.disconnect();
   }, [headerSelector, headerRemFallback]);
 
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)');
-    const sync = () => setIsDesktop(media.matches);
-
-    sync();
-    media.addEventListener('change', sync);
-    return () => media.removeEventListener('change', sync);
-  }, []);
-
   const sectionStyle: CSSProperties = {
     minHeight: `calc(76dvh - ${headerPx ?? headerRemFallback * 16}px)`,
   } as const;
 
   const m3u8 = '/video/hero.m3u8';
   const poster = '/zeinmotiontm2.webp';
-  const showDesktopVideo = isDesktop && !reduce;
 
   return (
     <section
@@ -66,7 +55,7 @@ export function Hero({
     >
       <button
         onClick={toggleSound}
-        className='absolute right-4 top-4 z-30 hidden size-11 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white md:bottom-8 md:right-8 md:top-auto md:inline-flex'
+        className='absolute right-4 top-4 z-30 inline-flex size-11 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white md:bottom-8 md:right-8 md:top-auto'
         aria-label={isMuted ? 'Turn on sound' : 'Turn off sound'}
         aria-pressed={!isMuted}
         type='button'
@@ -84,17 +73,27 @@ export function Hero({
         )}
       </button>
 
-      <Image
-        src='/zeinmotiontm.webp'
-        alt=''
-        fill
-        sizes='100vw'
-        className='absolute inset-0 hidden h-full w-full scale-105 object-cover object-[center_32%] opacity-60 blur-md md:block'
-        aria-hidden
-        priority
-      />
+      {!reduce ? (
+        <>
+          <LocalHlsVideo
+            src={m3u8}
+            poster={poster}
+            muted={isMuted}
+            className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
+            ariaHidden
+          />
+        </>
+      ) : (
+        <Image
+          src='/zeinmotiontm.webp'
+          alt='Massage brand video keyframe'
+          fill
+          sizes='100vw'
+          className='absolute inset-0 hidden h-full w-full object-cover object-[center_32%] md:block'
+        />
+      )}
 
-      {showDesktopVideo && (
+      {!reduce && (
         <>
           <motion.div
             key='hero-video-desktop'
@@ -114,7 +113,7 @@ export function Hero({
         </>
       )}
 
-      {isDesktop && reduce && (
+      {reduce && (
         <motion.img
           key='hero-image-desktop'
           src='/zeinmotiontm2.webp'
@@ -167,14 +166,23 @@ export function Hero({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
           >
-            <Image
-              src='/zeinmotiontm2.webp'
-              alt='Hero Image showing a person receiving a massage'
-              fill
-              sizes='(max-width: 767px) 24rem, 0vw'
-              className='object-contain'
-              priority
-            />
+            {!reduce ? (
+              <LocalHlsVideo
+                src={m3u8}
+                poster={poster}
+                muted={isMuted}
+                className='h-full w-full object-contain'
+                ariaLabel='Hero mobile foreground video'
+              />
+            ) : (
+              <Image
+                src='/zeinmotiontm2.webp'
+                alt='Hero Image showing a person receiving a massage'
+                fill
+                sizes='(max-width: 767px) 100vw, 0vw'
+                className='object-contain'
+              />
+            )}
           </motion.div>
         </div>
       </div>
