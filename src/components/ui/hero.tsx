@@ -40,16 +40,16 @@ export function Hero({
     return () => ro.disconnect();
   }, [headerSelector, headerRemFallback]);
 
-  const sectionStyle: CSSProperties = {
-    minHeight: `calc(76dvh - ${headerPx ?? headerRemFallback * 16}px)`,
-  } as const;
+  const sectionStyle = {
+    '--hero-header-offset': `${headerPx ?? headerRemFallback * 16}px`,
+  } as CSSProperties;
 
   const m3u8 = '/video/hero.m3u8';
   const poster = '/zeinmotiontm2.webp';
 
   return (
     <section
-      className='relative overflow-hidden bg-[color:var(--bg)]'
+      className='relative overflow-hidden bg-[color:var(--bg)] md:min-h-[calc(82dvh-var(--hero-header-offset))]'
       style={sectionStyle}
       aria-label={`${env.brandSEO} - Therapeutic Home Massage in Abu Dhabi`}
     >
@@ -128,7 +128,7 @@ export function Hero({
       <div className='absolute inset-0 z-[3] hidden bg-gradient-to-r from-[color:var(--bg)] via-[color:var(--bg)]/90 to-transparent md:block' />
 
       <div className='relative z-10 container mx-auto max-w-7xl px-4'>
-        <div className='grid min-h-[calc(76dvh-6rem)] grid-cols-1 items-start gap-5 pb-24 pt-7 md:min-h-[calc(82dvh-7rem)] md:grid-cols-[minmax(0,34rem)_1fr] md:items-center md:gap-0 md:pb-0 md:pt-0'>
+        <div className='grid grid-cols-1 items-start gap-5 pb-12 pt-7 md:min-h-[calc(82dvh-7rem)] md:grid-cols-[minmax(0,34rem)_1fr] md:items-center md:gap-0 md:pb-0 md:pt-0'>
           <motion.div
             variants={fadeInUp}
             initial='hidden'
