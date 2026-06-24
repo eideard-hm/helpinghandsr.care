@@ -45,7 +45,7 @@ export function Hero({
   } as CSSProperties;
 
   const m3u8 = '/video/hero.m3u8';
-  const poster = '/zeinmotiontm2.webp';
+  const poster = '/hero-poster.webp';
 
   return (
     <section
@@ -55,7 +55,7 @@ export function Hero({
     >
       <button
         onClick={toggleSound}
-        className='absolute right-4 top-4 z-30 inline-flex size-11 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white md:bottom-8 md:right-8 md:top-auto'
+        className='absolute right-4 top-4 z-30 hidden size-11 items-center justify-center rounded-full bg-black/55 text-white shadow-lg backdrop-blur-sm transition-all hover:bg-black/75 focus:outline-none focus:ring-2 focus:ring-white md:bottom-8 md:right-8 md:top-auto md:inline-flex'
         aria-label={isMuted ? 'Turn on sound' : 'Turn off sound'}
         aria-pressed={!isMuted}
         type='button'
@@ -85,7 +85,7 @@ export function Hero({
         </>
       ) : (
         <Image
-          src='/zeinmotiontm.webp'
+          src={poster}
           alt='Massage brand video keyframe'
           fill
           sizes='100vw'
@@ -116,7 +116,7 @@ export function Hero({
       {reduce && (
         <motion.img
           key='hero-image-desktop'
-          src='/zeinmotiontm2.webp'
+          src={poster}
           alt='Hero Image showing a person receiving a massage'
           className='absolute -right-[2vw] top-1/2 z-[2] hidden max-h-[78%] w-[56vw] -translate-y-1/2 object-contain opacity-85 md:block'
           initial={{ scale: 1.04, opacity: 0 }}
@@ -161,26 +161,46 @@ export function Hero({
 
           <motion.div
             key='hero-media-mobile'
-            className='relative mx-auto flex aspect-[16/10] w-full max-w-xs justify-center overflow-hidden rounded-2xl bg-white/50 shadow-sm sm:max-w-sm md:hidden'
+            className='relative -mx-1 flex aspect-video w-[calc(100%+0.5rem)] justify-center overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 md:hidden'
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: 'easeOut' }}
           >
+            <button
+              onClick={toggleSound}
+              className='absolute right-2 top-2 z-10 inline-flex size-9 items-center justify-center rounded-full bg-black/50 text-white shadow-md backdrop-blur-sm transition-all hover:bg-black/70 focus:outline-none focus:ring-2 focus:ring-white'
+              aria-label={isMuted ? 'Turn on sound' : 'Turn off sound'}
+              aria-pressed={!isMuted}
+              type='button'
+            >
+              {isMuted ? (
+                <IconVolumeOff
+                  size={20}
+                  aria-hidden
+                />
+              ) : (
+                <IconVolume
+                  size={20}
+                  aria-hidden
+                />
+              )}
+            </button>
+
             {!reduce ? (
               <LocalHlsVideo
                 src={m3u8}
                 poster={poster}
                 muted={isMuted}
-                className='h-full w-full object-contain'
+                className='h-full w-full object-cover'
                 ariaLabel='Hero mobile foreground video'
               />
             ) : (
               <Image
-                src='/zeinmotiontm2.webp'
+                src={poster}
                 alt='Hero Image showing a person receiving a massage'
                 fill
                 sizes='(max-width: 767px) 100vw, 0vw'
-                className='object-contain'
+                className='object-cover'
               />
             )}
           </motion.div>
