@@ -8,7 +8,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { IconVolume, IconVolumeOff } from '@tabler/icons-react';
 
 import { env } from '@/config/env';
-import { fadeInUp } from '@/lib/motion';
+import { childFade, listStagger } from '@/lib/motion';
 import { LocalHlsVideo } from '../common/LocalHlsVideo';
 import { WhatsAppButton } from '../common/whatsapp-btn';
 
@@ -130,31 +130,39 @@ export function Hero({
       <div className='relative z-10 container mx-auto max-w-7xl px-4'>
         <div className='grid grid-cols-1 items-start gap-5 pb-12 pt-7 md:min-h-[calc(82dvh-7rem)] md:grid-cols-[minmax(0,34rem)_1fr] md:items-center md:gap-0 md:pb-0 md:pt-0'>
           <motion.div
-            variants={fadeInUp}
-            initial='hidden'
-            whileInView='visible'
+            variants={reduce ? undefined : listStagger}
+            initial={reduce ? false : 'hidden'}
+            whileInView={reduce ? undefined : 'visible'}
             viewport={{ once: true, amount: 0.6 }}
           >
             <div className='p-0'>
               <div className='max-w-lg pr-14 md:pr-6'>
-                <p className='mb-3 text-sm font-semibold uppercase tracking-wide text-[color:var(--brand)]'>
+                <motion.p
+                  className='mb-3 text-sm font-semibold uppercase tracking-wide text-[color:var(--brand)]'
+                  variants={reduce ? undefined : childFade}
+                >
                   {env.brand}
-                </p>
-                <h1 className='text-pretty text-3xl font-extrabold leading-tight drop-shadow-sm text-title-indigo sm:text-4xl lg:text-5xl'>
+                </motion.p>
+                <motion.h1
+                  className='text-pretty text-3xl font-extrabold leading-tight drop-shadow-sm text-title-indigo sm:text-4xl lg:text-5xl'
+                  variants={reduce ? undefined : childFade}
+                >
                   Therapeutic Home Massage in Abu Dhabi
-                </h1>
+                </motion.h1>
                 <motion.p
                   className='mt-3 max-w-md text-base leading-7 text-ink sm:mt-4 sm:text-lg'
-                  variants={fadeInUp}
-                  transition={{ delay: 0.05 }}
+                  variants={reduce ? undefined : childFade}
                 >
                   20+ years of clinical experience in pain management and
                   mobility enhancement. Personalized sessions delivered to your
                   home.
                 </motion.p>
-                <div className='mt-5 hidden md:block'>
+                <motion.div
+                  className='mt-5 hidden md:block'
+                  variants={reduce ? undefined : childFade}
+                >
                   <WhatsAppButton label='Book via WhatsApp' />
-                </div>
+                </motion.div>
               </div>
             </div>
           </motion.div>
