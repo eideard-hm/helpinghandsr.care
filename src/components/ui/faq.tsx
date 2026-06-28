@@ -4,9 +4,9 @@ import { SectionTitle } from '../common/section-title';
 
 const FAQ_ITEMS = [
   {
-    question: 'Do you provide massage at home in Abu Dhabi?',
+    question: 'Do you provide home massages in Abu Dhabi?',
     answer:
-      'Yes. Sessions are delivered at your home, hotel, or residence across Abu Dhabi, with the equipment needed for a professional treatment.',
+      'Yes. Home massage sessions are delivered at your home, hotel, or residence across Abu Dhabi, with the equipment needed for a professional treatment.',
   },
   {
     question: 'How do I book a session?',

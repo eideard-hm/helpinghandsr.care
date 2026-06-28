@@ -7,7 +7,11 @@ import { Header } from '@/components/common/header';
 import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
-import mainMetadata from '@/metadata/main';
+import mainMetadata, {
+  businessSchema,
+  homeMassageServiceSchema,
+  websiteSchema,
+} from '@/metadata/main';
 
 import './globals.css';
 
@@ -25,6 +29,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [businessSchema, websiteSchema, homeMassageServiceSchema],
+  };
+
   return (
     <html
       lang='en'
@@ -35,6 +44,10 @@ export default function RootLayout({
           rel='preconnect'
           href='https://fonts.gstatic.com'
           crossOrigin=''
+        />
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
 

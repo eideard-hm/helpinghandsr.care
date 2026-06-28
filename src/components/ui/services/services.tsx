@@ -8,7 +8,7 @@ export function Services() {
       id='services'
       className='py-16 bg-bg container mx-auto px-4 max-w-7xl'
     >
-      <SectionTitle subTitle='Comprehensive care solutions tailored to your unique needs'>
+      <SectionTitle subTitle='Home massage services in Abu Dhabi tailored to your pain relief, mobility, and recovery needs'>
         Our Services
       </SectionTitle>
 
