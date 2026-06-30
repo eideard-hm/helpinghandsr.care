@@ -5,6 +5,11 @@ import { env } from '@/config/env';
 export const siteUrl = env.siteUrl || 'https://zeinmotion.vercel.app';
 
 const prodUrl = new URL(siteUrl);
+const BUSINESS_EMAIL = 'zeinmotionspa@gmail.com';
+const BUSINESS_PHONE_DISPLAY = '+971 54 374 0644';
+const BUSINESS_PHONE_SCHEMA = '+971543740644';
+const FACEBOOK_URL = 'https://web.facebook.com/ZeinMotion/';
+const INSTAGRAM_URL = 'https://www.instagram.com/zeinmotionuae/';
 
 const CORE_SERVICES = [
   'ZeinMotion Therapy',
@@ -63,6 +68,11 @@ const generateKeywords = () => {
     'professional massage therapist',
     'home massage prices Abu Dhabi',
     'WhatsApp massage booking Abu Dhabi',
+    'premium massage at home Abu Dhabi',
+    'customized home massage Abu Dhabi',
+    'tailored massage treatments Abu Dhabi',
+    'personalized home massage Abu Dhabi',
+    'massage therapist Abu Dhabi home visits',
 
     ...painReliefKeywords.flatMap((keyword) => [
       `${keyword} Abu Dhabi`,
@@ -92,7 +102,7 @@ export const mainMetadata: Metadata = {
     4
   ).join(
     ', '
-  )} and more. 20+ years of experience. Relieve muscle pain, improve mobility, and book home visits by WhatsApp. +971 54 374 0644`,
+  )} and more. Home visits, customized treatments, chronic pain relief, injury prevention, stress reduction, and self-care wellness. Book by WhatsApp: ${BUSINESS_PHONE_DISPLAY}`,
 
   keywords: generateKeywords(),
 
@@ -126,7 +136,7 @@ export const mainMetadata: Metadata = {
     description: `Professional home massages in Abu Dhabi with WhatsApp booking. ${CORE_SERVICES.slice(
       0,
       3
-    ).join(', ')} and more. Book your home visit! +971 54 374 0644`,
+    ).join(', ')} and customized treatments for chronic pain, injury prevention, stiffness, and stress relief. Book your home visit: ${BUSINESS_PHONE_DISPLAY}`,
     url: prodUrl,
     images: [
       {
@@ -144,10 +154,8 @@ export const mainMetadata: Metadata = {
     description: `Professional home massage in Abu Dhabi: ${CORE_SERVICES.slice(
       0,
       3
-    ).join(', ')}. Book your home visit! +971 54 374 0644`,
+    ).join(', ')}. Home visits, tailored treatments, pain relief, and wellness care. Book your home visit: ${BUSINESS_PHONE_DISPLAY}`,
     images: [`${prodUrl}og-image.jpg`],
-    creator: '@healinghandsr',
-    site: '@healinghandsr',
   },
 
   alternates: {
@@ -158,8 +166,8 @@ export const mainMetadata: Metadata = {
   classification: 'Professional Massage Therapy Services',
 
   other: {
-    'contact:phone': '+971543740644',
-    'contact:email': 'services@healinghandsr.com',
+    'contact:phone': BUSINESS_PHONE_SCHEMA,
+    'contact:email': BUSINESS_EMAIL,
     'business:service': CORE_SERVICES.join(', '),
     'location:city': 'Abu Dhabi',
     'location:country': 'United Arab Emirates',
@@ -206,8 +214,7 @@ export const sectionMetadata = {
 
   contact: {
     title: `Contact Professional Massage Therapist | ${env.brandSEO} - Abu Dhabi`,
-    description:
-      'Contact our professional massage therapist in Abu Dhabi for home visits. Call +971 54 374 0644 or email services@healinghandsr.com',
+    description: `Contact our professional massage therapist in Abu Dhabi for premium home visits, customized treatments, chronic pain relief, and wellness care. Call ${BUSINESS_PHONE_DISPLAY} or email ${BUSINESS_EMAIL}`,
     keywords: [
       'contact massage therapist Abu Dhabi',
       'massage service contact',
@@ -243,8 +250,8 @@ export const businessSchema = {
   description: mainMetadata.description,
   image: `${prodUrl}og-image.jpg`,
   logo: `${prodUrl}favicon_64x64.png`,
-  telephone: '+971543740644',
-  email: 'services@healinghandsr.com',
+  telephone: BUSINESS_PHONE_SCHEMA,
+  email: BUSINESS_EMAIL,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Abu Dhabi',
@@ -253,10 +260,7 @@ export const businessSchema = {
   },
   areaServed: 'Abu Dhabi and surrounding areas',
   serviceType: CORE_SERVICES,
-  sameAs: [
-    'https://www.facebook.com/HealingHands.R1',
-    'https://www.instagram.com/healinghands.r1',
-  ],
+  sameAs: [FACEBOOK_URL, INSTAGRAM_URL],
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Home massage services in Abu Dhabi',
@@ -292,7 +296,7 @@ export const homeMassageServiceSchema = {
   provider: {
     '@type': 'LocalBusiness',
     name: env.brandSEO,
-    telephone: '+971543740644',
+    telephone: BUSINESS_PHONE_SCHEMA,
   },
   areaServed: {
     '@type': 'City',

@@ -13,7 +13,7 @@ type SocialMediaItemsProps = {
 };
 
 export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
-     const waHref = waLinkWithEnv()
+  const waHref = waLinkWithEnv();
 
   return (
     <ul className={`${classList}`}>
@@ -34,7 +34,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
 
       <li className='rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow hover:scale-100'>
         <a
-          href='mailto:services@healinghandsr.com'
+          href='mailto:zeinmotionspa@gmail.com'
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#D44638] hover:text-red-500 transition duration-200'
@@ -49,7 +49,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
       
       <li className='rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow hover:scale-100'>
         <a
-          href='https://www.facebook.com/HealingHands.R1'
+          href='https://web.facebook.com/ZeinMotion/'
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#1877F2] hover:text-blue-700 transition duration-200'
@@ -64,7 +64,7 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
 
       <li className='rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow hover:scale-100'>
         <a
-          href='https://www.instagram.com/healinghands.r1'
+          href='https://www.instagram.com/zeinmotionuae/'
           target='_blank'
           rel='noopener noreferrer'
           className='text-[#e1306c] hover:text-pink-500 transition'
