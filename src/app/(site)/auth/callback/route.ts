@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   if (!code)
     return NextResponse.redirect(new URL('/auth/login?error=NoCode', origin));
 
-  let response = NextResponse.redirect(new URL(next, origin));
+  const response = NextResponse.redirect(new URL(next, origin));
 
   const supabase = await supabaseServerClient();
   const { error } = await supabase.auth.exchangeCodeForSession(code);

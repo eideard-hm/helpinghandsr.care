@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
+import { IconCheck } from '@tabler/icons-react';
 
 import { BookingButton } from '@/components/common/booking-btn';
 import { env } from '@/config/env';
@@ -152,7 +153,7 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
           {activeTab === 'zeinmotion' && (
             <div className='space-y-4 text-(--ink)'>
               <p>
-                <strong>ZeinMotion™</strong> is my premium signature massage
+                <strong>ZeinMotion(TM)</strong> is my premium signature massage
                 method, developed from nearly 20 years of hands-on experience.
                 This integrated approach combines time-tested techniques with a
                 thoughtful, human-centered methodology.
@@ -163,12 +164,12 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   <h4 className='font-semibold text-(--brand) mb-2'>
                     Techniques Integrated
                   </h4>
-                  <ul className='space-y-1 text-sm'>
-                    <li>• Head & Neck Massage</li>
-                    <li>• Deep Tissue & Sports Massage</li>
-                    <li>• Assisted Stretching</li>
-                    <li>• Reflexology Therapy</li>
-                    <li>• Cupping (when appropriate)</li>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>Head & Neck Massage</li>
+                    <li>Deep Tissue & Sports Massage</li>
+                    <li>Assisted Stretching</li>
+                    <li>Reflexology Therapy</li>
+                    <li>Cupping (when appropriate)</li>
                   </ul>
                 </div>
 
@@ -176,11 +177,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   <h4 className='font-semibold text-(--brand) mb-2'>
                     Session Approach
                   </h4>
-                  <ul className='space-y-1 text-sm'>
-                    <li>• Fully personalized assessments</li>
-                    <li>• Real-time pressure adjustment</li>
-                    <li>• Focus on specific need areas</li>
-                    <li>• Continuous feedback integration</li>
+                  <ul className='list-disc list-inside space-y-1 text-sm'>
+                    <li>Fully personalized assessments</li>
+                    <li>Real-time pressure adjustment</li>
+                    <li>Focus on specific areas of need</li>
+                    <li>Continuous feedback integration</li>
                   </ul>
                 </div>
               </div>
@@ -202,7 +203,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
 
               <ul className='space-y-3'>
                 <li className='flex items-start'>
-                  <span className='text-(--brand) mr-2 mt-1'>✓</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Pain Relief & Management:</strong> Targeted
                     treatment for chronic pain, muscle tension, and discomfort
@@ -210,7 +215,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-(--brand) mr-2 mt-1'>✓</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Enhanced Mobility & Flexibility:</strong>{' '}
                     Restoration of proper joint function and increased range of
@@ -218,7 +227,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-(--brand) mr-2 mt-1'>✓</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Performance Optimization:</strong> Support for
                     athletes and active individuals in recovery, injury
@@ -226,7 +239,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-(--brand) mr-2 mt-1'>✓</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Stress Reduction & Relaxation:</strong>{' '}
                     Downregulation of nervous system activity promoting deep
@@ -234,7 +251,11 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
                   </span>
                 </li>
                 <li className='flex items-start'>
-                  <span className='text-(--brand) mr-2 mt-1'>✓</span>
+                  <IconCheck
+                    size={18}
+                    className='text-[var(--brand)] mr-2 mt-1 shrink-0'
+                    aria-hidden
+                  />
                   <span>
                     <strong>Injury Prevention & Recovery:</strong>{' '}
                     Identification of musculoskeletal imbalances and support for
@@ -265,3 +286,4 @@ export function AboutMeContent({ bookingUrl }: AboutMeContentProps) {
     </motion.div>
   );
 }
+

@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 export function FormLayout({
   children,
   formTitle,
@@ -12,28 +14,30 @@ export function FormLayout({
   logotype?: string;
 }) {
   return (
-    <section className='flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0'>
-      <div className='flex items-center mb-3 text-2xl font-semibold text-gray-900'>
-        <img
-          width={96}
-          height={96}
-          className='size-24 mr-2 aspect-square object-contain'
+    <section className='mx-auto flex w-full flex-col'>
+      <div className='mb-4 flex items-center gap-3 text-gray-900'>
+        <Image
+          width={72}
+          height={72}
+          className='size-16 shrink-0 aspect-square object-contain sm:size-[4.5rem]'
           src='/zeinmotiontm2.webp'
-          alt={`Logo of ${brand} | Message Therapist`}
+          alt={`Logo of ${brand} | Massage Therapist`}
         />
 
-        <section>
-          <h2>{brand}</h2>
+        <div>
+          <p className='text-sm font-semibold uppercase tracking-wide text-[color:var(--brand)]'>
+            {brand}
+          </p>
           <p className='text-sm text-gray-500'>{logotype}</p>
-        </section>
+        </div>
       </div>
 
-      <div className='w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0'>
-        <div className='p-6 space-y-4 md:space-y-6 sm:p-8'>
+      <div className='w-full rounded-lg border border-gray-100 bg-white shadow-sm'>
+        <div className='space-y-4 p-5 sm:p-6 md:space-y-6'>
           {formTitle && (
-            <h1 className='!text-xl font-bold leading-tight tracking-tight text-gray-900 !md:text-2xl'>
+            <h2 className='!text-xl font-bold leading-tight tracking-tight text-gray-900'>
               {formTitle}
-            </h1>
+            </h2>
           )}
 
           {children}

@@ -1,9 +1,13 @@
-import type { Metadata, Viewport } from 'next';
+﻿import type { Metadata, Viewport } from 'next';
 
 import { Toaster } from 'react-hot-toast';
 
 import { fraunces, inter } from '@/fonts';
-import mainMetadata from '@/metadata/main';
+import mainMetadata, {
+  businessSchema,
+  homeMassageServiceSchema,
+  websiteSchema,
+} from '@/metadata/main';
 import { HeaderTitleProvider } from './providers/header-title.provider';
 
 import './globals.css';
@@ -22,6 +26,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [businessSchema, websiteSchema, homeMassageServiceSchema],
+  };
+
   return (
     <html
       lang='en'
@@ -32,6 +41,10 @@ export default function RootLayout({
           rel='preconnect'
           href='https://fonts.gstatic.com'
           crossOrigin=''
+        />
+        <script
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
 
@@ -51,9 +64,7 @@ export default function RootLayout({
       >
         <HeaderTitleProvider>
           {children}
-          <div>
-            <Toaster />
-          </div>
+          <Toaster />
         </HeaderTitleProvider>
       </body>
     </html>

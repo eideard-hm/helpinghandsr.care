@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 import { env } from '@/config/env';
 
-const { url: supabaseUrl, publishableKey: supabaseAnonKey } = env.susap;
+const { url: supabaseUrl, publishableKey: supabaseAnonKey } = env.supabase;
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });

@@ -1,5 +1,6 @@
 import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
+import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -15,6 +16,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <SocialMediaSidebar />
 
         {children}
+
+        <MobileWhatsAppCta />
       </main>
 
       <footer className='bg-brand-2 text-ink py-12 shadow-inner'>

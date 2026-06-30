@@ -4,8 +4,8 @@ import { createServerClient } from '@supabase/ssr';
 
 import { env } from '@/config/env';
 
-const supabaseUrl = env.susap.url;
-const supabaseKey = env.susap.publishableKey;
+const supabaseUrl = env.supabase.url;
+const supabaseKey = env.supabase.publishableKey;
 
 export async function supabaseServerClient() {
   const cookieStore = await cookies();

@@ -16,13 +16,13 @@ export function Footer() {
           Home Visits | Personalized Care
         </p>
         <p className='mt-4 text-sm text-ink/90'>
-          Helping you prevent injuries & chronic pain
+          Helping you prevent injuries and chronic pain
         </p>
-        <p className='mt-4 text-sm text-ink/90'>Relieve stiffness & stress</p>
-        <p className='mt-4 text-sm text-ink/90'>Tailored Treatments.</p>
+        <p className='mt-4 text-sm text-ink/90'>Relieve stiffness and stress</p>
+        <p className='mt-4 text-sm text-ink/90'>Tailored treatments.</p>
         <p className='mt-4 text-sm text-ink/90'>
-          Stretching & Sports massage, Deep tissue massage, Cupping therapy,
-          Reflexology therapy, Lymphatic drainage.
+          Stretching, Sports Massage, Deep Tissue Massage, Cupping Therapy,
+          Reflexology Therapy, and Lymphatic Drainage.
         </p>
       </div>
 
@@ -35,14 +35,14 @@ export function Footer() {
         <h4 className='font-semibold mb-3'>Contact</h4>
         <WhatsAppButton waLink={waHref} />
         <p className='mt-4 text-sm text-ink/90'>
-          © {year} {env.brand}. All rights reserved - Created and developed by{' '}
+          Copyright {year} {env.brand}. All rights reserved - Created and developed by{' '}
           <a
             href='https://edier-hm.netlify.app/en/'
             target='_blank'
             rel='noopener noreferrer'
             className='underline'
           >
-            Edier Hernández
+            Edier Hernandez
           </a>
         </p>
       </div>

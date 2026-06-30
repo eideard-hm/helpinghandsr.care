@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 
 import { useRef, useState } from 'react';
 
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
+import { IconDiamond, IconSparkles } from '@tabler/icons-react';
 
 import { BookingButton } from '@/components/common/booking-btn';
 import { Button } from '@/components/common/button';
@@ -56,8 +57,13 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
               <>
                 <div className='absolute inset-0 bg-black/10'></div>
                 <div className='absolute top-4 left-4'>
-                  <span className='bg-white/90 text-(--brand) px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm'>
-                    💎 Premium
+                  <span className='bg-white/90 text-[color:var(--brand)] px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm'>
+                    <IconDiamond
+                      size={16}
+                      className='inline-block mr-1'
+                      aria-hidden
+                    />
+                    Premium
                   </span>
                 </div>
               </>
@@ -106,7 +112,14 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
                     'bg-linear-to-r from-(--brand) to-(--brand-2) hover:from-(--brand)/90 hover:to-(--brand-2)/90',
                 )}
               >
-                {s.isMain ? '✨ Learn More' : 'Show More'}
+                {s.isMain && (
+                  <IconSparkles
+                    size={16}
+                    className='inline-block mr-1'
+                    aria-hidden
+                  />
+                )}
+                {s.isMain ? 'Learn More' : 'Show More'}
               </Button>
 
               <BookingButton

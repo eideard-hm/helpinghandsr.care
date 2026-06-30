@@ -1,21 +1,19 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 
 import { env } from '@/config/env';
-import { waLink } from '@/lib/whatsapp';
 import { NavLinks } from '../ui/nav-links';
-import { HeaderResponsive } from './header-responsive';
-import { WhatsAppButton } from './whatsapp-btn';
 import { BookingButton } from './booking-btn';
+import { HeaderResponsive } from './header-responsive';
 
 export function Header() {
   const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
   return (
-    <div className='mx-auto max-w-7xl px-4 h-32 flex items-center justify-between'>
+    <div className='mx-auto flex h-24 max-w-7xl items-center justify-between px-4 md:h-32'>
       <Link href='/'>
         <Image
-          className='aspect-square object-contain'
+          className='size-20 aspect-square object-contain md:size-[7.5rem]'
           src='/zeinmotiontm.webp'
           alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
           width={120}
