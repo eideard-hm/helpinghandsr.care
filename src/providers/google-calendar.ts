@@ -3,34 +3,43 @@ import { google } from 'googleapis';
 import { env } from '@/config/env';
 
 export class GoogleCalendarProvider {
-  private readonly oauth2Client;
+  getOAuthClientForStoredTokens(tokens: {
+    accessToken?: string;
+    refreshToken?: string;
+    expiryDate?: Date;
+  }) {
+    const client = this.createOAuthClient();
 
-  constructor() {
-    this.oauth2Client = new google.auth.OAuth2(
-      env.googleClientId,
-      env.googleClientSecret,
-      env.googleRedirectUri
-    );
-  }
-
-  getGoogleAuthUrl() {
-    const authUrl = this.oauth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: ['https://www.googleapis.com/auth/calendar'],
-      prompt: 'consent',
+    client.setCredentials({
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      expiry_date: tokens?.expiryDate?.getTime(),
     });
-    return authUrl;
+    return client;
   }
 
-  getGoogleAuthClient(accessToken: string) {
-    const auth = new google.auth.OAuth2();
-    auth.setCredentials({ access_token: accessToken });
-    return auth;
+  async listCalendars(auth: InstanceType<typeof google.auth.OAuth2>) {
+    const calendar = google.calendar({ version: 'v3', auth });
+    const res = await calendar.calendarList.list();
+    return res.data.items ?? [];
+  }
+
+  getGoogleAuthUrl(state: string) {
+    const client = this.createOAuthClient();
+
+    return client.generateAuthUrl({
+      access_type: 'offline',
+      prompt: 'consent',
+      scope: ['https://www.googleapis.com/auth/calendar'],
+      include_granted_scopes: true,
+      state,
+    });
   }
 
   async exchangesCodeForTokens(code: string) {
     try {
-      const { tokens } = await this.oauth2Client.getToken(code);
+      const client = this.createOAuthClient();
+      const { tokens } = await client.getToken(code);
       return tokens;
     } catch (error) {
       console.error('Error exchanging code for tokens:', error);
@@ -38,46 +47,64 @@ export class GoogleCalendarProvider {
     }
   }
 
-  async createCalendarEvent(
-    accessToken: string,
+  async createCalendarEvent(params: {
+    auth: any;
+    calendarId: string;
     event: {
       summary: string;
-      description: string;
-      start: { dateTime: string; timeZone?: string };
-      end: { dateTime: string; timeZone?: string };
+      description?: string;
+      location?: string;
+      start: { dateTime: string; timeZone: string };
+      end: { dateTime: string; timeZone: string };
       attendees?: { email: string }[];
-    }
-  ) {
-    const auth = this.getGoogleAuthClient(accessToken);
-    const calendar = google.calendar({ version: 'v3', auth });
+    };
+  }) {
     try {
-      const response = await calendar.events.insert({
-        calendarId: 'primary',
-        requestBody: event,
+      const calendar = google.calendar({ version: 'v3', auth: params.auth });
+      const res = await calendar.events.insert({
+        calendarId: params.calendarId,
+        requestBody: params.event,
       });
-      return response.data;
+      return res.data;
     } catch (error) {
       console.error('Error creating calendar event:', error);
       throw new Error('Failed to create calendar event');
     }
   }
 
-  async checkAvailability(accessToken: string, startTime: Date, endTime: Date) {
-    const auth = this.getGoogleAuthClient(accessToken);
+  async checkAvailability(params: {
+    accessToken?: string;
+    refreshToken?: string;
+    expiryDate?: Date;
+    calendarId: string;
+    startTime: Date;
+    endTime: Date;
+  }) {
+    const auth = this.getOAuthClientForStoredTokens({
+      accessToken: params.accessToken,
+      refreshToken: params.refreshToken,
+      expiryDate: params.expiryDate,
+    });
+
     const calendar = google.calendar({ version: 'v3', auth });
-    try {
-      const response = await calendar.freebusy.query({
-        requestBody: {
-          timeMin: startTime.toISOString(),
-          timeMax: endTime.toISOString(),
-          timeZone: 'UTC',
-          items: [{ id: 'primary' }],
-        },
-      });
-      return response.data.calendars?.primary?.busy || [];
-    } catch (error) {
-      console.error('Error checking availability:', error);
-      throw new Error('Failed to check availability');
-    }
+
+    const response = await calendar.freebusy.query({
+      requestBody: {
+        timeMin: params.startTime.toISOString(),
+        timeMax: params.endTime.toISOString(),
+        timeZone: 'UTC',
+        items: [{ id: params.calendarId }],
+      },
+    });
+
+    return response.data.calendars?.[params.calendarId]?.busy ?? [];
+  }
+
+  private createOAuthClient() {
+    return new google.auth.OAuth2(
+      env.googleClientId,
+      env.googleClientSecret,
+      env.googleRedirectUri,
+    );
   }
 }

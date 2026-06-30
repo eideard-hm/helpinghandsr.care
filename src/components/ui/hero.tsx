@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { type CSSProperties, useEffect, useState } from 'react';
 
@@ -9,17 +9,19 @@ import { IconVolume, IconVolumeOff } from '@tabler/icons-react';
 
 import { env } from '@/config/env';
 import { childFade, listStagger } from '@/lib/motion';
+import { BookingButton } from '../common/booking-btn';
 import { LocalHlsVideo } from '../common/LocalHlsVideo';
-import { WhatsAppButton } from '../common/whatsapp-btn';
 
 type HeroProps = {
   headerSelector?: string;
   headerRemFallback?: number;
+  BOOKING_URL: string;
 };
 
 export function Hero({
   headerSelector = 'header',
   headerRemFallback = 7,
+  BOOKING_URL,
 }: HeroProps) {
   const reduce = useReducedMotion();
   const [headerPx, setHeaderPx] = useState<number | null>(null);
@@ -74,15 +76,13 @@ export function Hero({
       </button>
 
       {!reduce ? (
-        <>
-          <LocalHlsVideo
-            src={m3u8}
-            poster={poster}
-            muted={isMuted}
-            className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
-            ariaHidden
-          />
-        </>
+        <LocalHlsVideo
+          src={m3u8}
+          poster={poster}
+          muted={isMuted}
+          className='absolute inset-0 hidden h-full w-full scale-110 object-cover blur-md md:block'
+          ariaHidden
+        />
       ) : (
         <Image
           src={poster}
@@ -94,23 +94,21 @@ export function Hero({
       )}
 
       {!reduce && (
-        <>
-          <motion.div
-            key='hero-video-desktop'
-            className='absolute -right-[2vw] top-1/2 z-[2] hidden h-full w-[56vw] -translate-y-1/2 items-center justify-center opacity-85 md:flex'
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.85 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-          >
-            <LocalHlsVideo
-              src={m3u8}
-              poster={poster}
-              muted={isMuted}
-              className='max-h-[78%] max-w-full object-contain'
-              ariaLabel='Hero desktop foreground video'
-            />
-          </motion.div>
-        </>
+        <motion.div
+          key='hero-video-desktop'
+          className='absolute -right-[2vw] top-1/2 z-[2] hidden h-full w-[56vw] -translate-y-1/2 items-center justify-center opacity-85 md:flex'
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.85 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+        >
+          <LocalHlsVideo
+            src={m3u8}
+            poster={poster}
+            muted={isMuted}
+            className='max-h-[78%] max-w-full object-contain'
+            ariaLabel='Hero desktop foreground video'
+          />
+        </motion.div>
       )}
 
       {reduce && (
@@ -161,7 +159,7 @@ export function Hero({
                   className='mt-5 hidden md:block'
                   variants={reduce ? undefined : childFade}
                 >
-                  <WhatsAppButton label='Book via WhatsApp' />
+                  <BookingButton bookingUrl={BOOKING_URL} />
                 </motion.div>
               </div>
             </div>

@@ -1,23 +1,20 @@
-import type { Metadata } from 'next';
+﻿import type { Metadata, Viewport } from 'next';
 
 import { Toaster } from 'react-hot-toast';
 
-import { Footer } from '@/components/common/footer';
-import { Header } from '@/components/common/header';
-import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
-import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
 import mainMetadata, {
   businessSchema,
   homeMassageServiceSchema,
   websiteSchema,
 } from '@/metadata/main';
+import { HeaderTitleProvider } from './providers/header-title.provider';
 
 import './globals.css';
 
 export const metadata: Metadata = mainMetadata;
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -52,27 +49,23 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.variable} ${fraunces.variable} font-sans bg-bg text-ink min-h-dvh grid grid-rows-[auto_1fr_auto]`}
+        className={`${inter.variable} ${fraunces.variable} font-sans`}
+        data-scope='admin'
+        data-theme-version='light'
+        data-layout='vertical'
+        data-nav-headerbg='color_1'
+        data-headerbg='color_1'
+        data-sidebar-style='full'
+        data-sibebarbg='color_1'
+        data-sidebar-position='fixed'
+        data-header-position='fixed'
+        data-container='wide'
+        data-primary='color_1'
       >
-        <header className='sticky top-0 z-40 bg-brand backdrop-blur'>
-          <Header />
-        </header>
-
-        <main className='overflow-hidden relative'>
-          <SocialMediaSidebar />
-
-          <div>
-            <Toaster />
-          </div>
-
+        <HeaderTitleProvider>
           {children}
-
-          <MobileWhatsAppCta />
-        </main>
-
-        <footer className='bg-brand-2 text-ink py-12 shadow-inner'>
-          <Footer />
-        </footer>
+          <Toaster />
+        </HeaderTitleProvider>
       </body>
     </html>
   );

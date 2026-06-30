@@ -1,5 +1,5 @@
 import { env } from '@/config/env';
-import type { Review } from '@/generated/prisma';
+import type { Review } from '@/generated/prisma/browser';
 
 export const DEFAULT_TESTIMONIALS: Review[] = [
   {

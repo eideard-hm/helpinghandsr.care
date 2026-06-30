@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useRef, useState } from 'react';
 
@@ -7,17 +7,17 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { IconDiamond, IconSparkles } from '@tabler/icons-react';
 
+import { BookingButton } from '@/components/common/booking-btn';
 import { Button } from '@/components/common/button';
 import { Dialog } from '@/components/common/dialog';
-import { WhatsAppButton } from '@/components/common/whatsapp-btn';
-import type { Services } from '@/data/services';
+import { cn } from '@/lib/cn';
 import { fadeInUp } from '@/lib/motion';
+import type { UiService } from './_types';
 import { Benefits } from './benefits';
 import { HowWeWork } from './how-we-work';
-import { cn } from '@/lib/cn';
 
 type ServicesCardProps = {
-  services: Services;
+  services: UiService;
 };
 
 export function ServicesCard({ services: s }: ServicesCardProps) {
@@ -35,24 +35,22 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
         className={cn(
           'group rounded-xl overflow-hidden relative border-2 transition-all duration-300 hover:-translate-y-1',
           s.isMain
-            ? 'bg-white border-[color:var(--brand-2)] shadow-xl'
-            : 'bg-white border-gray-100 shadow hover:shadow-lg'
+            ? 'bg-white border-(--brand-2) shadow-xl'
+            : 'bg-white border-gray-100 shadow hover:shadow-lg',
         )}
-        style={{ display: s.visible ? 'block' : 'none' }}
+        style={{ display: s.active ? 'block' : 'none' }}
       >
-        {/* Elemento decorativo para servicio principal */}
         {s.isMain && (
-          <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--accent)]'></div>
+          <div className='absolute top-0 left-0 w-full h-1 bg-linear-to-r from-(--brand) to-(--accent)'></div>
         )}
 
         <div className='relative'>
-          {/* Header con overlay para servicio principal */}
           <div
             className={cn(
               'relative flex justify-center items-center h-48 overflow-hidden',
               s.isMain
-                ? 'bg-gradient-to-br from-[color:var(--brand)] to-[color:var(--brand-2)]'
-                : 'bg-gradient-to-b from-[color:var(--brand-2)] to-[color:var(--bg)]'
+                ? 'bg-linear-to-br from-(--brand) to-(--brand-2)'
+                : 'bg-linear-to-b from-(--brand-2) to-(--bg)',
             )}
           >
             {s.isMain && (
@@ -79,8 +77,8 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
               className={cn(
                 'aspect-square rounded-full object-cover border-4 z-10 shadow-xl',
                 s.isMain
-                  ? 'size-[165px] border-white/90'
-                  : 'size-[150px] border-white'
+                  ? 'size-41.25 border-white/90'
+                  : 'size-37.5 border-white',
               )}
             />
           </div>
@@ -89,9 +87,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
             <h3
               className={cn(
                 'font-bold mb-3',
-                s.isMain
-                  ? 'text-2xl text-[color:var(--brand)]'
-                  : 'text-xl text-[color:var(--ink)]'
+                s.isMain ? 'text-2xl text-(--brand)' : 'text-xl text-(--ink)',
               )}
             >
               {s.title}
@@ -100,9 +96,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
             <p
               className={cn(
                 'line-clamp-3 mb-5 leading-relaxed',
-                s.isMain
-                  ? 'text-[color:var(--ink)] font-medium'
-                  : 'text-gray-600'
+                s.isMain ? 'text-(--ink) font-medium' : 'text-gray-600',
               )}
             >
               {s.excerpt}
@@ -115,7 +109,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
                 onClick={() => setOpen(true)}
                 className={cn(
                   s.isMain &&
-                    'bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--brand-2)] hover:from-[color:var(--brand)]/90 hover:to-[color:var(--brand-2)]/90'
+                    'bg-linear-to-r from-(--brand) to-(--brand-2) hover:from-(--brand)/90 hover:to-(--brand-2)/90',
                 )}
               >
                 {s.isMain && (
@@ -128,8 +122,8 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
                 {s.isMain ? 'Learn More' : 'Show More'}
               </Button>
 
-              <WhatsAppButton
-                waLink={s.waLink}
+              <BookingButton
+                bookingUrl={`/booking/${s.businessId}?serviceId=${encodeURIComponent(s.id)}`}
               />
             </section>
           </div>
@@ -145,10 +139,11 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
         size='lg'
         footer={
           <div className='flex gap-3 justify-end'>
-            <WhatsAppButton
+            <BookingButton
               ref={ctaRef}
-              waLink={s.waLink}
+              bookingUrl={`/booking/${s.businessId}?serviceId=${encodeURIComponent(s.id)}`}
             />
+
             <Button
               variant='outline'
               onClick={() => setOpen(false)}
@@ -158,7 +153,7 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
           </div>
         }
       >
-        <div className='relative w-full max-w-[800px] mx-auto space-y-6'>
+        <div className='relative w-full max-w-200 mx-auto space-y-6'>
           <div className='relative w-full max-h-[55vh] overflow-hidden rounded-xl bg-gray-100'>
             <Image
               src={s.bigImage}

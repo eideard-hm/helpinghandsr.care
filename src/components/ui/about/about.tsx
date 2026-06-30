@@ -1,8 +1,10 @@
 import { SectionTitle } from '@/components/common/section-title';
-import { waLinkWithEnv } from '@/lib/whatsapp';
+import { env } from '@/config/env';
 import { AboutMeContent } from './about-me-content';
 
 export function About() {
+  const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
+
   return (
     <section
       id='about'
@@ -10,7 +12,7 @@ export function About() {
     >
       <SectionTitle subTitle='Get your massage at home!'>About Me</SectionTitle>
 
-      <AboutMeContent waLink={waLinkWithEnv()} />
+      <AboutMeContent bookingUrl={BOOKING_URL} />
 
       <div className='absolute right-0 bottom-0 w-64 h-64 bg-teal-200 rounded-full -z-10 opacity-20 blur-3xl'></div>
     </section>

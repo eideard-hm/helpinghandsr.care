@@ -1,7 +1,11 @@
+import Link from 'next/link';
+
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandWhatsapp,
+  IconLogin,
+  IconLogout,
   IconMail,
 } from '@tabler/icons-react';
 
@@ -75,6 +79,19 @@ export function SocialMediaItems({ classList }: SocialMediaItemsProps) {
             className='inline-block'
           />
         </a>
+      </li>
+
+      <li className='rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow hover:scale-100'>
+        <Link
+          href='/auth/login'
+          className='text-brand hover:text-brand-dark transition'
+          aria-label={`Login - ${env.brand}`}
+        >
+          <IconLogout
+            size={24}
+            className='inline-block'
+          />
+        </Link>
       </li>
     </ul>
   );

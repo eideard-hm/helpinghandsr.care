@@ -1,3 +1,5 @@
+const { NEXT_PUBLIC_BOOKING_BUSINESS_ID } = process.env;
+
 export const env = {
   whatsAppNumber: process.env.NEXT_PUBLIC_WHATSAPP || '',
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || '',
@@ -9,10 +11,12 @@ export const env = {
 
   supabase: {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '',
+    publishableKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '',
   },
 
   googleClientId: process.env.GOOGLE_CLIENT_ID || '',
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
   googleRedirectUri: process.env.GOOGLE_REDIRECT_URI || '',
+
+  bookingBusinessId: NEXT_PUBLIC_BOOKING_BUSINESS_ID || '',
 } as const;
