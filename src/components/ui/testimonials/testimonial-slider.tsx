@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AnimatePresence, motion, PanInfo, type Variants } from 'framer-motion';
 
-import type { Review } from '@/generated/prisma';
+import type { Review } from '@/generated/prisma/browser';
 
 const STAR = ({ filled }: { filled: boolean }) => (
   <svg
@@ -46,7 +46,7 @@ export function TestimonialsSlider({
       setDir(direction);
       setIndex((next + items.length) % items.length);
     },
-    [items.length]
+    [items.length],
   );
 
   // autoplay con pausa al hover
@@ -98,12 +98,10 @@ export function TestimonialsSlider({
             >
               <header className='flex items-center justify-between'>
                 <div className='flex items-center gap-4'>
-                  <div className='size-12 rounded-full bg-[color:var(--brand)]/10' />
+                  <div className='size-12 rounded-full bg-(--brand)/10' />
                   <div className='flex-1'>
                     <div className='flex items-center gap-2'>
-                      <h4 className='font-semibold text-[color:var(--ink)]'>
-                        {r.name}
-                      </h4>
+                      <h4 className='font-semibold text-(--ink)'>{r.name}</h4>
                     </div>
                     <div className='mt-1 flex items-center gap-1'>
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -185,9 +183,7 @@ export function TestimonialsSlider({
               onClick={() => goTo(i, i > index ? 1 : -1)}
               className={`h-2.5 w-2.5 rounded-full transition
                 ${
-                  i === index
-                    ? 'bg-[color:var(--brand)]'
-                    : 'bg-gray-300 hover:bg-gray-400'
+                  i === index ? 'bg-(--brand)' : 'bg-gray-300 hover:bg-gray-400'
                 }`}
             />
           ))}

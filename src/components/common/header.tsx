@@ -1,14 +1,13 @@
-import Image from 'next/image';
+﻿import Image from 'next/image';
 import Link from 'next/link';
 
 import { env } from '@/config/env';
-import { waLink } from '@/lib/whatsapp';
 import { NavLinks } from '../ui/nav-links';
+import { BookingButton } from './booking-btn';
 import { HeaderResponsive } from './header-responsive';
-import { WhatsAppButton } from './whatsapp-btn';
 
 export function Header() {
-  const waHref = waLink(env.whatsAppNumber, env.waMessage);
+  const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
   return (
     <div className='mx-auto flex h-24 max-w-7xl items-center justify-between px-4 md:h-32'>
@@ -25,12 +24,12 @@ export function Header() {
 
       <NavLinks classList='hidden md:flex md:gap-6' />
 
-      <WhatsAppButton
-        waLink={waHref}
+      <BookingButton
+        bookingUrl={BOOKING_URL}
         classList='hidden! md:inline-flex!'
       />
 
-      <HeaderResponsive waLink={waHref} />
+      <HeaderResponsive bookingUrl={BOOKING_URL} />
     </div>
   );
 }

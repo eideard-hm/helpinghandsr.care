@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { getReviews } from '@/actions/reviews/review';
 import { DEFAULT_TESTIMONIALS } from '@/data/testimonials';
-import type { Review } from '@/generated/prisma';
+import type { Review } from '@/generated/prisma/browser';
 import { IconCirclePlus } from '@tabler/icons-react';
 import { SectionTitle } from '../../common/section-title';
 import { TestimonialsSlider } from './testimonial-slider';
@@ -16,7 +16,7 @@ export async function Testimonials() {
   return (
     <section
       id='testimonials'
-      className='py-16 bg-[color:var(--brand-2)]/20'
+      className='py-16 bg-(--brand-2)/20'
     >
       <div className='container mx-auto px-4 max-w-7xl'>
         <header className='flex items-center justify-between flex-wrap mb-3'>

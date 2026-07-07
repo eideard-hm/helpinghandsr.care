@@ -2,10 +2,10 @@
 
 import { motion } from 'framer-motion';
 
-import { WhatsAppButton } from '@/components/common/whatsapp-btn';
+import { BookingButton } from '@/components/common/booking-btn';
 import { steps } from '@/data/steps';
 
-export function Steps({ waLink }: { waLink: string }) {
+export function Steps({ bookingUrl }: { bookingUrl: string }) {
   return (
     <>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
@@ -45,7 +45,8 @@ export function Steps({ waLink }: { waLink: string }) {
           Begin your journey to wellness with our easy booking process and
           expert therapeutic care
         </p>
-        <WhatsAppButton waLink={waLink} />
+
+        <BookingButton bookingUrl={bookingUrl} />
       </motion.div>
     </>
   );

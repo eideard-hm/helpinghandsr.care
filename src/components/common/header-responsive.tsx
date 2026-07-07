@@ -1,16 +1,16 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useId, useState } from 'react';
 
 import Link from 'next/link';
 
-import { WhatsAppButton } from './whatsapp-btn';
+import { BookingButton } from './booking-btn';
 
 type HeaderResponsiveProps = {
-  waLink: string;
+  bookingUrl: string;
 };
 
-export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
+export function HeaderResponsive({ bookingUrl }: HeaderResponsiveProps) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
 
@@ -95,8 +95,8 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
             About
           </Link>
 
-          <WhatsAppButton
-            waLink={waLink}
+          <BookingButton
+            bookingUrl={bookingUrl}
             classList='mt-2'
           />
         </nav>

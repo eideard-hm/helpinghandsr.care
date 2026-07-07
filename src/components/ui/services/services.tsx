@@ -1,8 +1,11 @@
-import { SERVICES } from '@/data/services';
+import { env } from '@/config/env';
 import { SectionTitle } from '../../common/section-title';
+import { getActiveServices } from './_actions';
 import { ServicesCard } from './services-card';
 
-export function Services() {
+export async function Services() {
+  const services = await getActiveServices(env.bookingBusinessId);
+
   return (
     <section
       id='services'
@@ -13,7 +16,7 @@ export function Services() {
       </SectionTitle>
 
       <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-        {SERVICES.map((s) => (
+        {services.map((s) => (
           <ServicesCard
             key={s.id}
             services={s}

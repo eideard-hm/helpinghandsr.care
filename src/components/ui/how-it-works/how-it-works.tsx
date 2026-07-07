@@ -1,10 +1,9 @@
-
-import { waLinkWithEnv } from '@/lib/whatsapp';
+import { env } from '@/config/env';
 import { SectionTitle } from '../../common/section-title';
 import { Steps } from './steps';
 
 export function HowItWorks() {
-  const waHref = waLinkWithEnv();
+  const BOOKING_URL = `/booking/${encodeURIComponent(env.bookingBusinessId)}`;
 
   return (
     <section
@@ -16,7 +15,7 @@ export function HowItWorks() {
           Simple Booking Process
         </SectionTitle>
 
-        <Steps waLink={waHref} />
+        <Steps bookingUrl={BOOKING_URL} />
       </div>
     </section>
   );

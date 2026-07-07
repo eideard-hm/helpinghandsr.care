@@ -1,0 +1,47 @@
+import type { ComponentType } from 'react';
+
+import {
+  IconCalendarEvent,
+  IconClock,
+  IconSettings,
+} from '@tabler/icons-react';
+
+export const menuItems: MenuItem[] = [
+  {
+    label: 'Integrations',
+    href: '/admin/integrations',
+    icon: IconSettings,
+    match: (path: string) => path.startsWith('/admin/integrations'),
+  },
+  {
+    label: 'Bookings',
+    href: '/admin/bookings',
+    icon: IconCalendarEvent,
+    match: (path: string) => path === '/admin/bookings',
+  },
+  {
+    label: 'Business Hours',
+    href: '/admin/schedule/business-hours',
+    icon: IconClock,
+    match: (path: string) => path.startsWith('/admin/schedule/business-hours'),
+  },
+  {
+    label: 'Time Off',
+    href: '/admin/schedule/time-off',
+    icon: IconClock,
+    match: (path: string) => path.startsWith('/admin/schedule/time-off'),
+  },
+  {
+    label: 'Staff Hours',
+    href: '/admin/schedule/staff-hours',
+    icon: IconClock,
+    match: (path: string) => path.startsWith('/admin/schedule/staff-hours'),
+  },
+] as const;
+
+type MenuItem = {
+  label: string;
+  href: string;
+  icon: ComponentType<{ size?: number; stroke?: number }>;
+  match: (path: string) => boolean;
+};

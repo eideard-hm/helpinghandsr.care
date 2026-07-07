@@ -26,7 +26,7 @@ export const WhatsAppButton = forwardRef<
       size = 'medium',
       variant = 'primary',
     }: WhatsAppButtonProps,
-    ref
+    ref,
   ) => {
     const sizeClasses = {
       small: 'px-3 py-1.5 text-sm',
@@ -67,12 +67,12 @@ export const WhatsAppButton = forwardRef<
       >
         <IconBrandWhatsapp
           size={iconSize[size]}
-          className='mr-2 flex-shrink-0'
+          className='mr-2 shrink-0'
         />
         <span className='whitespace-nowrap'>{label}</span>
       </a>
     );
-  }
+  },
 );
 
 WhatsAppButton.displayName = 'WhatsAppButton';
