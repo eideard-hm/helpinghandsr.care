@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { env } from '@/config/env';
+import { FAQ_ITEMS } from '@/data/faq';
 
 export const siteUrl = env.siteUrl || 'https://zeinmotion.vercel.app';
 
@@ -73,15 +74,15 @@ const generateKeywords = () => {
     'tailored massage treatments Abu Dhabi',
     'personalized home massage Abu Dhabi',
     'massage therapist Abu Dhabi home visits',
+    'massage therapist Abu Dhabi',
+    'home visit massage therapist Abu Dhabi',
+    'pain relief massage Abu Dhabi',
+    'stress relief massage Abu Dhabi',
 
     ...painReliefKeywords.flatMap((keyword) => [
       `${keyword} Abu Dhabi`,
       `${keyword} at home`,
     ]),
-    'تدليك منزلي أبوظبي',
-    'مساج في البيت أبوظبي',
-    'علاج طبيعي منزلي',
-    'علاج طبيعي منزلي',
 
     ...locationKeywords.flatMap((location) => [
       `massage at home ${location}`,
@@ -245,22 +246,46 @@ export const getSectionMetadata = (
 
 export const businessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
+  '@type': 'HealthAndBeautyBusiness',
+  '@id': `${prodUrl}#business`,
   name: env.brandSEO,
   description: mainMetadata.description,
   image: `${prodUrl}og-image.jpg`,
   logo: `${prodUrl}favicon_64x64.png`,
   telephone: BUSINESS_PHONE_SCHEMA,
   email: BUSINESS_EMAIL,
+  priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Abu Dhabi',
     addressRegion: 'UAE',
     addressCountry: 'AE',
   },
-  areaServed: 'Abu Dhabi and surrounding areas',
+  areaServed: [
+    {
+      '@type': 'City',
+      name: 'Abu Dhabi',
+      addressCountry: 'AE',
+    },
+    'Al Reem Island',
+    'Yas Island',
+    'Khalifa City',
+    'Al Raha',
+    'Saadiyat Island',
+    'Al Maryah Island',
+    'Corniche',
+    'Mohammed Bin Zayed City',
+  ],
   serviceType: CORE_SERVICES,
   sameAs: [FACEBOOK_URL, INSTAGRAM_URL],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: BUSINESS_PHONE_SCHEMA,
+    email: BUSINESS_EMAIL,
+    contactType: 'booking',
+    areaServed: 'AE',
+    availableLanguage: ['en'],
+  },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Home massage services in Abu Dhabi',
@@ -275,6 +300,22 @@ export const businessSchema = {
     })),
   },
   openingHours: 'Mo-Su 09:00-22:00',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday',
+      ],
+      opens: '09:00',
+      closes: '22:00',
+    },
+  ],
   url: prodUrl.toString(),
 };
 
@@ -294,7 +335,8 @@ export const homeMassageServiceSchema = {
   description:
     'Professional home massage therapy delivered to homes, hotels, and residences across Abu Dhabi.',
   provider: {
-    '@type': 'LocalBusiness',
+    '@id': `${prodUrl}#business`,
+    '@type': 'HealthAndBeautyBusiness',
     name: env.brandSEO,
     telephone: BUSINESS_PHONE_SCHEMA,
   },
@@ -303,6 +345,20 @@ export const homeMassageServiceSchema = {
     name: 'Abu Dhabi',
   },
   serviceType: 'Home massage therapy',
+};
+
+export const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': `${prodUrl}#faq`,
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
+    },
+  })),
 };
 
 export default mainMetadata;

@@ -9,6 +9,7 @@ import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
 import mainMetadata, {
   businessSchema,
+  faqSchema,
   homeMassageServiceSchema,
   websiteSchema,
 } from '@/metadata/main';
@@ -31,7 +32,12 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [businessSchema, websiteSchema, homeMassageServiceSchema],
+    '@graph': [
+      businessSchema,
+      websiteSchema,
+      homeMassageServiceSchema,
+      faqSchema,
+    ],
   };
 
   return (

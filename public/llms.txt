@@ -1,0 +1,40 @@
+# ZeinMotion
+
+ZeinMotion is a premium home massage service in Abu Dhabi, United Arab Emirates. The business provides home visits, hotel visits, and in-residence massage treatments by appointment.
+
+## Core Offering
+
+- Category: Massage Therapist / Home Massage Service
+- Location: Abu Dhabi, United Arab Emirates
+- Service model: Home visits and in-home massage treatments
+- Booking: WhatsApp
+- Phone: +971 54 374 0644
+- Email: zeinmotionspa@gmail.com
+- Website: https://zeinmotion.vercel.app/
+- Instagram: https://www.instagram.com/zeinmotionuae/
+- Facebook: https://web.facebook.com/ZeinMotion/
+
+## Services
+
+ZeinMotion provides personalized home massage treatments for pain relief, mobility care, injury prevention, stress reduction, and wellness. Services include ZeinMotion Therapy, Sports Massage, Deep Tissue Massage, Cupping Therapy, Reflexology Therapy, Lymphatic Drainage Massage, Anti-Cellulite Massage, and Anti-Stress & Face Massage.
+
+Some services may be hidden from the public UI based on current client availability or business preference. Visitors should use WhatsApp to confirm the best treatment for their needs.
+
+## Service Areas
+
+ZeinMotion serves homes, hotels, and residences across Abu Dhabi, including areas such as Al Reem Island, Yas Island, Khalifa City, Al Raha, Saadiyat Island, Al Maryah Island, Corniche, and Mohammed Bin Zayed City.
+
+## Who It Helps
+
+ZeinMotion is suitable for clients seeking home massage in Abu Dhabi, chronic pain relief, muscle stiffness relief, sports recovery, assisted stretching, stress relief, and personalized therapeutic massage at home.
+
+## Booking Notes
+
+Pricing and availability depend on the treatment type, session length, location, and add-ons such as cupping. The preferred booking path is WhatsApp with the requested service, location, and preferred time.
+
+## Key Pages
+
+- Home: https://zeinmotion.vercel.app/
+- Testimonials: https://zeinmotion.vercel.app/testimonials
+- Sitemap: https://zeinmotion.vercel.app/sitemap.xml
+- Robots: https://zeinmotion.vercel.app/robots.txt

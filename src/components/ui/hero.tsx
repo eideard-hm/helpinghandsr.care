@@ -5,7 +5,13 @@ import { type CSSProperties, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { IconVolume, IconVolumeOff } from '@tabler/icons-react';
+import {
+  IconHomeHeart,
+  IconMassage,
+  IconShieldCheck,
+  IconVolume,
+  IconVolumeOff,
+} from '@tabler/icons-react';
 
 import { env } from '@/config/env';
 import { childFade, listStagger } from '@/lib/motion';
@@ -16,6 +22,12 @@ type HeroProps = {
   headerSelector?: string;
   headerRemFallback?: number;
 };
+
+const HERO_POINTS = [
+  { icon: IconHomeHeart, label: 'Home visits' },
+  { icon: IconShieldCheck, label: '20+ years experience' },
+  { icon: IconMassage, label: 'Customized treatments' },
+] as const;
 
 export function Hero({
   headerSelector = 'header',
@@ -51,7 +63,7 @@ export function Hero({
     <section
       className='relative overflow-hidden bg-[color:var(--bg)] md:min-h-[calc(82dvh-var(--hero-header-offset))]'
       style={sectionStyle}
-      aria-label={`${env.brandSEO} - Therapeutic Home Massage in Abu Dhabi`}
+      aria-label={`${env.brandSEO} - Premium therapeutic home massage in Abu Dhabi`}
     >
       <button
         onClick={toggleSound}
@@ -147,16 +159,35 @@ export function Hero({
                   className='text-pretty text-3xl font-extrabold leading-tight drop-shadow-sm text-title-indigo sm:text-4xl lg:text-5xl'
                   variants={reduce ? undefined : childFade}
                 >
-                  Therapeutic Home Massage in Abu Dhabi
+                  Premium Therapeutic Home Massage in Abu Dhabi
                 </motion.h1>
                 <motion.p
                   className='mt-3 max-w-md text-base leading-7 text-ink sm:mt-4 sm:text-lg'
                   variants={reduce ? undefined : childFade}
                 >
-                  20+ years of clinical experience in pain management and
-                  mobility enhancement. Personalized sessions delivered to your
-                  home.
+                  Home visits, customized treatments, pain relief, mobility
+                  care, and stress recovery delivered by a professional massage
+                  therapist.
                 </motion.p>
+                <motion.ul
+                  className='mt-4 flex max-w-md flex-wrap gap-2'
+                  variants={reduce ? undefined : childFade}
+                  aria-label='Key service highlights'
+                >
+                  {HERO_POINTS.map(({ icon: Icon, label }) => (
+                    <li
+                      key={label}
+                      className='inline-flex items-center gap-1.5 rounded-lg border border-[color:var(--brand-2)]/70 bg-white/75 px-3 py-1.5 text-sm font-medium text-[color:var(--ink)] shadow-sm backdrop-blur'
+                    >
+                      <Icon
+                        size={16}
+                        className='text-[color:var(--brand)]'
+                        aria-hidden
+                      />
+                      {label}
+                    </li>
+                  ))}
+                </motion.ul>
                 <motion.div
                   className='mt-5 hidden md:block'
                   variants={reduce ? undefined : childFade}

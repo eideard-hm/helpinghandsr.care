@@ -5,7 +5,7 @@ export const SERVICES: Services[] = [
   {
     isMain: true,
     visible: true,
-    id: Date.now(),
+    id: 'zeinmotion-therapy',
     title: `${env.brand} Therapy`,
     image: '/services/deep-tissue-massage.webp',
     bigImage: '/services/sports-massage-big.webp',
@@ -36,7 +36,7 @@ export const SERVICES: Services[] = [
         title: 'Stress & Energy Balance',
         details: [
           'Anti-stress and head/face massage calm the nervous system and release mental tension.',
-          'Each session begins with gentle energy activation (quantum/energy reset) to enhance the therapeutic effect.',
+          'The session flow is calm, intentional, and adapted to your body so the therapeutic work feels focused instead of rushed.',
           'Leaves you feeling lighter, more relaxed, and re-energized.'
         ],
       },
@@ -59,12 +59,12 @@ export const SERVICES: Services[] = [
   {
     isMain: false,
     visible: false,
-    id: Date.now() + 1,
+    id: 'deep-tissue-massage',
     image: '/services/deep-tissue-massage.webp',
     bigImage: '/services/deep-tissue-massage-big.webp',
     title: 'Deep Tissue Massage',
     excerpt:
-      'Deep tissue massage can be an effective treatment method for various conditions, including sports injuries and back pain.',
+      'Focused pressure and slow therapeutic work for chronic tension, back pain, sports recovery, and restricted mobility.',
     waLink: waLink(
       env.whatsAppNumber,
       env.waMessageTemplate.replace('{SERVICE}', 'Deep Tissue Massage')
@@ -73,25 +73,25 @@ export const SERVICES: Services[] = [
       {
         title: 'Relieves pain and stiffness',
         details: [
-          'This benefit helps you achieve better results by providing specialized expertise and personalized attention to your needs.',
+          'Targets deeper muscle layers to release persistent knots, tightness, and restricted movement.',
         ],
       },
       {
         title: 'Improves circulation and reduces swelling',
         details: [
-          'This benefit helps to enhance blood flow and reduce inflammation, promoting faster healing and recovery.',
+          'Encourages blood flow through tense areas to support recovery after training or long workdays.',
         ],
       },
       {
         title: 'Speeds up muscle recovery',
         details: [
-          'This benefit aids in the recovery process after intense physical activity, helping to reduce soreness and stiffness.',
+          'Helps reduce post-activity soreness and supports easier movement between sessions.',
         ],
       },
       {
         title: 'Reduces stress and anxiety',
         details: [
-          'This benefit promotes relaxation and a sense of well-being, helping to alleviate stress and anxiety.',
+          'Releases physical tension that often builds up from stress, posture, and repetitive routines.',
         ],
       },
     ],
@@ -104,39 +104,39 @@ export const SERVICES: Services[] = [
   {
     isMain: false,
     visible: false,
-    id: Date.now() + 2,
+    id: 'anti-stress-face-massage',
     title: 'Anti-Stress & Face Massage',
     image: '/services/anti-stress-massage.webp',
     bigImage: '/services/anti-stress-massage-big.webp',
     excerpt:
-      'Anti-Stress & Face Massage is a form of massage therapy where the joints and soft tissues are exercised to lessen muscle tension and pain.',
+      'A calming treatment for neck, shoulder, head, and facial tension, designed to reduce stress and restore a lighter feeling.',
     waLink: waLink(
       env.whatsAppNumber,
       env.waMessageTemplate.replace('{SERVICE}', 'Anti-Stress & Face Massage')
     ),
     benefits: [
       {
-        title: 'Reduction of inflammation of joints and heart rate',
+        title: 'Relieves stress-related tension',
         details: [
-          'This benefit helps to reduce inflammation in the joints, promoting better mobility and overall joint health.',
+          'Softens tension around the neck, shoulders, jaw, and face where stress commonly accumulates.',
         ],
       },
       {
-        title: 'Improved range of motion and flexibility',
+        title: 'Improves comfort and mobility',
         details: [
-          'This benefit helps to enhance flexibility and reduce stiffness, allowing for greater ease of movement.',
+          'Uses gentle mobility and soft-tissue work to ease stiffness without overloading the body.',
         ],
       },
       {
         title: 'Releases endorphins',
         details: [
-          'This benefit promotes a sense of well-being and can help to alleviate pain and discomfort.',
+          'Supports relaxation, calmer breathing, and a more settled nervous system.',
         ],
       },
       {
         title: 'Decreases muscle spasms and cramps',
         details: [
-          'This benefit helps relax tight muscles and reduce the frequency and intensity of cramps.',
+          'Helps quiet tight muscles and reduce discomfort from stress-related tension.',
         ],
       },
     ],
@@ -149,12 +149,12 @@ export const SERVICES: Services[] = [
   {
     isMain: false,
     visible: false,
-    id: Date.now() + 3,
+    id: 'sports-massage',
     title: 'Sports Massage',
     image: '/services/sports-massage.webp',
     bigImage: '/services/sports-massage-big.webp',
     excerpt:
-      'Sports Massage systematically targets muscles used in the gym or in a specific sport.',
+      'Targeted recovery work for active clients, gym routines, sport-specific tension, flexibility, and injury prevention.',
     waLink: waLink(
       env.whatsAppNumber,
       env.waMessageTemplate.replace('{SERVICE}', 'Sports Massage')
@@ -163,25 +163,25 @@ export const SERVICES: Services[] = [
       {
         title: 'Increases flexibility',
         details: [
-          'This benefit helps to enhance flexibility and reduce stiffness, allowing for greater ease of movement.',
+          'Assisted stretching and targeted pressure help improve range of motion and ease stiffness.',
         ],
       },
       {
         title: 'Prevents injuries',
         details: [
-          'This benefit helps to reduce the risk of injuries by improving muscle balance and coordination.',
+          'Addresses overloaded muscle groups before they become recurring pain or preventable injuries.',
         ],
       },
       {
         title: 'Improves performance',
         details: [
-          'This benefit helps to optimize physical performance by enhancing muscle function and reducing fatigue.',
+          'Supports better movement quality by reducing tension and improving muscle readiness.',
         ],
       },
       {
         title: 'Increases endurance',
         details: [
-          'This benefit helps to improve stamina and endurance, allowing for longer and more effective workouts.',
+          'Helps active clients recover more comfortably between workouts, matches, or training blocks.',
         ],
       },
     ],
@@ -194,7 +194,7 @@ export const SERVICES: Services[] = [
   {
     isMain: false,
     visible: false,
-    id: Date.now() + 4,
+    id: 'cupping-therapy',
     title: 'Cupping Therapy',
     image: '/services/cupping-therapy.webp',
     bigImage: '/services/cupping-therapy-big.webp',
@@ -208,31 +208,31 @@ export const SERVICES: Services[] = [
       {
         title: 'Encourages whole-body comfort and relaxation',
         details: [
-          'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
+          'Creates a decompressive effect that can make tight areas feel lighter and less restricted.',
         ],
       },
       {
         title: 'Supports whole-body comfort and relaxation',
         details: [
-          'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
+          'Can be paired with massage when extra circulation support is useful for recovery.',
         ],
       },
       {
-        title: 'Increase your pain threshold',
+        title: 'Eases sensitive, tense areas',
         details: [
-          'This benefit helps to increase your pain tolerance, making it easier to cope with discomfort.',
+          'May help reduce sensitivity in tense areas when applied appropriately.',
         ],
       },
       {
-        title: 'Reduce inflammation',
+        title: 'Supports local recovery',
         details: [
-          'This benefit helps to decrease inflammation in the body, promoting faster healing and recovery.',
+          'Supports local blood flow and tissue recovery after stiffness or overuse.',
         ],
       },
       {
-        title: 'Reduce cholesterol and low-density lipoprotein (LDL)',
+        title: 'Works well as a focused add-on',
         details: [
-          'This benefit helps to lower cholesterol levels and reduce the risk of heart disease.',
+          'Best used as an add-on for muscle tension, stiffness, and recovery goals.',
         ],
       },
     ],
@@ -245,7 +245,7 @@ export const SERVICES: Services[] = [
   {
     isMain: false,
     visible: false,
-    id: Date.now() + 5,
+    id: 'reflexology-therapy',
     title: 'Reflexology Therapy',
     image: '/services/reflexology-therapy.webp',
     bigImage: '/services/reflexology-therapy-big.webp',
@@ -259,25 +259,25 @@ export const SERVICES: Services[] = [
       {
         title: 'Promotes relaxation and reduces stress',
         details: [
-          'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
+          'Pressure-point work helps the body settle and supports a calmer overall state.',
         ],
       },
       {
         title: 'Improves circulation',
         details: [
-          'This benefit helps to enhance blood flow and circulation, promoting better oxygen and nutrient delivery to the body.',
+          'Stimulates the feet and hands to encourage warmth, circulation, and comfort.',
         ],
       },
       {
         title: 'Relieves pain and tension',
         details: [
-          'This benefit helps to alleviate pain and tension in the body, promoting relaxation and comfort.',
+          'Useful when the body feels tired, heavy, tense, or overworked.',
         ],
       },
       {
         title: 'Enhances overall well-being',
         details: [
-          'This benefit helps to improve overall health and well-being, promoting a sense of balance and harmony in the body.',
+          'Complements therapeutic massage as part of a balanced, personalized session.',
         ],
       },
     ],
@@ -289,7 +289,7 @@ export const SERVICES: Services[] = [
   },
   {
     isMain: false,
-    id: Date.now() + 6,
+    id: 'lymphatic-drainage-massage',
     visible: true,
     title: 'Lymphatic Drainage Massage',
     image: '/services/lymphatic-drainage-massage.webp',
@@ -304,25 +304,25 @@ export const SERVICES: Services[] = [
       {
         title: 'Reduces swelling and inflammation',
         details: [
-          'This benefit helps to decrease swelling and inflammation in the body, promoting faster healing and recovery.',
+          'Gentle rhythmic work supports fluid movement and can help reduce a heavy or swollen feeling.',
         ],
       },
       {
         title: 'Boosts immune system function',
         details: [
-          'This benefit helps to enhance the function of the immune system, promoting better overall health and well-being.',
+          'Encourages healthy lymph flow as part of a restorative wellness routine.',
         ],
       },
       {
         title: 'Improves circulation',
         details: [
-          'This benefit helps to enhance blood flow and circulation, promoting better oxygen and nutrient delivery to the body.',
+          'Uses light, precise pressure to support circulation without deep muscular strain.',
         ],
       },
       {
         title: 'Promotes relaxation and reduces stress',
         details: [
-          'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
+          'Creates a calm, gentle session for clients who prefer lighter therapeutic work.',
         ],
       },
     ],
@@ -334,7 +334,7 @@ export const SERVICES: Services[] = [
   },
   {
     isMain: false,
-    id: Date.now() + 7,
+    id: 'anti-cellulite-massage',
     visible: true,
     title: 'Anti-Cellulite Massage',
     image: '/services/anti-cellulite-massage.webp',
@@ -349,25 +349,25 @@ export const SERVICES: Services[] = [
       {
         title: 'Reduces the appearance of cellulite',
         details: [
-          'This benefit helps to improve skin texture and reduce the appearance of dimpling, promoting a smoother and more toned appearance.',
+          'Focused manual techniques support smoother-looking skin texture over time.',
         ],
       },
       {
         title: 'Improves circulation and lymphatic drainage',
         details: [
-          'This benefit helps to enhance blood flow and promote the removal of toxins and excess fluid from the body.',
+          'Combines circulation and lymphatic techniques for targeted body-care goals.',
         ],
       },
       {
         title: 'Promotes relaxation and reduces stress',
         details: [
-          'This benefit helps to promote a sense of overall well-being and relaxation, reducing stress and tension in the body.',
+          'Keeps the session comfortable while focusing on specific treatment areas.',
         ],
       },
       {
         title: 'Enhances skin tone and texture',
         details: [
-          'This benefit helps to improve skin elasticity and firmness, promoting a healthier and more youthful appearance.',
+          'Supports skin tone and firmness when paired with consistent care.',
         ],
       },
     ],
@@ -382,7 +382,7 @@ export const SERVICES: Services[] = [
 export type Services = {
   isMain: boolean;
   visible: boolean;
-  id: number;
+  id: string;
   title: string;
   image: string;
   bigImage: string;

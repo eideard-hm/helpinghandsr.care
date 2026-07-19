@@ -3,6 +3,8 @@ import { SectionTitle } from '../../common/section-title';
 import { ServicesCard } from './services-card';
 
 export function Services() {
+  const visibleServices = SERVICES.filter((service) => service.visible);
+
   return (
     <section
       id='services'
@@ -13,7 +15,7 @@ export function Services() {
       </SectionTitle>
 
       <div className='grid gap-8 sm:grid-cols-2 lg:grid-cols-3'>
-        {SERVICES.map((s) => (
+        {visibleServices.map((s) => (
           <ServicesCard
             key={s.id}
             services={s}

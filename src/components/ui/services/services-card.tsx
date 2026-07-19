@@ -38,7 +38,6 @@ export function ServicesCard({ services: s }: ServicesCardProps) {
             ? 'bg-white border-[color:var(--brand-2)] shadow-xl'
             : 'bg-white border-gray-100 shadow hover:shadow-lg'
         )}
-        style={{ display: s.visible ? 'block' : 'none' }}
       >
         {/* Elemento decorativo para servicio principal */}
         {s.isMain && (
