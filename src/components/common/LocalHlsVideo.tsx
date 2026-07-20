@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Hls from 'hls.js';
 
@@ -16,6 +16,8 @@ type Props = {
   controls?: boolean;
   ariaHidden?: boolean;
   ariaLabel?: string;
+  loadOnVisible?: boolean;
+  rootMargin?: string;
 };
 
 export function LocalHlsVideo({
@@ -30,13 +32,44 @@ export function LocalHlsVideo({
   controls = false,
   ariaHidden,
   ariaLabel,
+  loadOnVisible = false,
+  rootMargin = '200px',
 }: Props) {
   const ref = useRef<HTMLVideoElement | null>(null);
   const hlsRef = useRef<Hls | null>(null);
+  const [shouldLoad, setShouldLoad] = useState(!loadOnVisible);
+
+  useEffect(() => {
+    if (!loadOnVisible) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const video = ref.current;
+    if (!video) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin }
+    );
+
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [loadOnVisible, rootMargin]);
 
   useEffect(() => {
     const video = ref.current;
-    if (!video) return;
+    if (!video || !shouldLoad) return;
 
     video.muted = muted;
     video.loop = loop;
@@ -64,7 +97,7 @@ export function LocalHlsVideo({
         hlsRef.current = null;
       }
     };
-  }, [src, autoPlay, muted, loop, playsInline]);
+  }, [src, autoPlay, muted, loop, playsInline, shouldLoad]);
 
   useEffect(() => {
     if (ref.current) ref.current.muted = muted;

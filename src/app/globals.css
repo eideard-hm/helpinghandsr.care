@@ -43,7 +43,7 @@ h3,
 h4 {
   color: var(--title-indigo) !important;
   font-family: var(--font-fraunces), ui-serif, Georgia, serif;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 body {
