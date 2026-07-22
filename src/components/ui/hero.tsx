@@ -102,7 +102,7 @@ export function Hero({
   return (
     <section
       ref={heroRef}
-      className='relative isolate overflow-hidden bg-[color:var(--ink)] text-white md:min-h-[calc(80dvh-var(--hero-header-offset))]'
+      className='relative isolate overflow-hidden bg-[color:var(--ink)] text-white md:min-h-[calc(82dvh-var(--hero-header-offset))]'
       style={sectionStyle}
       aria-label={`${env.brandSEO} - therapeutic home massage in Abu Dhabi`}
     >
@@ -134,7 +134,7 @@ export function Hero({
       <div className='absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(15,23,42,0.90)_0%,rgba(15,23,42,0.72)_42%,rgba(15,23,42,0.34)_72%,rgba(15,23,42,0.60)_100%)]' />
       <div className='absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-[color:var(--ink)]/80 to-transparent' />
 
-      <div className='container mx-auto grid max-w-7xl gap-8 px-4 py-10 md:min-h-[calc(80dvh-7rem)] md:py-14 lg:grid-cols-[minmax(0,1fr)_23rem] lg:items-center'>
+      <div className='container mx-auto grid max-w-7xl gap-8 px-4 py-10 md:min-h-[calc(82dvh-6rem)] md:py-12 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-center'>
         <motion.div
           className='max-w-3xl pr-8 md:pr-0'
           variants={reduce ? undefined : listStagger}
@@ -153,13 +153,13 @@ export function Hero({
           </motion.div>
 
           <motion.h1
-            className='max-w-3xl text-pretty text-4xl font-extrabold leading-[1.05] !text-white sm:text-5xl lg:text-6xl xl:text-7xl'
+            className='max-w-3xl text-pretty text-4xl font-extrabold leading-[1.05] !text-white sm:text-5xl lg:text-6xl'
             aria-label='Therapeutic Home Massage in Abu Dhabi'
           >
             {HEADLINE_LINES.map((line) => (
               <span
                 key={line}
-                className='block overflow-hidden pb-1'
+                className='block overflow-hidden pb-1 first:lg:whitespace-nowrap'
               >
                 <motion.span
                   className='block'
@@ -278,16 +278,18 @@ export function Hero({
           initial={reduce ? false : { opacity: 0, x: 28, scale: 0.98 }}
           animate={reduce ? undefined : { opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.35, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          whileHover={reduce ? undefined : { rotateY: -2, rotateX: 1, y: -3 }}
+          style={{ transformPerspective: 1200 }}
           aria-label='Booking and service highlights'
         >
-          <div className='rounded-xl border border-white/20 bg-white/14 p-5 text-white shadow-2xl shadow-black/20 backdrop-blur-lg'>
+          <div className='rounded-xl border border-white/20 bg-white/14 p-4 text-white shadow-2xl shadow-black/20 backdrop-blur-lg'>
             <div className='flex items-center justify-between gap-4'>
               <div>
                 <p className='text-sm font-semibold uppercase tracking-wide text-white/70'>
                   Home visit flow
                 </p>
-                <h2 className='mt-1 text-2xl font-extrabold !text-white'>
-                  Relief starts before you travel anywhere.
+                <h2 className='mt-1 text-xl font-extrabold leading-tight !text-white'>
+                  Relief starts at your door.
                 </h2>
               </div>
               <span className='inline-flex size-12 shrink-0 items-center justify-center rounded-lg bg-[color:var(--brand-2)]/20 text-[color:var(--brand-2)]'>
@@ -295,11 +297,11 @@ export function Hero({
               </span>
             </div>
 
-            <ol className='mt-6 divide-y divide-white/12 border-y border-white/12'>
+            <ol className='mt-4 divide-y divide-white/12 border-y border-white/12'>
               {SESSION_STEPS.map((step, index) => (
                 <motion.li
                   key={step}
-                  className='flex items-center gap-3 py-3'
+                  className='flex items-center gap-3 py-2.5'
                   initial={reduce ? false : { opacity: 0, x: 14 }}
                   animate={reduce ? undefined : { opacity: 1, x: 0 }}
                   transition={{
@@ -318,34 +320,24 @@ export function Hero({
               ))}
             </ol>
 
-            <div className='mt-5 divide-y divide-white/12 border-y border-white/12'>
-              {HERO_PROOF.map(({ icon: Icon, title, detail }) => (
-                <motion.div
-                  key={title}
-                  className='flex items-center gap-3 py-3'
-                  whileHover={reduce ? undefined : { x: 4 }}
-                  transition={{ duration: 0.18, ease: 'easeOut' }}
-                >
-                  <Icon
-                    size={21}
-                    className='text-[color:var(--brand-2)]'
-                    aria-hidden
-                  />
-                  <span>
-                    <span className='block text-sm font-bold text-white'>
-                      {title}
-                    </span>
-                    <span className='text-xs leading-5 text-white/68'>
-                      {detail}
-                    </span>
-                  </span>
-                </motion.div>
-              ))}
+            <div className='mt-4 grid grid-cols-2 gap-3 border-b border-white/12 pb-4'>
+              <div>
+                <p className='text-2xl font-extrabold !text-white'>20+</p>
+                <p className='text-xs leading-5 text-white/68'>
+                  years experience
+                </p>
+              </div>
+              <div>
+                <p className='text-2xl font-extrabold !text-white'>AD</p>
+                <p className='text-xs leading-5 text-white/68'>
+                  home visit coverage
+                </p>
+              </div>
             </div>
 
             <a
               href='#services'
-              className='mt-5 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-white text-sm font-bold text-[color:var(--ink)] transition-all duration-200 hover:bg-[color:var(--brand-2)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[color:var(--ink)]'
+              className='mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-white text-sm font-bold text-[color:var(--ink)] transition-all duration-200 hover:bg-[color:var(--brand-2)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[color:var(--ink)]'
             >
               Explore treatment options
               <IconArrowRight size={18} aria-hidden />

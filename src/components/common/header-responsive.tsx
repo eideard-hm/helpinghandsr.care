@@ -74,7 +74,7 @@ export function HeaderResponsive({ waLink }: HeaderResponsiveProps) {
       <div
         id={panelId}
         hidden={!open}
-        className='absolute left-0 right-0 top-24 z-50 border-t bg-white/95 shadow-md backdrop-blur md:hidden'
+        className='absolute left-0 right-0 top-20 z-50 border-t bg-white/95 shadow-md backdrop-blur md:hidden'
         aria-modal='true'
         role='dialog'
         aria-label='Mobile menu'

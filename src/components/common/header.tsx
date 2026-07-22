@@ -11,10 +11,10 @@ export function Header() {
   const waHref = waLink(env.whatsAppNumber, env.waMessage);
 
   return (
-    <div className='mx-auto flex h-24 max-w-7xl items-center justify-between px-4 md:h-32'>
+    <div className='mx-auto flex h-20 max-w-7xl items-center justify-between px-4 md:h-24'>
       <Link href='/'>
         <Image
-          className='size-20 aspect-square object-contain md:size-[7.5rem]'
+          className='size-16 aspect-square object-contain md:size-24'
           src='/zeinmotiontm.webp'
           alt={`Logo from ${env.brand} | ${env.brandLogotype}`}
           width={120}
