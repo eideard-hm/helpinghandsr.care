@@ -9,21 +9,19 @@ import {
   useReducedMotion,
   useScroll,
   useTransform,
-  type Variants,
 } from 'framer-motion';
 import {
   IconArrowDown,
-  IconArrowRight,
-  IconCalendarCheck,
   IconClockHour4,
   IconHomeHeart,
-  IconMassage,
   IconMapPin,
+  IconMassage,
   IconShieldCheck,
 } from '@tabler/icons-react';
 
 import { env } from '@/config/env';
-import { childFade, listStagger } from '@/lib/motion';
+import { CONTACT } from '@/data/site';
+import { cn } from '@/lib/cn';
 import { LocalHlsVideo } from '../common/LocalHlsVideo';
 import { WhatsAppButton } from '../common/whatsapp-btn';
 
@@ -33,6 +31,10 @@ type HeroProps = {
 };
 
 const HERO_VIDEO = '/video/hero.m3u8';
+// Inside the second HLS segment (starts at 10.42 s), past hls.js' 0.25 s lookup
+// tolerance: skips the logo intro and never downloads the 5.5 MB first segment.
+const HERO_VIDEO_START = 10.75;
+// A frame at that point, larger than the 1280x720 video so it stays the largest paint.
 const HERO_POSTER = '/hero-poster.webp';
 
 const HERO_PROOF = [
@@ -53,25 +55,30 @@ const HERO_PROOF = [
   },
 ] as const;
 
-const RELIEF_TAGS = ['Chronic pain relief', 'Injury prevention', 'Stress recovery'];
+// Mirrors the client's Instagram bio.
+const RELIEF_TAGS = [
+  'Relieve chronic pain',
+  'Prevent injury',
+  'Reduce stress',
+  'Self-care & wellness',
+];
 const HEADLINE_LINES = ['Therapeutic Home Massage', 'in Abu Dhabi'];
-const SESSION_STEPS = ['Message on WhatsApp', 'Share your pain points', 'Receive care at home'];
+const SESSION_STEPS = [
+  'Message us on WhatsApp',
+  'Share your pain points and location',
+  'Receive tailored care at home',
+];
 
-const headlineLine: Variants = {
-  hidden: { opacity: 0, y: '100%' },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-  },
-};
+/** Staggers the CSS entrance animation of hero elements. */
+const enterAt = (ms: number): CSSProperties => ({ animationDelay: `${ms}ms` });
 
 export function Hero({
   headerSelector = 'header',
-  headerRemFallback = 7,
+  headerRemFallback = 6,
 }: HeroProps) {
   const heroRef = useRef<HTMLElement | null>(null);
   const reduce = useReducedMotion();
+  const [videoPlaying, setVideoPlaying] = useState(false);
   const [headerPx, setHeaderPx] = useState<number | null>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -102,7 +109,7 @@ export function Hero({
   return (
     <section
       ref={heroRef}
-      className='relative isolate overflow-hidden bg-[color:var(--ink)] text-white md:min-h-[calc(82dvh-var(--hero-header-offset))]'
+      className='relative isolate overflow-hidden bg-ink text-white lg:min-h-[calc(88dvh-var(--hero-header-offset))]'
       style={sectionStyle}
       aria-label={`${env.brandSEO} - therapeutic home massage in Abu Dhabi`}
     >
@@ -110,252 +117,204 @@ export function Hero({
         className='absolute inset-0 -z-20'
         style={reduce ? undefined : { y: mediaY, scale: mediaScale }}
       >
-        {reduce ? (
-          <Image
-            src={HERO_POSTER}
-            alt=''
-            fill
-            priority
-            sizes='100vw'
-            className='object-cover object-center'
-          />
-        ) : (
+        {/* The poster is the largest paint; the video fades in over it once it plays. */}
+        <Image
+          src={HERO_POSTER}
+          alt=''
+          fill
+          priority
+          sizes='1440px'
+          className='object-cover object-center'
+        />
+        {!reduce && (
           <LocalHlsVideo
             src={HERO_VIDEO}
-            poster={HERO_POSTER}
+            startAt={HERO_VIDEO_START}
             muted
-            preload='metadata'
-            className='h-full w-full object-cover object-center'
+            preload='none'
+            deferUntil='interaction'
+            onPlaying={() => setVideoPlaying(true)}
+            className={cn(
+              'absolute inset-0 h-full w-full object-cover object-center transition-opacity duration-1000',
+              videoPlaying ? 'opacity-100' : 'opacity-0'
+            )}
             ariaHidden
           />
         )}
       </motion.div>
 
-      <div className='absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(15,23,42,0.90)_0%,rgba(15,23,42,0.72)_42%,rgba(15,23,42,0.34)_72%,rgba(15,23,42,0.60)_100%)]' />
-      <div className='absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-[color:var(--ink)]/80 to-transparent' />
+      {/* The footage is bright; keep copy legible on every frame. */}
+      <div className='absolute inset-0 -z-10 bg-ink/70 md:bg-[linear-gradient(90deg,rgba(15,23,42,0.92)_0%,rgba(15,23,42,0.78)_42%,rgba(15,23,42,0.42)_72%,rgba(15,23,42,0.6)_100%)]' />
+      <div className='absolute inset-x-0 bottom-0 -z-10 h-40 bg-linear-to-t from-ink/80 to-transparent' />
 
-      <div className='container mx-auto grid max-w-7xl gap-8 px-4 py-10 md:min-h-[calc(82dvh-6rem)] md:py-12 lg:grid-cols-[minmax(0,1fr)_21rem] lg:items-center'>
-        <motion.div
-          className='max-w-3xl pr-8 md:pr-0'
-          variants={reduce ? undefined : listStagger}
-          initial={reduce ? false : 'hidden'}
-          animate={reduce ? undefined : 'visible'}
-        >
-          <motion.div
-            className='mb-5 inline-flex min-h-11 items-center gap-2 rounded-full border border-white/25 bg-white/12 px-4 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md'
-            variants={reduce ? undefined : childFade}
+      <div className='container mx-auto grid max-w-7xl gap-10 px-4 pt-10 pb-12 md:pt-14 md:pb-16 lg:min-h-[calc(88dvh-var(--hero-header-offset))] lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-center lg:gap-12'>
+        <div className='max-w-3xl'>
+          <p
+            className='mb-5 inline-flex animate-rise items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur-md'
+            style={enterAt(0)}
           >
             <IconMapPin
               size={18}
+              className='shrink-0 text-brand-2'
               aria-hidden
             />
-            Home massage visits across Abu Dhabi
-          </motion.div>
+            Premium massage at home &middot; Abu Dhabi
+          </p>
 
-          <motion.h1
-            className='max-w-3xl text-pretty text-4xl font-extrabold leading-[1.05] !text-white sm:text-5xl lg:text-6xl'
-            aria-label='Therapeutic Home Massage in Abu Dhabi'
-          >
-            {HEADLINE_LINES.map((line) => (
+          <h1 className='max-w-3xl text-4xl leading-[1.08] font-extrabold text-balance !text-white sm:text-5xl lg:text-6xl'>
+            {HEADLINE_LINES.map((line, index) => (
               <span
                 key={line}
-                className='block overflow-hidden pb-1 first:lg:whitespace-nowrap'
+                className='block overflow-hidden pb-1'
               >
-                <motion.span
-                  className='block'
-                  variants={reduce ? undefined : headlineLine}
+                <span
+                  className={cn(
+                    'block animate-line-up',
+                    index === 1 && 'text-brand-2'
+                  )}
+                  style={enterAt(80 + index * 90)}
                 >
                   {line}
-                </motion.span>
+                </span>{' '}
               </span>
             ))}
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className='mt-4 max-w-2xl text-lg leading-8 text-white/90 sm:text-xl'
-            variants={reduce ? undefined : childFade}
+          <p
+            className='mt-5 max-w-2xl animate-rise text-lg leading-8 text-white/90 sm:text-xl'
+            style={enterAt(260)}
           >
             Personalized home visits for chronic pain, stiffness, mobility,
-            injury prevention, stress relief, and wellness recovery.
-          </motion.p>
+            injury prevention, stress relief and wellness recovery &mdash;
+            with over 20 years of hands-on experience.
+          </p>
 
-          <motion.ul
-            className='mt-5 flex max-w-2xl flex-wrap gap-2'
-            variants={reduce ? undefined : childFade}
-            aria-label='Therapeutic massage benefits'
+          <ul
+            className='mt-6 flex max-w-2xl animate-rise flex-wrap gap-2'
+            style={enterAt(340)}
+            aria-label='What ZeinMotion helps with'
           >
             {RELIEF_TAGS.map((tag) => (
-              <motion.li
+              <li
                 key={tag}
-                className='rounded-full border border-white/20 bg-white/12 px-4 py-2 text-sm font-medium text-white/95 backdrop-blur-md'
-                whileHover={reduce ? undefined : { y: -2, scale: 1.02 }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
+                className='rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-sm font-medium text-white/95 backdrop-blur-md'
               >
                 {tag}
-              </motion.li>
+              </li>
             ))}
-          </motion.ul>
+          </ul>
 
-          <motion.div
-            className='mt-7 flex flex-col gap-3 sm:flex-row sm:items-center'
-            variants={reduce ? undefined : childFade}
+          <div
+            className='mt-8 flex animate-rise flex-col gap-3 sm:flex-row sm:items-center'
+            style={enterAt(420)}
           >
-            <motion.div
-              whileHover={reduce ? undefined : { y: -2, scale: 1.02 }}
-              whileTap={reduce ? undefined : { scale: 0.98 }}
-            >
-              <WhatsAppButton
-                label='Book a home visit'
-                size='large'
-                classList='min-h-12 rounded-lg px-6 shadow-xl shadow-black/20'
-              />
-            </motion.div>
-            <motion.a
+            <WhatsAppButton
+              label='Book a home visit'
+              size='large'
+              classList='rounded-xl px-7 shadow-xl shadow-black/25 hover:-translate-y-0.5'
+            />
+            <a
               href='#services'
-              className='inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/30 bg-white/10 px-6 text-base font-semibold text-white backdrop-blur-md transition-all duration-200 hover:bg-white/18 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[color:var(--ink)]'
-              whileHover={reduce ? undefined : { y: -2 }}
-              whileTap={reduce ? undefined : { scale: 0.98 }}
+              className='inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 text-base font-semibold text-white backdrop-blur-md transition-all duration-200 hover:-translate-y-0.5 hover:bg-white/20 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-ink'
             >
               View treatments
-              <IconArrowDown size={19} aria-hidden />
-            </motion.a>
-          </motion.div>
-        </motion.div>
+              <IconArrowDown
+                size={19}
+                aria-hidden
+              />
+            </a>
+          </div>
 
-        <motion.div
-          className='grid gap-3 sm:grid-cols-3 lg:hidden'
-          initial={reduce ? false : 'hidden'}
-          animate={reduce ? undefined : 'visible'}
-          variants={
-            reduce
-              ? undefined
-              : {
-                  hidden: {},
-                  visible: {
-                    transition: { delayChildren: 0.35, staggerChildren: 0.08 },
-                  },
-                }
-          }
-          aria-label='Reasons to choose ZeinMotion'
+          <ul
+            className='mt-10 grid animate-rise grid-cols-3 gap-2 sm:gap-3 lg:flex lg:gap-0 lg:divide-x lg:divide-white/15'
+            style={enterAt(500)}
+            aria-label={`Reasons to choose ${env.brandSEO}`}
+          >
+            {HERO_PROOF.map(({ icon: Icon, title, detail }) => (
+              <li
+                key={title}
+                className='flex flex-col items-start gap-2 rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-md sm:flex-row sm:items-center sm:gap-3 sm:p-4 lg:rounded-none lg:border-0 lg:bg-transparent lg:px-6 lg:py-0 lg:backdrop-blur-none lg:first:pl-0'
+              >
+                <span className='inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-brand-2/20 text-brand-2 sm:size-11'>
+                  <Icon
+                    size={22}
+                    aria-hidden
+                  />
+                </span>
+                <span>
+                  <span className='block text-sm font-bold text-white'>
+                    {title}
+                  </span>
+                  <span className='mt-0.5 block text-xs leading-5 text-white/75 sm:text-sm'>
+                    {detail}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <aside
+          className='hidden animate-slide-in lg:block'
+          style={enterAt(350)}
+          aria-labelledby='hero-booking-title'
         >
-          {HERO_PROOF.map(({ icon: Icon, title, detail }) => (
-            <motion.article
-              key={title}
-              className='flex min-h-24 items-center gap-3 rounded-lg border border-white/18 bg-white/12 p-4 text-white shadow-sm backdrop-blur-md'
-              variants={
-                reduce
-                  ? undefined
-                  : {
-                      hidden: { opacity: 0, y: 16 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.35, ease: 'easeOut' },
-                      },
-                    }
-              }
+          <div className='rounded-2xl border border-white/15 bg-ink/60 p-6 text-white shadow-2xl shadow-black/30 backdrop-blur-md'>
+            <p className='text-xs font-semibold tracking-[0.18em] text-brand-2 uppercase'>
+              How booking works
+            </p>
+            <h2
+              id='hero-booking-title'
+              className='mt-2 text-2xl leading-tight font-bold !text-white'
             >
-              <span className='inline-flex size-11 shrink-0 items-center justify-center rounded-lg bg-[color:var(--brand-2)]/20 text-[color:var(--brand-2)]'>
-                <Icon
-                  size={23}
-                  aria-hidden
-                />
-              </span>
-              <span>
-                <span className='block text-sm font-bold !text-white'>
-                  {title}
-                </span>
-                <span className='mt-1 block text-sm leading-5 text-white/78'>
-                  {detail}
-                </span>
-              </span>
-            </motion.article>
-          ))}
-        </motion.div>
+              Relief starts at your door.
+            </h2>
 
-        <motion.aside
-          className='hidden lg:block'
-          initial={reduce ? false : { opacity: 0, x: 28, scale: 0.98 }}
-          animate={reduce ? undefined : { opacity: 1, x: 0, scale: 1 }}
-          transition={{ delay: 0.35, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          whileHover={reduce ? undefined : { rotateY: -2, rotateX: 1, y: -3 }}
-          style={{ transformPerspective: 1200 }}
-          aria-label='Booking and service highlights'
-        >
-          <div className='rounded-xl border border-white/20 bg-white/14 p-4 text-white shadow-2xl shadow-black/20 backdrop-blur-lg'>
-            <div className='flex items-center justify-between gap-4'>
-              <div>
-                <p className='text-sm font-semibold uppercase tracking-wide text-white/70'>
-                  Home visit flow
-                </p>
-                <h2 className='mt-1 text-xl font-extrabold leading-tight !text-white'>
-                  Relief starts at your door.
-                </h2>
-              </div>
-              <span className='inline-flex size-12 shrink-0 items-center justify-center rounded-lg bg-[color:var(--brand-2)]/20 text-[color:var(--brand-2)]'>
-                <IconClockHour4 size={25} aria-hidden />
-              </span>
-            </div>
-
-            <ol className='mt-4 divide-y divide-white/12 border-y border-white/12'>
+            <ol className='mt-5 space-y-4'>
               {SESSION_STEPS.map((step, index) => (
-                <motion.li
+                <li
                   key={step}
-                  className='flex items-center gap-3 py-2.5'
-                  initial={reduce ? false : { opacity: 0, x: 14 }}
-                  animate={reduce ? undefined : { opacity: 1, x: 0 }}
-                  transition={{
-                    delay: 0.52 + index * 0.08,
-                    duration: 0.28,
-                    ease: 'easeOut',
-                  }}
+                  className='flex animate-rise items-center gap-3'
+                  style={enterAt(550 + index * 100)}
                 >
-                  <span className='inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[color:var(--brand)]'>
+                  <span className='inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-brand'>
                     {index + 1}
                   </span>
-                  <span className='text-sm font-semibold text-white/90'>
+                  <span className='text-[15px] leading-6 font-medium text-white'>
                     {step}
                   </span>
-                </motion.li>
+                </li>
               ))}
             </ol>
 
-            <div className='mt-4 grid grid-cols-2 gap-3 border-b border-white/12 pb-4'>
-              <div>
-                <p className='text-2xl font-extrabold !text-white'>20+</p>
-                <p className='text-xs leading-5 text-white/68'>
-                  years experience
-                </p>
-              </div>
-              <div>
-                <p className='text-2xl font-extrabold !text-white'>AD</p>
-                <p className='text-xs leading-5 text-white/68'>
-                  home visit coverage
-                </p>
-              </div>
-            </div>
-
-            <a
-              href='#services'
-              className='mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-white text-sm font-bold text-[color:var(--ink)] transition-all duration-200 hover:bg-[color:var(--brand-2)] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[color:var(--ink)]'
-            >
-              Explore treatment options
-              <IconArrowRight size={18} aria-hidden />
-            </a>
+            <p className='mt-6 flex items-center gap-2 border-t border-white/15 pt-5 text-sm text-white/80'>
+              <IconClockHour4
+                size={18}
+                className='shrink-0 text-brand-2'
+                aria-hidden
+              />
+              Available {CONTACT.availability}
+            </p>
           </div>
-        </motion.aside>
-
-        <motion.div
-          className='hidden items-center gap-2 text-sm font-medium text-white/72 lg:col-span-2 lg:flex'
-          initial={reduce ? false : { opacity: 0, y: -6 }}
-          animate={reduce ? undefined : { opacity: 1, y: 0 }}
-          transition={{ delay: 0.7, duration: 0.3, ease: 'easeOut' }}
-          aria-hidden
-        >
-          <IconCalendarCheck size={17} />
-          Direct WhatsApp scheduling with personalized treatment guidance
-        </motion.div>
+        </aside>
       </div>
+
+      <motion.a
+        href='#benefits'
+        className='absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold tracking-[0.2em] text-white/70 uppercase transition-colors hover:text-white lg:inline-flex'
+        initial={reduce ? false : { opacity: 0 }}
+        animate={reduce ? undefined : { opacity: 1, y: [0, 6, 0] }}
+        transition={{
+          opacity: { delay: 1.2, duration: 0.4 },
+          y: { delay: 1.2, duration: 1.8, repeat: Infinity, ease: 'easeInOut' },
+        }}
+      >
+        Discover
+        <IconArrowDown
+          size={16}
+          aria-hidden
+        />
+      </motion.a>
     </section>
   );
 }

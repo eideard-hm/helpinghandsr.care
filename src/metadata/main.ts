@@ -2,15 +2,40 @@ import type { Metadata } from 'next';
 
 import { env } from '@/config/env';
 import { FAQ_ITEMS } from '@/data/faq';
+import {
+  CONTACT,
+  SERVICE_AREA_GEO,
+  SERVICE_AREAS,
+  SIGNATURE_TECHNIQUES,
+  SITE_UPDATED_AT,
+  SOCIAL_LINKS,
+  THERAPIST,
+} from '@/data/site';
+import { waLinkWithEnv } from '@/lib/whatsapp';
 
 export const siteUrl = env.siteUrl || 'https://zeinmotion.vercel.app';
 
 const prodUrl = new URL(siteUrl);
-const BUSINESS_EMAIL = 'zeinmotionspa@gmail.com';
-const BUSINESS_PHONE_DISPLAY = '+971 54 374 0644';
-const BUSINESS_PHONE_SCHEMA = '+971543740644';
-const FACEBOOK_URL = 'https://web.facebook.com/ZeinMotion/';
-const INSTAGRAM_URL = 'https://www.instagram.com/zeinmotionuae/';
+const BUSINESS_EMAIL = CONTACT.email;
+const BUSINESS_PHONE_SCHEMA = CONTACT.phoneSchema;
+const FACEBOOK_URL = SOCIAL_LINKS.facebook.href;
+const INSTAGRAM_URL = SOCIAL_LINKS.instagram.href;
+const OG_IMAGE = `${prodUrl}og-zeinmotion.jpg`;
+// Google asks for 16:9, 4:3 and 1:1 images for local business results.
+const SCHEMA_IMAGES = [
+  OG_IMAGE,
+  `${prodUrl}og-zeinmotion-4x3.jpg`,
+  `${prodUrl}og-zeinmotion-1x1.jpg`,
+];
+
+const ID = {
+  business: `${prodUrl}#business`,
+  therapist: `${prodUrl}#richard-mahecha`,
+  website: `${prodUrl}#website`,
+  webpage: `${prodUrl}#webpage`,
+  service: `${prodUrl}#home-massage`,
+  faq: `${prodUrl}#faq`,
+};
 
 const CORE_SERVICES = [
   'ZeinMotion Therapy',
@@ -23,99 +48,46 @@ const CORE_SERVICES = [
   'Anti-Stress & Face Massage',
 ];
 
+const SEO_TITLE = `Home Massage Abu Dhabi | ${env.brandSEO} Premium Massage at Home`;
+const SEO_DESCRIPTION = `Premium home massage in Abu Dhabi. ${env.brandSEO} brings therapeutic sessions to your home or hotel for chronic pain, injuries and stress. Book on WhatsApp.`;
+const SOCIAL_TITLE = `${env.brandSEO} - Premium Massage at Home in Abu Dhabi`;
+const SOCIAL_DESCRIPTION = `Therapeutic home massage in Abu Dhabi by ${THERAPIST.name}, ${THERAPIST.yearsOfExperience}+ years of experience: sports, deep tissue, stretching, reflexology and cupping. Book on WhatsApp.`;
+
 const generateKeywords = () => {
   const serviceKeywords = CORE_SERVICES.flatMap((service) => [
     `${service} Abu Dhabi`,
     `${service} at home`,
-    `home ${service.toLowerCase()}`,
-    `mobile ${service.toLowerCase()} Abu Dhabi`,
   ]);
 
-  const locationKeywords = [
-    'Abu Dhabi',
-    'UAE',
-    'United Arab Emirates',
-    'Al Reem Island',
-    'Yas Island',
-    'Khalifa City',
-    'Al Raha',
-    'Saadiyat Island',
-    'Al Maryah Island',
-    'Corniche',
-    'Mohammed Bin Zayed City',
-  ];
-
-  const painReliefKeywords = [
-    'chronic pain relief',
-    'muscle stiffness',
-    'injury prevention',
-    'stress relief',
-    'sports recovery',
-    'post-surgery massage',
-    'office workers massage',
-    'athlete massage therapy',
-  ];
-
   return [
-    ...serviceKeywords,
-
     'home massage Abu Dhabi',
-    'home massages in Abu Dhabi',
-    'home massage in Abu Dhabi',
-    'massage home service Abu Dhabi',
-    'mobile massage therapist',
-    'massage at home service',
-    'wellness therapy Abu Dhabi',
-    'professional massage therapist',
-    'home massage prices Abu Dhabi',
-    'WhatsApp massage booking Abu Dhabi',
-    'premium massage at home Abu Dhabi',
-    'customized home massage Abu Dhabi',
-    'tailored massage treatments Abu Dhabi',
-    'personalized home massage Abu Dhabi',
+    'massage at home Abu Dhabi',
+    'mobile massage therapist Abu Dhabi',
     'massage therapist Abu Dhabi home visits',
-    'massage therapist Abu Dhabi',
-    'home visit massage therapist Abu Dhabi',
+    'premium massage at home Abu Dhabi',
+    'hotel massage Abu Dhabi',
     'pain relief massage Abu Dhabi',
-    'stress relief massage Abu Dhabi',
-
-    ...painReliefKeywords.flatMap((keyword) => [
-      `${keyword} Abu Dhabi`,
-      `${keyword} at home`,
-    ]),
-
-    ...locationKeywords.flatMap((location) => [
-      `massage at home ${location}`,
-      `mobile massage ${location}`,
-      `massage therapist ${location}`,
-    ]),
+    'sports recovery massage Abu Dhabi',
+    'WhatsApp massage booking Abu Dhabi',
+    ...serviceKeywords,
+    ...SERVICE_AREAS.map((area) => `home massage ${area}`),
   ];
 };
 
 export const mainMetadata: Metadata = {
   metadataBase: prodUrl,
   title: {
-    default: `Home Massage in Abu Dhabi | Mobile Massage Therapist | ${env.brandSEO}`,
-    template: `%s | ${env.brandSEO} - Professional Home Massage Abu Dhabi`,
+    default: SEO_TITLE,
+    template: `%s | ${env.brandSEO} Abu Dhabi`,
   },
-  description: `${env.brandSEO} provides home massages in Abu Dhabi with premium in-home massage therapy. Specialized in ${CORE_SERVICES.slice(
-    0,
-    4
-  ).join(
-    ', '
-  )} and more. Home visits, customized treatments, chronic pain relief, injury prevention, stress reduction, and self-care wellness. Book by WhatsApp: ${BUSINESS_PHONE_DISPLAY}`,
+  description: SEO_DESCRIPTION,
+  applicationName: env.brandSEO,
 
   keywords: generateKeywords(),
 
-  authors: [
-    {
-      name: 'Edier Hernandez',
-      url: 'https://edier-hm.netlify.app/',
-    },
-  ],
-
+  authors: [{ name: env.brandSEO, url: siteUrl }],
   creator: 'Edier Hernandez',
-  publisher: `${env.brandSEO}`,
+  publisher: env.brandSEO,
 
   robots: {
     index: true,
@@ -132,31 +104,25 @@ export const mainMetadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_AE',
-    siteName: `${env.brandSEO} | Professional Home Massage Abu Dhabi`,
-    title: `Home Massage in Abu Dhabi | ${env.brandSEO} - Mobile Massage Therapist`,
-    description: `Professional home massages in Abu Dhabi with WhatsApp booking. ${CORE_SERVICES.slice(
-      0,
-      3
-    ).join(', ')} and customized treatments for chronic pain, injury prevention, stiffness, and stress relief. Book your home visit: ${BUSINESS_PHONE_DISPLAY}`,
+    siteName: env.brandSEO,
+    title: SOCIAL_TITLE,
+    description: SOCIAL_DESCRIPTION,
     url: prodUrl,
     images: [
       {
-        url: `${prodUrl}og-image.jpg`,
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
-        alt: `${env.brandSEO} - Professional Home Massage Therapy in Abu Dhabi - ZeinMotion, Sports Massage & Pain Relief Services`,
+        alt: `${env.brandSEO} - Premium massage at home in Abu Dhabi`,
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image',
-    title: `Home Massage Abu Dhabi | ${env.brandSEO} - Mobile Therapy Services`,
-    description: `Professional home massage in Abu Dhabi: ${CORE_SERVICES.slice(
-      0,
-      3
-    ).join(', ')}. Home visits, tailored treatments, pain relief, and wellness care. Book your home visit: ${BUSINESS_PHONE_DISPLAY}`,
-    images: [`${prodUrl}og-image.jpg`],
+    title: SOCIAL_TITLE,
+    description: SOCIAL_DESCRIPTION,
+    images: [OG_IMAGE],
   },
 
   alternates: {
@@ -164,16 +130,13 @@ export const mainMetadata: Metadata = {
   },
 
   category: 'Health & Wellness',
-  classification: 'Professional Massage Therapy Services',
+  classification: 'Home Massage Therapy',
 
   other: {
-    'contact:phone': BUSINESS_PHONE_SCHEMA,
-    'contact:email': BUSINESS_EMAIL,
-    'business:service': CORE_SERVICES.join(', '),
-    'location:city': 'Abu Dhabi',
-    'location:country': 'United Arab Emirates',
-    'service:area': 'Abu Dhabi and surrounding areas',
-    'service:type': 'Home Visit Massage Therapy',
+    'geo.region': 'AE-AZ',
+    'geo.placename': CONTACT.city,
+    'geo.position': `${SERVICE_AREA_GEO.latitude};${SERVICE_AREA_GEO.longitude}`,
+    ICBM: `${SERVICE_AREA_GEO.latitude}, ${SERVICE_AREA_GEO.longitude}`,
   },
 
   icons: {
@@ -183,108 +146,73 @@ export const mainMetadata: Metadata = {
       { url: '/favicon_48x48.png', sizes: '48x48', type: 'image/png' },
       { url: '/favicon_64x64.png', sizes: '64x64', type: 'image/png' },
     ],
-    apple: [{ url: '/favicon_64x64.png', sizes: '64x64', type: 'image/png' }],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
     shortcut: ['/favicon_32x32.png'],
   },
 };
 
-export const sectionMetadata = {
-  services: {
-    title: `Our Massage Services in Abu Dhabi | ${env.brandSEO} - Professional Treatments`,
-    description: `Explore our professional massage services in Abu Dhabi: ${CORE_SERVICES.join(
-      ', '
-    )}. Personalized treatments for pain relief and wellness.`,
-    keywords: CORE_SERVICES.map(
-      (service) =>
-        `${service} Abu Dhabi, home ${service}, mobile ${service} service`
-    ).flat(),
-  },
-
-  booking: {
-    title: `Book Home Massage in Abu Dhabi | ${env.brandSEO} - Schedule Your Visit`,
-    description:
-      'Book your professional home massage therapy in Abu Dhabi. Easy scheduling, flexible appointments, professional service. Contact us now!',
-    keywords: [
-      'book massage Abu Dhabi',
-      'schedule home massage',
-      'massage appointment',
-      'wellness booking Abu Dhabi',
-      'mobile massage schedule',
-    ],
-  },
-
-  contact: {
-    title: `Contact Professional Massage Therapist | ${env.brandSEO} - Abu Dhabi`,
-    description: `Contact our professional massage therapist in Abu Dhabi for premium home visits, customized treatments, chronic pain relief, and wellness care. Call ${BUSINESS_PHONE_DISPLAY} or email ${BUSINESS_EMAIL}`,
-    keywords: [
-      'contact massage therapist Abu Dhabi',
-      'massage service contact',
-      'wellness therapist phone',
-      'home massage inquiry',
-    ],
-  },
-};
-
-export const getSectionMetadata = (
-  section: keyof typeof sectionMetadata
-): Metadata => ({
-  title: sectionMetadata[section].title,
-  description: sectionMetadata[section].description,
-  keywords: sectionMetadata[section].keywords,
-  openGraph: {
-    ...mainMetadata.openGraph,
-    title: sectionMetadata[section].title,
-    description: sectionMetadata[section].description,
-    url: `${prodUrl}/${section}`,
-  },
-  twitter: {
-    ...mainMetadata.twitter,
-    title: sectionMetadata[section].title,
-    description: sectionMetadata[section].description,
-  },
-});
-
 export const businessSchema = {
-  '@context': 'https://schema.org',
   '@type': 'HealthAndBeautyBusiness',
-  '@id': `${prodUrl}#business`,
+  '@id': ID.business,
   name: env.brandSEO,
-  description: mainMetadata.description,
-  image: `${prodUrl}og-image.jpg`,
-  logo: `${prodUrl}favicon_64x64.png`,
+  alternateName: [env.brand, `${env.brandSEO} - Premium Massage At Home`],
+  slogan: env.brandLogotype,
+  description: `${env.brandSEO} is a premium home massage service in Abu Dhabi. ${THERAPIST.name}, a ${THERAPIST.role} with ${THERAPIST.yearsOfExperience}+ years of experience, visits homes, hotels and residences to relieve chronic pain, prevent injuries and reduce stress with customized treatments.`,
+  url: prodUrl.toString(),
+  image: SCHEMA_IMAGES,
+  logo: `${prodUrl}icon-512.png`,
   telephone: BUSINESS_PHONE_SCHEMA,
   email: BUSINESS_EMAIL,
   priceRange: '$$',
+  currenciesAccepted: 'AED',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Abu Dhabi',
-    addressRegion: 'UAE',
+    addressLocality: CONTACT.city,
+    addressRegion: 'Abu Dhabi',
     addressCountry: 'AE',
   },
   areaServed: [
     {
       '@type': 'City',
-      name: 'Abu Dhabi',
-      addressCountry: 'AE',
+      name: CONTACT.city,
+      sameAs: 'https://en.wikipedia.org/wiki/Abu_Dhabi',
     },
-    'Al Reem Island',
-    'Yas Island',
-    'Khalifa City',
-    'Al Raha',
-    'Saadiyat Island',
-    'Al Maryah Island',
-    'Corniche',
-    'Mohammed Bin Zayed City',
+    {
+      '@type': 'GeoCircle',
+      geoMidpoint: {
+        '@type': 'GeoCoordinates',
+        latitude: SERVICE_AREA_GEO.latitude,
+        longitude: SERVICE_AREA_GEO.longitude,
+      },
+      geoRadius: SERVICE_AREA_GEO.radiusMeters,
+    },
+    ...SERVICE_AREAS.map((area) => ({ '@type': 'Place', name: area })),
   ],
-  serviceType: CORE_SERVICES,
-  sameAs: [FACEBOOK_URL, INSTAGRAM_URL],
+  knowsAbout: [...CORE_SERVICES, ...SIGNATURE_TECHNIQUES],
+  sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
+  founder: { '@id': ID.therapist },
+  employee: { '@id': ID.therapist },
   contactPoint: {
     '@type': 'ContactPoint',
     telephone: BUSINESS_PHONE_SCHEMA,
     email: BUSINESS_EMAIL,
-    contactType: 'booking',
+    contactType: 'reservations',
     areaServed: 'AE',
     availableLanguage: ['en'],
+  },
+  potentialAction: {
+    '@type': 'ReserveAction',
+    name: 'Book a home massage on WhatsApp',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: waLinkWithEnv(),
+      actionPlatform: [
+        'https://schema.org/DesktopWebPlatform',
+        'https://schema.org/MobileWebPlatform',
+      ],
+    },
   },
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
@@ -294,12 +222,12 @@ export const businessSchema = {
       itemOffered: {
         '@type': 'Service',
         name: service,
-        areaServed: 'Abu Dhabi',
         serviceType: 'Home massage therapy',
+        areaServed: { '@type': 'City', name: CONTACT.city },
+        provider: { '@id': ID.business },
       },
     })),
   },
-  openingHours: 'Mo-Su 09:00-22:00',
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -316,41 +244,87 @@ export const businessSchema = {
       closes: '22:00',
     },
   ],
-  url: prodUrl.toString(),
+};
+
+export const therapistSchema = {
+  '@type': 'Person',
+  '@id': ID.therapist,
+  name: THERAPIST.name,
+  jobTitle: THERAPIST.role,
+  description: `${THERAPIST.role} and creator of the ${env.brandSEO} massage method, with ${THERAPIST.yearsOfExperience}+ years of experience in therapeutic, sports and deep tissue massage in Abu Dhabi.`,
+  image: `${prodUrl}${THERAPIST.image.slice(1)}`,
+  url: `${prodUrl}#about`,
+  worksFor: { '@id': ID.business },
+  knowsAbout: [...THERAPIST.credentials.certifiedIn, 'Assisted Stretching'],
+  hasCredential: {
+    '@type': 'EducationalOccupationalCredential',
+    name: THERAPIST.role,
+    credentialCategory: 'diploma',
+    educationalLevel: THERAPIST.credentials.trainedAt,
+    recognizedBy: THERAPIST.credentials.attestedBy.map((name) => ({
+      '@type': 'Organization',
+      name,
+    })),
+  },
+  alumniOf: {
+    '@type': 'EducationalOrganization',
+    name: THERAPIST.credentials.trainedAt,
+  },
+  sameAs: [INSTAGRAM_URL],
 };
 
 export const websiteSchema = {
-  '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': ID.website,
   name: env.brandSEO,
   url: prodUrl.toString(),
-  description: mainMetadata.description,
-  inLanguage: 'en-AE',
+  inLanguage: 'en',
+  publisher: { '@id': ID.business },
+};
+
+export const webPageSchema = {
+  '@type': 'WebPage',
+  '@id': ID.webpage,
+  url: prodUrl.toString(),
+  name: SEO_TITLE,
+  description: SEO_DESCRIPTION,
+  inLanguage: 'en',
+  isPartOf: { '@id': ID.website },
+  about: { '@id': ID.business },
+  mainEntity: { '@id': ID.business },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    url: OG_IMAGE,
+    width: 1200,
+    height: 630,
+  },
+  dateModified: SITE_UPDATED_AT,
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['h1', '#benefits-title', '#faq-title'],
+  },
 };
 
 export const homeMassageServiceSchema = {
-  '@context': 'https://schema.org',
   '@type': 'Service',
+  '@id': ID.service,
   name: 'Home massage in Abu Dhabi',
   description:
-    'Professional home massage therapy delivered to homes, hotels, and residences across Abu Dhabi.',
-  provider: {
-    '@id': `${prodUrl}#business`,
-    '@type': 'HealthAndBeautyBusiness',
-    name: env.brandSEO,
-    telephone: BUSINESS_PHONE_SCHEMA,
-  },
-  areaServed: {
-    '@type': 'City',
-    name: 'Abu Dhabi',
-  },
+    'Therapeutic massage delivered to homes, hotels and residences across Abu Dhabi, tailored to chronic pain, injury prevention, sports recovery and stress relief.',
   serviceType: 'Home massage therapy',
+  provider: { '@id': ID.business },
+  areaServed: { '@type': 'City', name: CONTACT.city },
+  audience: {
+    '@type': 'PeopleAudience',
+    audienceType:
+      'Athletes, active professionals, office workers and anyone with chronic pain, stiffness or stress',
+  },
 };
 
 export const faqSchema = {
-  '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  '@id': `${prodUrl}#faq`,
+  '@id': ID.faq,
+  isPartOf: { '@id': ID.webpage },
   mainEntity: FAQ_ITEMS.map((item) => ({
     '@type': 'Question',
     name: item.question,

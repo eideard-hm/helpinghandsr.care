@@ -1,4 +1,3 @@
-
 import { waLinkWithEnv } from '@/lib/whatsapp';
 import { SectionTitle } from '../../common/section-title';
 import { Steps } from './steps';
@@ -9,10 +8,15 @@ export function HowItWorks() {
   return (
     <section
       id='how-it-works'
-      className='py-16 bg-gray-50 shadow'
+      aria-labelledby='how-it-works-title'
+      className='bg-bg py-16 md:py-24'
     >
-      <div className='container mx-auto px-4 max-w-7xl'>
-        <SectionTitle subTitle='Experience our seamless booking system designed for your convenience and peace of mind'>
+      <div className='container mx-auto max-w-7xl px-4'>
+        <SectionTitle
+          id='how-it-works-title'
+          eyebrow='How it works'
+          subTitle='A seamless booking experience designed for your convenience and peace of mind.'
+        >
           Simple Booking Process
         </SectionTitle>
 

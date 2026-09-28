@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 
 export function FormLayout({
@@ -19,23 +17,23 @@ export function FormLayout({
         <Image
           width={72}
           height={72}
-          className='size-16 shrink-0 aspect-square object-contain sm:size-[4.5rem]'
+          className='aspect-square size-16 shrink-0 object-contain sm:size-18'
           src='/zeinmotiontm2.webp'
           alt={`Logo of ${brand} | Massage Therapist`}
         />
 
         <div>
-          <p className='text-sm font-semibold uppercase tracking-wide text-[color:var(--brand)]'>
+          <p className='text-sm font-semibold tracking-wide text-brand-700 uppercase'>
             {brand}
           </p>
           <p className='text-sm text-gray-500'>{logotype}</p>
         </div>
       </div>
 
-      <div className='w-full rounded-lg border border-gray-100 bg-white shadow-sm'>
-        <div className='space-y-4 p-5 sm:p-6 md:space-y-6'>
+      <div className='w-full rounded-3xl bg-white shadow-xl ring-1 shadow-ink/5 ring-gray-200/70'>
+        <div className='space-y-5 p-6 sm:p-8'>
           {formTitle && (
-            <h2 className='!text-xl font-bold leading-tight tracking-tight text-gray-900'>
+            <h2 className='text-2xl leading-tight font-bold text-title-indigo'>
               {formTitle}
             </h2>
           )}

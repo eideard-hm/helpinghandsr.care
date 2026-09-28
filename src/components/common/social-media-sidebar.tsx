@@ -2,8 +2,11 @@ import { SocialMediaItems } from './social-media-items';
 
 export function SocialMediaSidebar() {
   return (
-    <aside className='fixed top-[55%] right-6 z-50 hidden -translate-y-1/2 md:block'>
-      <SocialMediaItems classList='flex flex-col gap-2' />
+    <aside
+      aria-label='Contact and social media'
+      className='fixed top-1/2 right-5 z-30 hidden -translate-y-1/2 lg:block'
+    >
+      <SocialMediaItems classList='flex-col gap-3' />
     </aside>
   );
 }

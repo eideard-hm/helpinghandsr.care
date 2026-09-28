@@ -7,8 +7,16 @@ export const SERVICES: Services[] = [
     visible: true,
     id: 'zeinmotion-therapy',
     title: `${env.brand} Therapy`,
-    image: '/services/deep-tissue-massage.webp',
+    image: '/services/deep-tissue-massage-big.webp',
     bigImage: '/services/sports-massage-big.webp',
+    techniques: [
+      'Deep Tissue',
+      'Sports Massage',
+      'Assisted Stretching',
+      'Reflexology',
+      'Head & Neck',
+      'Cupping (when appropriate)',
+    ],
     excerpt:
       'A premium signature massage method developed over 20+ years of clinical experience. Integrates Head Massage, Deep Tissue, Sports Massage, Assisted Stretching, and Reflexology for comprehensive pain relief and performance enhancement.',
     waLink: waLink(
@@ -60,7 +68,7 @@ export const SERVICES: Services[] = [
     isMain: false,
     visible: false,
     id: 'deep-tissue-massage',
-    image: '/services/deep-tissue-massage.webp',
+    image: '/services/deep-tissue-massage-big.webp',
     bigImage: '/services/deep-tissue-massage-big.webp',
     title: 'Deep Tissue Massage',
     excerpt:
@@ -106,7 +114,7 @@ export const SERVICES: Services[] = [
     visible: false,
     id: 'anti-stress-face-massage',
     title: 'Anti-Stress & Face Massage',
-    image: '/services/anti-stress-massage.webp',
+    image: '/services/anti-stress-massage-big.webp',
     bigImage: '/services/anti-stress-massage-big.webp',
     excerpt:
       'A calming treatment for neck, shoulder, head, and facial tension, designed to reduce stress and restore a lighter feeling.',
@@ -151,7 +159,7 @@ export const SERVICES: Services[] = [
     visible: false,
     id: 'sports-massage',
     title: 'Sports Massage',
-    image: '/services/sports-massage.webp',
+    image: '/services/sports-massage-big.webp',
     bigImage: '/services/sports-massage-big.webp',
     excerpt:
       'Targeted recovery work for active clients, gym routines, sport-specific tension, flexibility, and injury prevention.',
@@ -196,7 +204,7 @@ export const SERVICES: Services[] = [
     visible: false,
     id: 'cupping-therapy',
     title: 'Cupping Therapy',
-    image: '/services/cupping-therapy.webp',
+    image: '/services/cupping-therapy-big.webp',
     bigImage: '/services/cupping-therapy-big.webp',
     excerpt:
       'This ancient healing technique utilizes specialized cups that create a gentle suction on your skin, promoting improved circulation, detoxification, and muscle relaxation.',
@@ -247,7 +255,7 @@ export const SERVICES: Services[] = [
     visible: false,
     id: 'reflexology-therapy',
     title: 'Reflexology Therapy',
-    image: '/services/reflexology-therapy.webp',
+    image: '/services/reflexology-therapy-big.webp',
     bigImage: '/services/reflexology-therapy-big.webp',
     excerpt:
       'Reflexology is a compression technique that focuses on specific pressure points in the hands and feet.',
@@ -292,7 +300,7 @@ export const SERVICES: Services[] = [
     id: 'lymphatic-drainage-massage',
     visible: true,
     title: 'Lymphatic Drainage Massage',
-    image: '/services/lymphatic-drainage-massage.webp',
+    image: '/services/lymphatic-drainage-massage-big.webp',
     bigImage: '/services/lymphatic-drainage-massage-big.webp',
     excerpt:
       'Lymphatic Drainage Massage is a gentle massage technique that stimulates the lymphatic system to promote the removal of toxins and excess fluid from the body.',
@@ -337,7 +345,7 @@ export const SERVICES: Services[] = [
     id: 'anti-cellulite-massage',
     visible: true,
     title: 'Anti-Cellulite Massage',
-    image: '/services/anti-cellulite-massage.webp',
+    image: '/services/anti-cellulite-massage-big.webp',
     bigImage: '/services/anti-cellulite-massage-big.webp',
     excerpt:
       'Anti-Cellulite Massage is a specialized massage technique that targets areas of the body affected by cellulite, helping to improve skin texture and reduce the appearance of dimpling.',
@@ -377,7 +385,7 @@ export const SERVICES: Services[] = [
       'The massage can be performed on the thighs, buttocks, abdomen, and other areas where cellulite is commonly found.',
     ],
   },
-] as const;
+];
 
 export type Services = {
   isMain: boolean;
@@ -387,6 +395,8 @@ export type Services = {
   image: string;
   bigImage: string;
   excerpt: string;
+  /** Techniques combined in the session, shown as chips on the card. */
+  techniques?: string[];
   waLink: string;
   benefits: Benefits[];
   details: string[];

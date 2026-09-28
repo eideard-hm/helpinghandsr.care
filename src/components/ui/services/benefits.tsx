@@ -1,11 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import { IconChevronDown, IconCircleCheck, IconStar } from '@tabler/icons-react';
+import {
+  IconChevronDown,
+  IconCircleCheck,
+  IconStar,
+} from '@tabler/icons-react';
 
 import type { Benefits as BenefitsType } from '@/data/services';
+import { cn } from '@/lib/cn';
 
 export const Benefits = ({
   benefits,
@@ -14,97 +19,94 @@ export const Benefits = ({
   benefits: BenefitsType[];
   isMain?: boolean;
 }) => {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-
-  const containerStyles = isMain
-    ? 'mb-8 p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl border-2 border-green-200 shadow-lg'
-    : 'mb-6';
-
-  const titleStyles = isMain
-    ? 'text-xl font-bold mb-4 flex items-center text-green-700'
-    : 'text-lg font-semibold mb-4 flex items-center';
-
-  const benefitItemStyles = isMain
-    ? 'bg-white rounded-xl p-4 cursor-pointer hover:shadow-md transition-all duration-300 border border-green-100 hover:border-green-300'
-    : 'bg-gray-50 rounded-lg p-3 cursor-pointer hover:bg-green-50 transition-colors';
-
-  const benefitTitleStyles = isMain
-    ? 'font-bold text-green-800 text-lg'
-    : 'font-medium text-gray-800';
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const baseId = useId();
 
   return (
-    <div className={containerStyles}>
-      <h4 className={titleStyles}>
+    <div
+      className={cn(
+        'rounded-2xl p-5 ring-1',
+        isMain ? 'bg-brand-2/20 ring-brand-2' : 'bg-gray-50 ring-gray-100'
+      )}
+    >
+      <h3 className='mb-4 flex items-center gap-2 text-lg font-bold text-title-indigo'>
         {isMain ? (
           <IconStar
             size={20}
-            className='mr-2 text-green-600'
+            className='text-accent'
             aria-hidden
           />
         ) : (
           <IconCircleCheck
             size={20}
-            className='mr-2 text-green-500'
+            className='text-brand'
             aria-hidden
           />
         )}
-        {isMain
-          ? 'Premium Benefits Included'
-          : 'What Is Included / Benefits'}
-      </h4>
+        {isMain ? 'Premium benefits included' : 'What is included'}
+      </h3>
 
-      <div className={isMain ? 'space-y-3' : 'space-y-2'}>
-        {benefits.map((benefit, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={benefitItemStyles}
-            onClick={() =>
-              setExpandedIndex(expandedIndex === index ? null : index)
-            }
-          >
-            <div className='flex items-center justify-between'>
-              <span className={benefitTitleStyles}>{benefit.title}</span>
-              <motion.div
-                animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <IconChevronDown
-                  size={20}
-                  className={isMain ? 'text-green-600' : 'text-gray-500'}
-                  aria-hidden
-                />
-              </motion.div>
-            </div>
+      <ul className='space-y-2'>
+        {benefits.map((benefit, index) => {
+          const expanded = expandedIndex === index;
+          const panelId = `${baseId}-panel-${index}`;
 
-            <AnimatePresence>
-              {expandedIndex === index && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className='overflow-hidden'
+          return (
+            <li
+              key={benefit.title}
+              className='overflow-hidden rounded-xl bg-white ring-1 ring-black/5'
+            >
+              <h4 className='font-sans text-base'>
+                <button
+                  type='button'
+                  aria-expanded={expanded}
+                  aria-controls={panelId}
+                  onClick={() => setExpandedIndex(expanded ? null : index)}
+                  className='flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-ink transition-colors hover:text-brand'
                 >
-                  <div
-                    className={`pt-2 ${
-                      isMain ? 'text-green-700' : 'text-gray-600'
-                    }`}
+                  {benefit.title}
+                  <IconChevronDown
+                    size={20}
+                    className={cn(
+                      'shrink-0 text-brand transition-transform duration-300',
+                      expanded && 'rotate-180'
+                    )}
+                    aria-hidden
+                  />
+                </button>
+              </h4>
+
+              <AnimatePresence initial={false}>
+                {expanded && (
+                  <motion.div
+                    id={panelId}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25 }}
+                    className='overflow-hidden'
                   >
-                    <ul className='list-disc list-inside space-y-1'>
-                      {benefit.details.map((detail, detailIndex) => (
-                        <li key={detailIndex}>{detail}</li>
+                    <ul className='space-y-1.5 px-4 pb-4 text-sm leading-6 text-gray-600'>
+                      {benefit.details.map((detail) => (
+                        <li
+                          key={detail}
+                          className='flex gap-2.5'
+                        >
+                          <span
+                            className='mt-2.5 size-1.5 shrink-0 rounded-full bg-accent'
+                            aria-hidden
+                          />
+                          {detail}
+                        </li>
                       ))}
                     </ul>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
-        ))}
-      </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

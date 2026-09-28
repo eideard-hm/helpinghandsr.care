@@ -2,18 +2,40 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { AnimatePresence, motion, PanInfo, type Variants } from 'framer-motion';
+import {
+  AnimatePresence,
+  motion,
+  type PanInfo,
+  useReducedMotion,
+  type Variants,
+} from 'framer-motion';
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconQuote,
+  IconStarFilled,
+} from '@tabler/icons-react';
 
 import type { Review } from '@/generated/prisma';
+import { cn } from '@/lib/cn';
 
-const STAR = ({ filled }: { filled: boolean }) => (
-  <svg
-    viewBox='0 0 24 24'
-    className={`h-4 w-4 ${filled ? 'fill-yellow-400' : 'fill-gray-300'}`}
-  >
-    <path d='M12 2l3.09 6.26 6.91.6-5 4.52 1.54 6.62L12 17.77 5.46 20l1.54-6.62-5-4.52 6.91-.6L12 2z' />
-  </svg>
-);
+// Fixed time zone so the server and the browser render the same date.
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'Asia/Dubai',
+});
+
+const getInitials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
 
 const variants: Variants = {
   enter: (dir: number) => ({ x: dir > 0 ? 80 : -80, opacity: 0 }),
@@ -27,19 +49,26 @@ const variants: Variants = {
 
 type Props = {
   items: Review[];
-  autoPlayMs?: number; // default 4500
+  autoPlayMs?: number;
   className?: string;
 };
 
+const controlClass =
+  'inline-flex size-11 cursor-pointer items-center justify-center rounded-full bg-white text-ink shadow-sm ring-1 ring-black/10 transition-colors hover:bg-brand hover:text-white';
+
 export function TestimonialsSlider({
   items,
-  autoPlayMs = 4500,
+  autoPlayMs = 6000,
   className = '',
 }: Props) {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [stopped, setStopped] = useState(false);
+  const reduce = useReducedMotion();
   const timer = useRef<number | null>(null);
+  const canSlide = items.length > 1;
+  const autoplay = canSlide && !reduce && !stopped && !hovered;
 
   const goTo = useCallback(
     (next: number, direction = 1) => {
@@ -49,17 +78,15 @@ export function TestimonialsSlider({
     [items.length]
   );
 
-  // autoplay con pausa al hover
   useEffect(() => {
-    if (paused || items.length <= 1) return;
+    if (!autoplay) return;
     timer.current = window.setTimeout(() => goTo(index + 1, 1), autoPlayMs);
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
-  }, [index, paused, autoPlayMs, items.length, goTo]);
+  }, [index, autoplay, autoPlayMs, goTo]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onDragEnd = (_: any, info: PanInfo) => {
+  const onDragEnd = (_: unknown, info: PanInfo) => {
     const offset = info.offset.x;
     const velocity = info.velocity.x;
     if (offset < -60 || velocity < -300) goTo(index + 1, 1);
@@ -69,130 +96,159 @@ export function TestimonialsSlider({
   const r = items[index];
 
   return (
-    <section
-      className={`relative isolate ${className}`}
+    <div
+      className={cn('relative flex h-full flex-col', className)}
+      role='region'
       aria-roledescription='carousel'
-      aria-label='Testimonials'
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onTouchStart={() => setPaused(true)}
-      onTouchEnd={() => setPaused(false)}
+      aria-label='Client testimonials'
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocus={() => setHovered(true)}
+      onBlur={() => setHovered(false)}
     >
-      <div className='mx-auto max-w-3xl'>
-        <div className='relative overflow-hidden rounded-2xl bg-white p-6 shadow-sm ring-1 ring-black/5'>
-          <AnimatePresence
+      <div className='relative flex-1 overflow-hidden rounded-3xl bg-white p-6 shadow-sm ring-1 ring-black/5 md:p-10'>
+        <IconQuote
+          className='absolute top-6 right-6 size-14 text-brand-2/70 md:size-20'
+          aria-hidden
+        />
+
+        <AnimatePresence
+          custom={dir}
+          mode='popLayout'
+          initial={false}
+        >
+          <motion.figure
+            key={r.id}
             custom={dir}
-            mode='popLayout'
+            variants={variants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            drag={canSlide ? 'x' : false}
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={onDragEnd}
+            className={cn(
+              'relative',
+              canSlide && 'cursor-grab active:cursor-grabbing'
+            )}
+            role='group'
+            aria-roledescription='slide'
+            aria-label={`${index + 1} of ${items.length}`}
           >
-            <motion.div
-              key={r.id}
-              custom={dir}
-              variants={variants}
-              initial='enter'
-              animate='center'
-              exit='exit'
-              drag='x'
-              dragConstraints={{ left: 0, right: 0 }}
-              onDragEnd={onDragEnd}
-              className='cursor-grab active:cursor-grabbing'
+            <div
+              className='flex gap-1'
+              role='img'
+              aria-label={`Rated ${r.rating} out of 5`}
             >
-              <header className='flex items-center justify-between'>
-                <div className='flex items-center gap-4'>
-                  <div className='size-12 rounded-full bg-[color:var(--brand)]/10' />
-                  <div className='flex-1'>
-                    <div className='flex items-center gap-2'>
-                      <h4 className='font-semibold text-[color:var(--ink)]'>
-                        {r.name}
-                      </h4>
-                    </div>
-                    <div className='mt-1 flex items-center gap-1'>
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <STAR
-                          key={i}
-                          filled={i < r.rating}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <IconStarFilled
+                  key={i}
+                  size={20}
+                  className={i < r.rating ? 'text-accent' : 'text-gray-200'}
+                  aria-hidden
+                />
+              ))}
+            </div>
 
-                <span>
-                  {r.createdAt.toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
+            <blockquote className='mt-6 pr-6 text-lg leading-8 text-ink/85 md:text-xl md:leading-9'>
+              <p>&ldquo;{r.content}&rdquo;</p>
+            </blockquote>
+
+            <figcaption className='mt-8 flex items-center gap-4'>
+              <span
+                className='inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-brand font-semibold text-white'
+                aria-hidden
+              >
+                {getInitials(r.name)}
+              </span>
+              <span>
+                <span className='block font-display text-lg font-semibold text-title-indigo'>
+                  {r.name}
                 </span>
-              </header>
-
-              <p className='mt-4 text-[15px] leading-relaxed text-gray-700'>
-                &quot;{r.content}&quot;
-              </p>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+                <time
+                  dateTime={new Date(r.createdAt).toISOString()}
+                  className='block text-sm text-gray-500'
+                >
+                  {dateFormatter.format(new Date(r.createdAt))}
+                </time>
+              </span>
+            </figcaption>
+          </motion.figure>
+        </AnimatePresence>
       </div>
 
-      {items.length > 1 && (
-        <>
-          <button
-            aria-label='Previous'
-            onClick={() => goTo(index - 1, -1)}
-            className='absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-black/5 hover:bg-white'
-          >
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-            >
-              <path
-                d='M15 18l-6-6 6-6'
-                stroke='currentColor'
-                strokeWidth='2'
-                fill='none'
-                strokeLinecap='round'
-              />
-            </svg>
-          </button>
-          <button
-            aria-label='Next'
-            onClick={() => goTo(index + 1, 1)}
-            className='absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow ring-1 ring-black/5 hover:bg-white'
-          >
-            <svg
-              width='20'
-              height='20'
-              viewBox='0 0 24 24'
-            >
-              <path
-                d='M9 6l6 6-6 6'
-                stroke='currentColor'
-                strokeWidth='2'
-                fill='none'
-                strokeLinecap='round'
-              />
-            </svg>
-          </button>
-        </>
-      )}
+      {canSlide && (
+        <div className='mt-5 flex items-center justify-between gap-4'>
+          <div className='flex items-center gap-2'>
+            {items.map((item, i) => (
+              <button
+                key={item.id}
+                type='button'
+                aria-label={`Show testimonial ${i + 1} of ${items.length}`}
+                aria-current={i === index ? 'true' : undefined}
+                onClick={() => goTo(i, i > index ? 1 : -1)}
+                className='group inline-flex size-6 cursor-pointer items-center justify-center'
+              >
+                <span
+                  className={cn(
+                    'h-2.5 rounded-full transition-all duration-300',
+                    i === index
+                      ? 'w-6 bg-brand'
+                      : 'w-2.5 bg-gray-300 group-hover:bg-gray-400'
+                  )}
+                />
+              </button>
+            ))}
+          </div>
 
-      {items.length > 1 && (
-        <div className='mt-4 flex justify-center gap-2'>
-          {items.map((_, i) => (
+          <div className='flex items-center gap-2'>
+            {!reduce && (
+              <button
+                type='button'
+                onClick={() => setStopped((v) => !v)}
+                aria-label={
+                  stopped ? 'Play testimonials' : 'Pause testimonials'
+                }
+                className={controlClass}
+              >
+                {stopped ? (
+                  <IconPlayerPlay
+                    size={18}
+                    aria-hidden
+                  />
+                ) : (
+                  <IconPlayerPause
+                    size={18}
+                    aria-hidden
+                  />
+                )}
+              </button>
+            )}
             <button
-              key={i}
-              aria-label={`Ir al slide ${i + 1}`}
-              onClick={() => goTo(i, i > index ? 1 : -1)}
-              className={`h-2.5 w-2.5 rounded-full transition
-                ${
-                  i === index
-                    ? 'bg-[color:var(--brand)]'
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-            />
-          ))}
+              type='button'
+              aria-label='Previous testimonial'
+              onClick={() => goTo(index - 1, -1)}
+              className={controlClass}
+            >
+              <IconChevronLeft
+                size={20}
+                aria-hidden
+              />
+            </button>
+            <button
+              type='button'
+              aria-label='Next testimonial'
+              onClick={() => goTo(index + 1, 1)}
+              className={controlClass}
+            >
+              <IconChevronRight
+                size={20}
+                aria-hidden
+              />
+            </button>
+          </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }

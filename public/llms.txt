@@ -1,40 +1,52 @@
-# ZeinMotion
+# ZeinMotion™
 
-ZeinMotion is a premium home massage service in Abu Dhabi, United Arab Emirates. The business provides home visits, hotel visits, and in-residence massage treatments by appointment.
+> ZeinMotion™ is a premium home massage service in Abu Dhabi, United Arab Emirates, created by Richard Mahecha, a Physical Therapy Technician attested by MOFA and KHDA with 20+ years of experience. Sessions take place at the client's home, hotel or residence and focus on chronic pain relief, injury prevention, stress reduction and self-care. Booking is by WhatsApp.
 
-## Core Offering
+Last updated: 2026-09-28
 
-- Category: Massage Therapist / Home Massage Service
-- Location: Abu Dhabi, United Arab Emirates
-- Service model: Home visits and in-home massage treatments
-- Booking: WhatsApp
-- Phone: +971 54 374 0644
+## Quick facts
+
+- Business: ZeinMotion™ (also "ZeinMotion - Premium Massage At Home"), tagline "Your Trusted Touch"
+- Category: Home massage service / mobile massage therapist
+- Location: Abu Dhabi, United Arab Emirates. Home, hotel and residence visits only; there is no studio to visit
+- Therapist and founder: Richard Mahecha, Physical Therapy Technician
+- Experience: 20+ years of hands-on therapeutic massage
+- Credentials: attested by the UAE Ministry of Foreign Affairs (MOFA) and the Knowledge and Human Development Authority (KHDA); diploma from Newton Training Center, Abu Dhabi; certified in Deep Tissue Massage, Sports Massage, Reflexology, Cupping Therapy and Lymphatic Drainage
+- Availability: 7 days a week, by appointment
+- Booking: WhatsApp +971 54 374 0644 (https://wa.me/971543740644)
 - Email: zeinmotionspa@gmail.com
-- Website: https://zeinmotion.vercel.app/
-- Instagram: https://www.instagram.com/zeinmotionuae/
+- Instagram: https://www.instagram.com/zeinmotionuae/ (@zeinmotionuae)
 - Facebook: https://web.facebook.com/ZeinMotion/
 
 ## Services
 
-ZeinMotion provides personalized home massage treatments for pain relief, mobility care, injury prevention, stress reduction, and wellness. Services include ZeinMotion Therapy, Sports Massage, Deep Tissue Massage, Cupping Therapy, Reflexology Therapy, Lymphatic Drainage Massage, Anti-Cellulite Massage, and Anti-Stress & Face Massage.
+- [ZeinMotion Therapy](https://zeinmotion.vercel.app/#services): the signature method. One session combines an assessment with deep tissue work, sports massage, assisted stretching, head and neck massage and reflexology, plus cupping when appropriate. Recommended when a client is unsure which treatment to choose.
+- [Sports Massage and Assisted Stretching](https://zeinmotion.vercel.app/#services): training recovery, flexibility and injury prevention for athletes and active people.
+- [Deep Tissue Massage](https://zeinmotion.vercel.app/#services): chronic tension, back pain and restricted mobility.
+- [Lymphatic Drainage Massage](https://zeinmotion.vercel.app/#services): gentle rhythmic work for swelling and a heavy feeling.
+- [Anti-Cellulite Massage](https://zeinmotion.vercel.app/#services): targeted body-care sessions for skin texture and circulation.
+- Cupping Therapy, Reflexology Therapy and Anti-Stress & Face Massage are available as part of a session or on request.
 
-Some services may be hidden from the public UI based on current client availability or business preference. Visitors should use WhatsApp to confirm the best treatment for their needs.
+## Who it helps
 
-## Service Areas
+People in Abu Dhabi looking for a massage at home or in their hotel: office workers with posture-related neck and back pain, athletes and gym-goers in training, clients recovering from stiffness or overuse, and anyone who wants stress relief and self-care without travelling.
 
-ZeinMotion serves homes, hotels, and residences across Abu Dhabi, including areas such as Al Reem Island, Yas Island, Khalifa City, Al Raha, Saadiyat Island, Al Maryah Island, Corniche, and Mohammed Bin Zayed City.
+## Service areas
 
-## Who It Helps
+Home visits across Abu Dhabi, including Al Reem Island, Yas Island, Saadiyat Island, Khalifa City, Al Raha, Al Maryah Island, the Corniche and Mohammed Bin Zayed City. Other areas are confirmed on WhatsApp.
 
-ZeinMotion is suitable for clients seeking home massage in Abu Dhabi, chronic pain relief, muscle stiffness relief, sports recovery, assisted stretching, stress relief, and personalized therapeutic massage at home.
+## How booking works
 
-## Booking Notes
+1. Message ZeinMotion on WhatsApp with the preferred treatment, location and time.
+2. Share pain points or goals and receive a personalized recommendation.
+3. Receive confirmation and preparation details. The therapist arrives fully equipped; the client only needs a quiet space where a massage table fits.
 
-Pricing and availability depend on the treatment type, session length, location, and add-ons such as cupping. The preferred booking path is WhatsApp with the requested service, location, and preferred time.
+Pricing depends on the treatment, session length, location and add-ons such as cupping, and is confirmed on WhatsApp before booking.
 
-## Key Pages
+## Key pages
 
-- Home: https://zeinmotion.vercel.app/
-- Testimonials: https://zeinmotion.vercel.app/testimonials
-- Sitemap: https://zeinmotion.vercel.app/sitemap.xml
-- Robots: https://zeinmotion.vercel.app/robots.txt
+- [Home](https://zeinmotion.vercel.app/): services, method, therapist profile, booking steps, testimonials and FAQ
+- [About Richard Mahecha](https://zeinmotion.vercel.app/#about): background, credentials and the ZeinMotion method
+- [Frequently asked questions](https://zeinmotion.vercel.app/#faq)
+- [Client testimonials](https://zeinmotion.vercel.app/#testimonials) and [write a testimonial](https://zeinmotion.vercel.app/testimonials)
+- [Sitemap](https://zeinmotion.vercel.app/sitemap.xml)

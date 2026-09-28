@@ -1,183 +1,233 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import Image from 'next/image';
 
 import { motion } from 'framer-motion';
-import { IconDiamond, IconSparkles } from '@tabler/icons-react';
+import {
+  IconArrowRight,
+  IconCircleCheck,
+  IconDiamond,
+} from '@tabler/icons-react';
 
 import { Button } from '@/components/common/button';
 import { Dialog } from '@/components/common/dialog';
 import { WhatsAppButton } from '@/components/common/whatsapp-btn';
 import type { Services } from '@/data/services';
+import { cn } from '@/lib/cn';
 import { fadeInUp } from '@/lib/motion';
 import { Benefits } from './benefits';
 import { HowWeWork } from './how-we-work';
-import { cn } from '@/lib/cn';
 
 type ServicesCardProps = {
   services: Services;
+  featured?: boolean;
 };
 
-export function ServicesCard({ services: s }: ServicesCardProps) {
+function TechniqueChips({ techniques }: { techniques: string[] }) {
+  return (
+    <ul className='mt-3 flex flex-wrap gap-2'>
+      {techniques.map((technique) => (
+        <li
+          key={technique}
+          className='rounded-full bg-brand-2/30 px-3 py-1 text-sm font-medium text-brand-700'
+        >
+          {technique}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function ServicesCard({
+  services: s,
+  featured = false,
+}: ServicesCardProps) {
   const [open, setOpen] = useState(false);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const titleId = `${s.id}-title`;
+  const benefitTitles = s.benefits.map((benefit) => benefit.title);
 
   return (
     <>
-      <motion.div
-        key={s.id}
+      <motion.article
         variants={fadeInUp}
         initial='hidden'
         whileInView='visible'
-        viewport={{ once: true }}
+        viewport={{ once: true, amount: 0.2 }}
+        aria-labelledby={titleId}
         className={cn(
-          'group rounded-xl overflow-hidden relative border-2 transition-all duration-300 hover:-translate-y-1',
-          s.isMain
-            ? 'bg-white border-[color:var(--brand-2)] shadow-xl'
-            : 'bg-white border-gray-100 shadow hover:shadow-lg'
+          'group relative overflow-hidden rounded-3xl bg-white ring-1 transition-shadow duration-300',
+          featured
+            ? 'shadow-xl ring-brand-2 shadow-brand/10 lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]'
+            : 'flex flex-col shadow-sm ring-gray-200/80 hover:shadow-xl hover:shadow-ink/10'
         )}
       >
-        {/* Elemento decorativo para servicio principal */}
-        {s.isMain && (
-          <div className='absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--accent)]'></div>
+        {featured && (
+          <div
+            className='absolute inset-x-0 top-0 z-10 h-1 bg-linear-to-r from-brand via-brand-2 to-accent'
+            aria-hidden
+          />
         )}
 
-        <div className='relative'>
-          {/* Header con overlay para servicio principal */}
+        <div
+          className={cn(
+            'relative aspect-[4/3] overflow-hidden bg-brand-2/30',
+            featured && 'lg:aspect-auto lg:min-h-[30rem]'
+          )}
+        >
+          <Image
+            src={s.image}
+            alt={`${s.title} session`}
+            fill
+            sizes={
+              featured
+                ? '(min-width: 1024px) 580px, 100vw'
+                : '(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw'
+            }
+            className='object-cover transition-transform duration-700 ease-out group-hover:scale-105'
+          />
           <div
+            className='absolute inset-0 bg-linear-to-t from-ink/35 via-transparent to-transparent'
+            aria-hidden
+          />
+          {featured && (
+            <span className='absolute top-5 left-5 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold tracking-wide text-brand uppercase shadow-sm'>
+              <IconDiamond
+                size={14}
+                aria-hidden
+              />
+              Signature treatment
+            </span>
+          )}
+        </div>
+
+        <div
+          className={cn(
+            'flex flex-1 flex-col p-6',
+            featured && 'md:p-10 lg:justify-center'
+          )}
+        >
+          <h3
+            id={titleId}
             className={cn(
-              'relative flex justify-center items-center h-48 overflow-hidden',
-              s.isMain
-                ? 'bg-gradient-to-br from-[color:var(--brand)] to-[color:var(--brand-2)]'
-                : 'bg-gradient-to-b from-[color:var(--brand-2)] to-[color:var(--bg)]'
+              'font-bold text-title-indigo',
+              featured ? 'text-2xl md:text-3xl' : 'text-xl'
             )}
           >
-            {s.isMain && (
-              <>
-                <div className='absolute inset-0 bg-black/10'></div>
-                <div className='absolute top-4 left-4'>
-                  <span className='bg-white/90 text-[color:var(--brand)] px-3 py-1 rounded-full text-sm font-bold backdrop-blur-sm'>
-                    <IconDiamond
-                      size={16}
-                      className='inline-block mr-1'
-                      aria-hidden
-                    />
-                    Premium
-                  </span>
-                </div>
-              </>
+            {s.title}
+          </h3>
+
+          <p
+            className={cn(
+              'mt-3 leading-relaxed text-gray-600',
+              featured ? 'text-base md:text-lg' : 'line-clamp-3 text-[15px]'
             )}
+          >
+            {s.excerpt}
+          </p>
 
-            <Image
-              width={s.isMain ? 165 : 150}
-              height={s.isMain ? 165 : 150}
-              src={s.image}
-              alt={s.title}
-              className={cn(
-                'aspect-square rounded-full object-cover border-4 z-10 shadow-xl',
-                s.isMain
-                  ? 'size-[165px] border-white/90'
-                  : 'size-[150px] border-white'
-              )}
-            />
-          </div>
+          {featured && s.techniques?.length ? (
+            <div className='mt-6'>
+              <p className='text-xs font-semibold tracking-wider text-gray-500 uppercase'>
+                Techniques combined in one session
+              </p>
+              <TechniqueChips techniques={s.techniques} />
+            </div>
+          ) : null}
 
-          <div className='p-6 text-center'>
-            <h3
-              className={cn(
-                'font-bold mb-3',
-                s.isMain
-                  ? 'text-2xl text-[color:var(--brand)]'
-                  : 'text-xl text-[color:var(--ink)]'
-              )}
-            >
-              {s.title}
-            </h3>
-
-            <p
-              className={cn(
-                'line-clamp-3 mb-5 leading-relaxed',
-                s.isMain
-                  ? 'text-[color:var(--ink)] font-medium'
-                  : 'text-gray-600'
-              )}
-            >
-              {s.excerpt}
-            </p>
-
-            <section className='flex justify-center gap-3 mt-6 flex-wrap'>
-              <Button
-                variant={s.isMain ? 'primary' : 'outline'}
-                size='small'
-                onClick={() => setOpen(true)}
-                className={cn(
-                  s.isMain &&
-                    'bg-gradient-to-r from-[color:var(--brand)] to-[color:var(--brand-2)] hover:from-[color:var(--brand)]/90 hover:to-[color:var(--brand-2)]/90'
-                )}
-              >
-                {s.isMain && (
-                  <IconSparkles
-                    size={16}
-                    className='inline-block mr-1'
+          <ul
+            className={cn('mt-6 grid gap-2.5', featured && 'sm:grid-cols-2')}
+          >
+            {(featured ? benefitTitles : benefitTitles.slice(0, 2)).map(
+              (title) => (
+                <li
+                  key={title}
+                  className='flex items-start gap-2 text-sm leading-6 text-ink/85'
+                >
+                  <IconCircleCheck
+                    size={18}
+                    className='mt-0.5 shrink-0 text-brand'
                     aria-hidden
                   />
-                )}
-                {s.isMain ? 'Learn More' : 'Show More'}
-              </Button>
+                  {title}
+                </li>
+              )
+            )}
+          </ul>
 
-              <WhatsAppButton
-                waLink={s.waLink}
+          <div className='mt-auto grid gap-3 pt-7 sm:flex sm:flex-wrap'>
+            <WhatsAppButton
+              waLink={s.waLink}
+              label={featured ? 'Book this treatment' : 'Book now'}
+            />
+            <Button
+              variant='outline'
+              onClick={() => setOpen(true)}
+              aria-haspopup='dialog'
+              className='rounded-xl font-semibold'
+            >
+              View details
+              <IconArrowRight
+                size={18}
+                className='transition-transform duration-200 group-hover:translate-x-0.5'
+                aria-hidden
               />
-            </section>
+              <span className='sr-only'>about {s.title}</span>
+            </Button>
           </div>
         </div>
-      </motion.div>
+      </motion.article>
 
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
         title={s.title}
-        initialFocusRef={ctaRef}
-        className='overflow-y-auto'
         size='lg'
         footer={
-          <div className='flex gap-3 justify-end'>
-            <WhatsAppButton
-              ref={ctaRef}
-              waLink={s.waLink}
-            />
+          <div className='flex flex-col-reverse gap-3 sm:flex-row sm:justify-end'>
             <Button
               variant='outline'
               onClick={() => setOpen(false)}
+              className='rounded-xl'
             >
               Close
             </Button>
+            <WhatsAppButton
+              waLink={s.waLink}
+              label='Book on WhatsApp'
+            />
           </div>
         }
       >
-        <div className='relative w-full max-w-[800px] mx-auto space-y-6'>
-          <div className='relative w-full max-h-[55vh] overflow-hidden rounded-xl bg-gray-100'>
+        <div className='space-y-6'>
+          <div className='relative aspect-[16/10] w-full overflow-hidden rounded-2xl bg-gray-100'>
             <Image
               src={s.bigImage}
-              alt={s.title}
-              width={800}
-              height={0}
-              sizes='(max-width: 800px) 100vw, 800px'
-              className='w-full h-auto object-contain'
-              priority={false}
+              alt={`${s.title} treatment`}
+              fill
+              sizes='(min-width: 672px) 630px, 100vw'
+              className='object-cover'
             />
           </div>
 
-          <p className='text-gray-700 leading-relaxed'>{s.excerpt}</p>
+          <p className='leading-relaxed text-gray-700'>{s.excerpt}</p>
+
+          {s.techniques?.length ? (
+            <div>
+              <h3 className='text-lg font-bold text-title-indigo'>
+                Techniques combined
+              </h3>
+              <TechniqueChips techniques={s.techniques} />
+            </div>
+          ) : null}
 
           <Benefits
-            benefits={[...s.benefits]}
+            benefits={s.benefits}
             isMain={s.isMain}
           />
 
-          <HowWeWork details={[...s.details]} />
+          <HowWeWork details={s.details} />
         </div>
       </Dialog>
     </>
