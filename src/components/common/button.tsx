@@ -2,12 +2,29 @@
 
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 
+import { cn } from '@/lib/cn';
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'accent';
   size?: 'small' | 'medium' | 'large';
   isLoading?: boolean;
   fullWidth?: boolean;
 }
+
+const VARIANTS = {
+  primary: 'bg-brand text-white hover:bg-brand-700 focus-visible:ring-brand',
+  secondary: 'bg-brand-2 text-ink hover:bg-teal-300 focus-visible:ring-brand-2',
+  outline:
+    'border border-brand text-brand hover:bg-brand/5 focus-visible:ring-brand',
+  ghost: 'text-brand hover:bg-brand/5 focus-visible:ring-brand',
+  accent: 'bg-accent text-ink hover:bg-accent-700 hover:text-white focus-visible:ring-accent',
+} as const;
+
+const SIZES = {
+  small: 'min-h-10 px-3 py-1.5 text-sm',
+  medium: 'min-h-11 px-4 py-2 text-base',
+  large: 'min-h-12 px-6 py-3 text-lg',
+} as const;
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -19,63 +36,35 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       fullWidth = false,
       className = '',
       disabled,
+      type = 'button',
       ...props
     },
     ref
   ) => {
-    const baseClasses =
-      'rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 inline-flex items-center justify-center';
-
-    const variants = {
-      primary:
-        'bg-[color:var(--brand)] text-white hover:bg-teal-800 focus:ring-[color:var(--brand)]',
-      secondary:
-        'bg-[color:var(--brand-2)] text-[color:var(--ink)] hover:bg-teal-300 focus:ring-[color:var(--brand-2)]',
-      outline:
-        'border border-[color:var(--brand)] text-[color:var(--brand)] hover:bg-teal-50 focus:ring-[color:var(--brand)]',
-      ghost:
-        'text-[color:var(--brand)] hover:bg-teal-50 focus:ring-[color:var(--brand)]',
-      accent:
-        'bg-[color:var(--accent)] text-white hover:bg-orange-600 focus:ring-[color:var(--accent)]',
-    };
-
-    const sizes = {
-      small: 'px-3 py-1.5 text-sm',
-      medium: 'px-4 py-2 text-base',
-      large: 'px-6 py-3 text-lg',
-    };
-
-    const disabledClasses =
-      disabled || isLoading
-        ? 'opacity-50 cursor-not-allowed'
-        : 'cursor-pointer';
-
-    const widthClass = fullWidth ? 'w-full' : '';
-
-    const buttonClasses = `
-      ${baseClasses}
-      ${variants[variant]}
-      ${sizes[size]}
-      ${disabledClasses}
-      ${widthClass}
-      ${className}
-    `
-      .replace(/\s+/g, ' ')
-      .trim();
-
     return (
       <button
         ref={ref}
-        className={buttonClasses}
+        type={type}
+        className={cn(
+          'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+          VARIANTS[variant],
+          SIZES[size],
+          disabled || isLoading
+            ? 'cursor-not-allowed opacity-50'
+            : 'cursor-pointer',
+          fullWidth && 'w-full',
+          className
+        )}
         disabled={disabled || isLoading}
         {...props}
       >
         {isLoading && (
           <svg
-            className='animate-spin -ml-1 mr-2 h-4 w-4'
+            className='-ml-1 h-4 w-4 animate-spin'
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
+            aria-hidden
           >
             <circle
               className='opacity-25'

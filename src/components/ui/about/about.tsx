@@ -6,13 +6,25 @@ export function About() {
   return (
     <section
       id='about'
-      className='py-16 bg-bg container mx-auto px-4 max-w-7xl'
+      aria-labelledby='about-title'
+      className='relative isolate overflow-clip bg-white py-16 md:py-24'
     >
-      <SectionTitle subTitle='Get your massage at home!'>About Me</SectionTitle>
+      <div className='container mx-auto max-w-7xl px-4'>
+        <SectionTitle
+          id='about-title'
+          eyebrow='Meet your therapist'
+          subTitle='Premium massage at home, delivered personally by the creator of the method.'
+        >
+          About Me
+        </SectionTitle>
 
-      <AboutMeContent waLink={waLinkWithEnv()} />
+        <AboutMeContent waLink={waLinkWithEnv()} />
+      </div>
 
-      <div className='absolute right-0 bottom-0 w-64 h-64 bg-teal-200 rounded-full -z-10 opacity-20 blur-3xl'></div>
+      <div
+        className='absolute right-0 bottom-0 -z-10 h-64 w-64 rounded-full bg-teal-200 opacity-20 blur-3xl'
+        aria-hidden
+      />
     </section>
   );
 }

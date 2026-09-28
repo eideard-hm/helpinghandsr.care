@@ -1,16 +1,16 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { Toaster } from 'react-hot-toast';
 
 import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
 import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
+import { MotionProvider } from '@/components/common/motion-provider';
 import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
 import { fraunces, inter } from '@/fonts';
 import mainMetadata, {
   businessSchema,
-  faqSchema,
-  homeMassageServiceSchema,
+  therapistSchema,
   websiteSchema,
 } from '@/metadata/main';
 
@@ -18,11 +18,11 @@ import './globals.css';
 
 export const metadata: Metadata = mainMetadata;
 
-export const viewport = {
+export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#2F7D6D',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
@@ -30,55 +30,56 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Site-wide entities; page-specific ones (FAQ, service) live on their page.
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@graph': [
-      businessSchema,
-      websiteSchema,
-      homeMassageServiceSchema,
-      faqSchema,
-    ],
+    '@graph': [businessSchema, therapistSchema, websiteSchema],
   };
 
   return (
     <html
       lang='en'
       data-scroll-behavior='smooth'
+      className={`${inter.variable} ${fraunces.variable}`}
     >
       <head>
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin=''
-        />
         <script
           type='application/ld+json'
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
 
-      <body
-        className={`${inter.variable} ${fraunces.variable} font-sans bg-bg text-ink min-h-dvh grid grid-rows-[auto_1fr_auto]`}
-      >
-        <header className='sticky top-0 z-40 bg-brand backdrop-blur'>
+      <body className='grid min-h-dvh grid-rows-[auto_1fr_auto] bg-bg font-sans text-ink antialiased'>
+        <a
+          href='#main-content'
+          className='fixed top-3 left-3 z-50 -translate-y-24 rounded-lg bg-ink px-4 py-3 text-sm font-semibold text-white shadow-lg transition-transform focus:translate-y-0'
+        >
+          Skip to content
+        </a>
+
+        <MotionProvider>
           <Header />
-        </header>
 
-        <main className='overflow-hidden relative'>
-          <SocialMediaSidebar />
+          <main
+            id='main-content'
+            tabIndex={-1}
+            className='relative min-w-0 overflow-x-clip outline-none'
+          >
+            <SocialMediaSidebar />
 
-          <div>
-            <Toaster />
-          </div>
+            <div>
+              <Toaster />
+            </div>
 
-          {children}
+            {children}
 
-          <MobileWhatsAppCta />
-        </main>
+            <MobileWhatsAppCta />
+          </main>
 
-        <footer className='bg-brand-2 text-ink py-12 shadow-inner'>
-          <Footer />
-        </footer>
+          <footer className='bg-ink pb-24 text-white/75 lg:pb-0'>
+            <Footer />
+          </footer>
+        </MotionProvider>
       </body>
     </html>
   );
