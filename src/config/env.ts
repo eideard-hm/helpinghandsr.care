@@ -2,7 +2,7 @@
 const DEFAULT_WA_MESSAGE =
   'Hello, I’m interested in booking a session with *ZeinMotion™*. Could you please share availability and pricing details?';
 const DEFAULT_WA_MESSAGE_TEMPLATE =
-  'Hello *ZeinMotion™*, I would like to book a {SERVICE} session. Could you please share availability?';
+  'Hello *ZeinMotion™*, I would like to book a session of {SERVICE}. Could you please share availability?';
 
 export const env = {
   whatsAppNumber: process.env.NEXT_PUBLIC_WHATSAPP || '',
