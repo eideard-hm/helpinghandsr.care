@@ -1,15 +1,20 @@
-import { Fraunces, Inter } from 'next/font/google';
+import { Barlow, Tomorrow } from 'next/font/google';
 
-const inter = Inter({
+// Reading text.
+const text = Barlow({
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
   display: 'swap',
-  variable: '--font-inter',
-});
-const fraunces = Fraunces({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  display: 'swap',
-  variable: '--font-fraunces',
+  variable: '--font-text-face',
 });
 
-export { inter, fraunces };
+// Drafted lettering for headings, labels and time stamps; always set inclined.
+const lettering = Tomorrow({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['italic'],
+  display: 'swap',
+  variable: '--font-lettering-face',
+});
+
+export { lettering, text };

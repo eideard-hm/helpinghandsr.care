@@ -23,9 +23,42 @@ test.describe('home page', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Therapeutic Home Massage in Abu Dhabi'
     );
-    const book = page.getByRole('link', { name: /Book a home visit/ });
+    const book = page.getByRole('link', { name: /Book this visit/ }).first();
     await expect(book).toHaveAttribute('href', /^https:\/\/wa\.me\/\d{8,15}\?text=/);
     await expect(book).toHaveAttribute('target', '_blank');
+  });
+
+  test('choosing an hour moves the drawing and adds it to the WhatsApp message', async ({
+    page,
+  }) => {
+    await page.goto('/');
+
+    const book = page.getByRole('link', { name: /Book this visit/ }).first();
+    const message = async () =>
+      decodeURIComponent((await book.getAttribute('href')) ?? '');
+
+    // Nothing is assumed about the hour until the visitor picks one.
+    expect(await message()).not.toContain('I would prefer a visit');
+    for (const radio of await page.getByRole('radio').all()) {
+      await expect(radio).not.toBeChecked();
+    }
+
+    // The hour shown by default must be choosable too, and the click may land before hydration.
+    for (const [label, time] of [
+      ['Evening', '18:30'],
+      ['Morning', '09:00'],
+    ]) {
+      await expect(async () => {
+        await page.locator('label', { hasText: label }).first().click();
+        await expect(
+          page.getByRole('radio', { name: new RegExp(label) }).first()
+        ).toBeChecked();
+      }).toPass();
+      await expect.poll(message).toContain(time);
+      await expect(
+        page.locator(`svg[aria-label*="at ${time}"]`).first()
+      ).toBeAttached();
+    }
   });
 
   test('every WhatsApp link has a number and a message', async ({ page }) => {
@@ -51,9 +84,9 @@ test.describe('home page', () => {
     const nav = page.getByRole('navigation', { name: 'Main' });
 
     for (const [label, id] of [
-      ['Services', 'services'],
-      ['About', 'about'],
-      ['FAQ', 'faq'],
+      ['Treatments', 'services'],
+      ['Richard', 'about'],
+      ['Questions', 'faq'],
     ]) {
       const link = nav.getByRole('link', { name: label, exact: true });
       await link.click();
@@ -82,10 +115,10 @@ test.describe('home page', () => {
     await expect(menu.locator(`a[href="${INSTAGRAM_URL}"]`)).toBeVisible();
     await expect(menu.locator(`a[href="${FACEBOOK_URL}"]`)).toBeVisible();
 
-    await menu.getByRole('link', { name: 'Services' }).click();
+    await menu.getByRole('link', { name: 'Treatments' }).click();
     await expect(menu).toBeHidden();
     await expect(
-      page.getByRole('heading', { name: 'Our Services', level: 2 })
+      page.locator('#services').getByRole('heading', { level: 2 }).first()
     ).toBeInViewport();
     await expect(page).toHaveURL(/#services$/);
   });
@@ -97,9 +130,7 @@ test.describe('home page', () => {
     test.skip(!isMobile, 'Mobile only');
     await page.goto('/');
 
-    const wrapper = page
-      .getByRole('link', { name: /Book via WhatsApp/, includeHidden: true })
-      .locator('xpath=..');
+    const wrapper = page.locator('#mobile-cta');
     await expect(wrapper).toHaveAttribute('inert', '');
 
     await page.locator('#services').scrollIntoViewIfNeeded();
@@ -256,7 +287,7 @@ test('unknown routes show the branded 404 page', async ({ page }) => {
 
   expect(response?.status()).toBe(404);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'This page took a different path'
+    'This room is not on the drawing'
   );
   await expect(page.getByRole('link', { name: 'Back to home' })).toBeVisible();
 });

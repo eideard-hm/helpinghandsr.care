@@ -5,14 +5,11 @@ import { useActionState, useEffect, useRef, useState, useTransition } from 'reac
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  IconBrandInstagram,
-  IconCircleCheck,
-  IconStarFilled,
-} from '@tabler/icons-react';
+import { IconArrowUpRight, IconStarFilled } from '@tabler/icons-react';
 import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
 
 import { createReview } from '@/actions/reviews/review';
+import { Button } from '@/components/common/button';
 import { SOCIAL_LINKS } from '@/data/site';
 import { cn } from '@/lib/cn';
 import { type ReviewFormInput, ReviewSchema } from '@/schema/review';
@@ -27,12 +24,15 @@ const RATING_LABELS: Record<number, string> = {
   5: 'Excellent',
 };
 
+const labelClass = 'mb-2 block text-xs font-medium text-poche lettering';
+
+// Ruled fields, like the entries of a drawing's title block.
 const fieldClass = (hasError: boolean) =>
   cn(
-    'block w-full rounded-xl border bg-gray-50 p-3 text-gray-900 transition-colors placeholder:text-gray-400 focus:bg-white focus:ring-2 focus:outline-none',
+    'block w-full border-0 border-b-2 bg-limewash px-3 py-3 text-[1.0625rem] text-ink transition-colors placeholder:text-ink-soft/70 focus:bg-shadow focus:outline-none',
     hasError
-      ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
-      : 'border-gray-300 focus:border-brand focus:ring-brand/20'
+      ? 'border-alert focus:border-alert'
+      : 'border-poche/50 focus:border-poche'
   );
 
 export default function AddReviewForm() {
@@ -79,27 +79,18 @@ export default function AddReviewForm() {
 
   if (state?.ok) {
     return (
-      <div
-        role='status'
-        className='py-4 text-center'
-      >
-        <span className='mx-auto inline-flex size-14 items-center justify-center rounded-full bg-brand-2/40 text-brand'>
-          <IconCircleCheck
-            size={30}
-            aria-hidden
-          />
-        </span>
-        <h3 className='mt-4 text-xl font-bold'>
-          Thank you for your testimonial!
+      <div role='status'>
+        <h3 className='text-2xl text-life-deep lettering-display'>
+          Thank you for your testimonial
         </h3>
-        <p className='mt-2 text-sm leading-6 text-gray-600'>
+        <p className='mt-3 text-[1.0625rem] leading-7 text-ink-soft'>
           It was submitted for review and will appear on the website once
           approved.
         </p>
-        <div className='mt-6 grid gap-3'>
+        <div className='mt-7 flex flex-col gap-3'>
           <Link
             href='/'
-            className='inline-flex min-h-11 items-center justify-center rounded-xl bg-brand px-4 font-semibold text-white transition-colors hover:bg-brand-700'
+            className='inline-flex min-h-12 items-center justify-center bg-poche px-5 text-[0.8125rem] font-medium text-limewash transition-colors lettering hover:bg-poche-deep'
           >
             Back to home
           </Link>
@@ -107,13 +98,14 @@ export default function AddReviewForm() {
             href={SOCIAL_LINKS.instagram.href}
             target='_blank'
             rel='noopener noreferrer'
-            className='inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-gray-300 px-4 font-semibold text-ink transition-colors hover:border-brand hover:text-brand'
+            className='inline-flex min-h-12 items-center justify-center gap-3 border border-poche px-5 text-[0.8125rem] font-medium text-poche transition-colors lettering hover:bg-poche hover:text-limewash'
           >
-            <IconBrandInstagram
-              size={20}
+            Follow on Instagram
+            <IconArrowUpRight
+              size={18}
+              stroke={1.5}
               aria-hidden
             />
-            Follow on Instagram
           </a>
         </div>
       </div>
@@ -124,12 +116,12 @@ export default function AddReviewForm() {
     <form
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      className='relative w-full space-y-5'
+      className='relative w-full space-y-6'
     >
       <div>
         <label
           htmlFor='name'
-          className='mb-2 block text-sm font-medium text-gray-900'
+          className={labelClass}
         >
           Name
         </label>
@@ -147,7 +139,7 @@ export default function AddReviewForm() {
           <p
             id='err-name'
             role='alert'
-            className='mt-1 text-sm text-red-600'
+            className='mt-2 text-sm text-alert'
           >
             {errors.name.message}
           </p>
@@ -157,7 +149,7 @@ export default function AddReviewForm() {
       <div>
         <label
           htmlFor='review'
-          className='mb-2 block text-sm font-medium text-gray-900'
+          className={labelClass}
         >
           Testimonial
         </label>
@@ -173,12 +165,12 @@ export default function AddReviewForm() {
           }
           className={fieldClass(!!errors.content)}
         />
-        <div className='mt-1 flex items-start justify-between gap-3'>
+        <div className='mt-2 flex items-start justify-between gap-3'>
           {errors.content ? (
             <p
               id='err-content'
               role='alert'
-              className='text-sm text-red-600'
+              className='text-sm text-alert'
             >
               {errors.content.message}
             </p>
@@ -187,7 +179,7 @@ export default function AddReviewForm() {
           )}
           <p
             id='review-count'
-            className='shrink-0 text-xs text-gray-500'
+            className='shrink-0 text-sm text-ink-soft stamp'
           >
             {contentLength}/{MAX_CONTENT_LENGTH}
           </p>
@@ -195,9 +187,7 @@ export default function AddReviewForm() {
       </div>
 
       <fieldset>
-        <legend className='mb-2 block text-sm font-medium text-gray-900'>
-          Rating
-        </legend>
+        <legend className={labelClass}>Rating</legend>
         <Controller
           name='rating'
           control={control}
@@ -205,7 +195,7 @@ export default function AddReviewForm() {
             const current = hoverRating ?? field.value ?? 5;
 
             return (
-              <div className='flex items-center gap-3'>
+              <div className='flex items-center gap-4'>
                 <div
                   className='flex'
                   onMouseLeave={() => setHoverRating(null)}
@@ -213,7 +203,7 @@ export default function AddReviewForm() {
                   {RATINGS.map((value) => (
                     <label
                       key={value}
-                      className='cursor-pointer p-0.5'
+                      className='cursor-pointer p-1 has-focus-visible:outline-2 has-focus-visible:outline-poche'
                       onMouseEnter={() => setHoverRating(value)}
                     >
                       <input
@@ -223,13 +213,13 @@ export default function AddReviewForm() {
                         checked={field.value === value}
                         onChange={() => field.onChange(value)}
                         onBlur={field.onBlur}
-                        className='peer sr-only'
+                        className='sr-only'
                       />
                       <IconStarFilled
-                        size={32}
+                        size={30}
                         className={cn(
-                          'rounded-md transition-transform duration-150 peer-focus-visible:ring-2 peer-focus-visible:ring-brand hover:scale-110',
-                          value <= current ? 'text-accent' : 'text-gray-300'
+                          'transition-colors duration-150',
+                          value <= current ? 'text-sun' : 'text-mortar'
                         )}
                         aria-hidden
                       />
@@ -241,7 +231,7 @@ export default function AddReviewForm() {
                   ))}
                 </div>
                 <span
-                  className='text-sm font-medium text-gray-700'
+                  className='text-sm text-ink-soft'
                   aria-hidden
                 >
                   {RATING_LABELS[current]}
@@ -253,7 +243,7 @@ export default function AddReviewForm() {
         {errors.rating && (
           <p
             role='alert'
-            className='mt-1 text-sm text-red-600'
+            className='mt-2 text-sm text-alert'
           >
             {errors.rating.message}
           </p>
@@ -278,19 +268,20 @@ export default function AddReviewForm() {
       {state?.error && (
         <p
           role='alert'
-          className='rounded-xl bg-red-50 px-3 py-2 text-sm text-red-700'
+          className='border-t-2 border-alert pt-3 text-sm text-alert'
         >
           {state.error}
         </p>
       )}
 
-      <button
+      <Button
         type='submit'
+        size='large'
+        fullWidth
         disabled={isSubmitting || isPending}
-        className='w-full cursor-pointer rounded-xl bg-brand px-4 py-3 text-center font-semibold text-white transition hover:bg-brand-700 focus:ring-4 focus:ring-brand/20 focus:outline-none disabled:cursor-not-allowed disabled:opacity-70'
       >
         {isSubmitting || isPending ? 'Sending...' : 'Submit testimonial'}
-      </button>
+      </Button>
     </form>
   );
 }

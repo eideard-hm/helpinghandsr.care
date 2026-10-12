@@ -6,8 +6,8 @@ import { Footer } from '@/components/common/footer';
 import { Header } from '@/components/common/header';
 import { MobileWhatsAppCta } from '@/components/common/mobile-whatsapp-cta';
 import { MotionProvider } from '@/components/common/motion-provider';
-import { SocialMediaSidebar } from '@/components/common/social-media-sidebar';
-import { fraunces, inter } from '@/fonts';
+import { VisitProvider } from '@/components/common/visit-provider';
+import { lettering, text } from '@/fonts';
 import mainMetadata, {
   businessSchema,
   therapistSchema,
@@ -22,7 +22,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#ffffff',
+  themeColor: '#f2f3ef',
 };
 
 export default function RootLayout({
@@ -40,7 +40,7 @@ export default function RootLayout({
     <html
       lang='en'
       data-scroll-behavior='smooth'
-      className={`${inter.variable} ${fraunces.variable}`}
+      className={`${text.variable} ${lettering.variable}`}
     >
       <head>
         <script
@@ -49,36 +49,39 @@ export default function RootLayout({
         />
       </head>
 
-      <body className='grid min-h-dvh grid-rows-[auto_1fr_auto] bg-bg font-sans text-ink antialiased'>
+      <body className='grid min-h-dvh grid-rows-[auto_1fr_auto] antialiased'>
         <a
           href='#main-content'
-          className='fixed top-3 left-3 z-50 -translate-y-24 rounded-lg bg-ink px-4 py-3 text-sm font-semibold text-white shadow-lg transition-transform focus:translate-y-0'
+          className='fixed top-3 left-3 z-50 -translate-y-24 bg-poche px-4 py-3 text-xs font-medium text-limewash transition-transform lettering focus:translate-y-0'
         >
           Skip to content
         </a>
 
         <MotionProvider>
-          <Header />
+          <VisitProvider>
+            <Header />
 
-          <main
-            id='main-content'
-            tabIndex={-1}
-            className='relative min-w-0 overflow-x-clip outline-none'
-          >
-            <SocialMediaSidebar />
+            <main
+              id='main-content'
+              tabIndex={-1}
+              className='relative min-w-0 overflow-x-clip outline-none'
+            >
+              <div>
+                <Toaster />
+              </div>
 
-            <div>
-              <Toaster />
-            </div>
+              {children}
 
-            {children}
+              <MobileWhatsAppCta />
+            </main>
 
-            <MobileWhatsAppCta />
-          </main>
-
-          <footer className='bg-ink pb-24 text-white/75 lg:pb-0'>
-            <Footer />
-          </footer>
+            <footer
+              data-ground='poche'
+              className='bg-poche-deep pb-24 lg:pb-0'
+            >
+              <Footer />
+            </footer>
+          </VisitProvider>
         </MotionProvider>
       </body>
     </html>

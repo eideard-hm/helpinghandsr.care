@@ -53,27 +53,6 @@ const SEO_DESCRIPTION = `Premium home massage in Abu Dhabi. ${env.brandSEO} brin
 const SOCIAL_TITLE = `${env.brandSEO} - Premium Massage at Home in Abu Dhabi`;
 const SOCIAL_DESCRIPTION = `Therapeutic home massage in Abu Dhabi by ${THERAPIST.name}, ${THERAPIST.yearsOfExperience}+ years of experience: sports, deep tissue, stretching, reflexology and cupping. Book on WhatsApp.`;
 
-const generateKeywords = () => {
-  const serviceKeywords = CORE_SERVICES.flatMap((service) => [
-    `${service} Abu Dhabi`,
-    `${service} at home`,
-  ]);
-
-  return [
-    'home massage Abu Dhabi',
-    'massage at home Abu Dhabi',
-    'mobile massage therapist Abu Dhabi',
-    'massage therapist Abu Dhabi home visits',
-    'premium massage at home Abu Dhabi',
-    'hotel massage Abu Dhabi',
-    'pain relief massage Abu Dhabi',
-    'sports recovery massage Abu Dhabi',
-    'WhatsApp massage booking Abu Dhabi',
-    ...serviceKeywords,
-    ...SERVICE_AREAS.map((area) => `home massage ${area}`),
-  ];
-};
-
 export const mainMetadata: Metadata = {
   metadataBase: prodUrl,
   title: {
@@ -82,8 +61,6 @@ export const mainMetadata: Metadata = {
   },
   description: SEO_DESCRIPTION,
   applicationName: env.brandSEO,
-
-  keywords: generateKeywords(),
 
   authors: [{ name: env.brandSEO, url: siteUrl }],
   creator: 'Edier Hernandez',
@@ -126,7 +103,7 @@ export const mainMetadata: Metadata = {
   },
 
   alternates: {
-    canonical: prodUrl,
+    canonical: '/',
   },
 
   category: 'Health & Wellness',
@@ -188,9 +165,13 @@ export const businessSchema = {
       },
       geoRadius: SERVICE_AREA_GEO.radiusMeters,
     },
-    ...SERVICE_AREAS.map((area) => ({ '@type': 'Place', name: area })),
+    ...SERVICE_AREAS.map((area) => ({
+      '@type': 'Place',
+      name: area,
+      containedInPlace: { '@type': 'City', name: CONTACT.city },
+    })),
   ],
-  knowsAbout: [...CORE_SERVICES, ...SIGNATURE_TECHNIQUES],
+  knowsAbout: [...new Set([...CORE_SERVICES, ...SIGNATURE_TECHNIQUES])],
   sameAs: [INSTAGRAM_URL, FACEBOOK_URL],
   founder: { '@id': ID.therapist },
   employee: { '@id': ID.therapist },
@@ -228,6 +209,7 @@ export const businessSchema = {
       },
     })),
   },
+  // Hours are by appointment; no opening times are claimed beyond what the page shows.
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -240,8 +222,6 @@ export const businessSchema = {
         'Saturday',
         'Sunday',
       ],
-      opens: '09:00',
-      closes: '22:00',
     },
   ],
 };
@@ -260,7 +240,6 @@ export const therapistSchema = {
     '@type': 'EducationalOccupationalCredential',
     name: THERAPIST.role,
     credentialCategory: 'diploma',
-    educationalLevel: THERAPIST.credentials.trainedAt,
     recognizedBy: THERAPIST.credentials.attestedBy.map((name) => ({
       '@type': 'Organization',
       name,
@@ -299,10 +278,6 @@ export const webPageSchema = {
     height: 630,
   },
   dateModified: SITE_UPDATED_AT,
-  speakable: {
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['h1', '#benefits-title', '#faq-title'],
-  },
 };
 
 export const homeMassageServiceSchema = {

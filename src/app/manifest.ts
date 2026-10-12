@@ -10,8 +10,8 @@ export default function manifest(): MetadataRoute.Manifest {
       'Therapeutic home massage in Abu Dhabi: home visits, customized treatments, chronic pain relief, injury prevention and stress reduction.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#f8fafc',
-    theme_color: '#ffffff',
+    background_color: '#f2f3ef',
+    theme_color: '#f2f3ef',
     icons: [
       { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
       { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },

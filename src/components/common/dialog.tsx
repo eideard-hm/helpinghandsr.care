@@ -105,7 +105,7 @@ export function Dialog({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className='fixed inset-0 z-100 flex items-end justify-center bg-ink/60 backdrop-blur-[2px] sm:items-center sm:p-4'
+          className='fixed inset-0 z-100 flex items-end justify-center bg-ink/60 sm:items-center sm:p-4'
           onClick={onClose}
         >
           <motion.div
@@ -114,30 +114,29 @@ export function Dialog({
             aria-modal='true'
             aria-labelledby={title ? titleId : undefined}
             tabIndex={-1}
-            initial={{ y: 40, opacity: 0, scale: 0.98 }}
+            initial={{ y: 32, opacity: 0 }}
             animate={{
               y: 0,
               opacity: 1,
-              scale: 1,
-              transition: { duration: 0.25, ease: 'easeOut' },
+              transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
             }}
             exit={{
-              y: 40,
+              y: 32,
               opacity: 0,
               transition: { duration: 0.2, ease: 'easeIn' },
             }}
             className={cn(
-              'flex max-h-[92dvh] w-full flex-col overflow-hidden rounded-t-3xl bg-white shadow-2xl ring-1 ring-black/5 outline-none sm:max-h-[90dvh] sm:rounded-2xl',
+              'flex max-h-[92dvh] w-full flex-col overflow-hidden border-t-8 border-poche bg-limewash shadow-[0_24px_60px_-20px_rgba(23,24,63,0.55)] outline-none sm:max-h-[90dvh]',
               SIZES[size],
               className
             )}
             onClick={(e) => e.stopPropagation()}
           >
             {title && (
-              <div className='flex shrink-0 items-center justify-between gap-4 border-b border-gray-100 px-5 py-4'>
+              <div className='flex shrink-0 items-center justify-between gap-4 border-b border-mortar px-5 py-4 sm:px-7'>
                 <h2
                   id={titleId}
-                  className='text-xl font-bold text-title-indigo'
+                  className='text-2xl text-poche lettering-display sm:text-[1.75rem]'
                 >
                   {title}
                 </h2>
@@ -145,22 +144,23 @@ export function Dialog({
                   type='button'
                   onClick={onClose}
                   aria-label='Close dialog'
-                  className='inline-flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-ink'
+                  className='inline-flex size-11 shrink-0 cursor-pointer items-center justify-center border border-poche text-poche transition-colors hover:bg-poche hover:text-limewash'
                 >
                   <IconX
                     className='size-5'
+                    stroke={1.5}
                     aria-hidden
                   />
                 </button>
               </div>
             )}
 
-            <div className='min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5'>
+            <div className='min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-6 sm:px-7'>
               {children}
             </div>
 
             {footer && (
-              <div className='shrink-0 border-t border-gray-100 bg-gray-50 px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]'>
+              <div className='shrink-0 border-t border-mortar px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-7'>
                 {footer}
               </div>
             )}

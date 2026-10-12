@@ -3,11 +3,7 @@
 import { useId, useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  IconChevronDown,
-  IconCircleCheck,
-  IconStar,
-} from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 
 import type { Benefits as BenefitsType } from '@/data/services';
 import { cn } from '@/lib/cn';
@@ -23,30 +19,12 @@ export const Benefits = ({
   const baseId = useId();
 
   return (
-    <div
-      className={cn(
-        'rounded-2xl p-5 ring-1',
-        isMain ? 'bg-brand-2/20 ring-brand-2' : 'bg-gray-50 ring-gray-100'
-      )}
-    >
-      <h3 className='mb-4 flex items-center gap-2 text-lg font-bold text-title-indigo'>
-        {isMain ? (
-          <IconStar
-            size={20}
-            className='text-accent'
-            aria-hidden
-          />
-        ) : (
-          <IconCircleCheck
-            size={20}
-            className='text-brand'
-            aria-hidden
-          />
-        )}
+    <div>
+      <h3 className='text-xl text-poche lettering-display'>
         {isMain ? 'Premium benefits included' : 'What is included'}
       </h3>
 
-      <ul className='space-y-2'>
+      <ul className='mt-3 border-t border-poche'>
         {benefits.map((benefit, index) => {
           const expanded = expandedIndex === index;
           const panelId = `${baseId}-panel-${index}`;
@@ -54,22 +32,23 @@ export const Benefits = ({
           return (
             <li
               key={benefit.title}
-              className='overflow-hidden rounded-xl bg-white ring-1 ring-black/5'
+              className='border-b border-mortar'
             >
-              <h4 className='font-sans text-base'>
+              <h4>
                 <button
                   type='button'
                   aria-expanded={expanded}
                   aria-controls={panelId}
                   onClick={() => setExpandedIndex(expanded ? null : index)}
-                  className='flex min-h-12 w-full cursor-pointer items-center justify-between gap-3 px-4 py-3 text-left font-semibold text-ink transition-colors hover:text-brand'
+                  className='flex min-h-13 w-full cursor-pointer items-center justify-between gap-4 py-3 text-left text-[1.0625rem] font-semibold text-ink transition-colors hover:text-poche'
                 >
                   {benefit.title}
-                  <IconChevronDown
+                  <IconPlus
                     size={20}
+                    stroke={1.5}
                     className={cn(
-                      'shrink-0 text-brand transition-transform duration-300',
-                      expanded && 'rotate-180'
+                      'shrink-0 text-poche transition-transform duration-300 ease-settle',
+                      expanded && 'rotate-45'
                     )}
                     aria-hidden
                   />
@@ -83,21 +62,12 @@ export const Benefits = ({
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                     className='overflow-hidden'
                   >
-                    <ul className='space-y-1.5 px-4 pb-4 text-sm leading-6 text-gray-600'>
+                    <ul className='space-y-2 pb-5 text-[0.9375rem] leading-7 text-ink-soft'>
                       {benefit.details.map((detail) => (
-                        <li
-                          key={detail}
-                          className='flex gap-2.5'
-                        >
-                          <span
-                            className='mt-2.5 size-1.5 shrink-0 rounded-full bg-accent'
-                            aria-hidden
-                          />
-                          {detail}
-                        </li>
+                        <li key={detail}>{detail}</li>
                       ))}
                     </ul>
                   </motion.div>

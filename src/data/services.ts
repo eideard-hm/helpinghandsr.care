@@ -303,7 +303,7 @@ export const SERVICES: Services[] = [
     image: '/services/lymphatic-drainage-massage-big.webp',
     bigImage: '/services/lymphatic-drainage-massage-big.webp',
     excerpt:
-      'Lymphatic Drainage Massage is a gentle massage technique that stimulates the lymphatic system to promote the removal of toxins and excess fluid from the body.',
+      'Lymphatic Drainage Massage is a gentle massage technique that supports lymph flow and helps the body move excess fluid, easing a heavy or swollen feeling.',
     waLink: waLink(
       env.whatsAppNumber,
       env.waMessageTemplate.replace('{SERVICE}', 'Lymphatic Drainage Massage')
@@ -316,7 +316,7 @@ export const SERVICES: Services[] = [
         ],
       },
       {
-        title: 'Boosts immune system function',
+        title: 'Supports healthy lymph flow',
         details: [
           'Encourages healthy lymph flow as part of a restorative wellness routine.',
         ],

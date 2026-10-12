@@ -1,84 +1,52 @@
-import {
-  IconBrandFacebook,
-  IconBrandInstagram,
-  IconBrandWhatsapp,
-  IconMail,
-} from '@tabler/icons-react';
+import { IconBrandFacebook, IconBrandInstagram } from '@tabler/icons-react';
 
 import { env } from '@/config/env';
-import { CONTACT, SOCIAL_LINKS } from '@/data/site';
+import { SOCIAL_LINKS } from '@/data/site';
 import { cn } from '@/lib/cn';
-import { waLinkWithEnv } from '@/lib/whatsapp';
 
 type SocialMediaItemsProps = {
   classList?: string;
-  /** `floating`: white round buttons with brand-colored icons. `dark`: for dark backgrounds. `light`: bordered, for light backgrounds. */
-  variant?: 'floating' | 'dark' | 'light';
-  includeContact?: boolean;
+  /** The ground the links sit on. */
+  ground?: 'limewash' | 'poche';
 };
 
-const VARIANT_CLASSES = {
-  floating:
-    'bg-white shadow-lg ring-1 ring-black/5 hover:-translate-y-0.5 hover:shadow-xl',
-  dark: 'bg-white/10 text-white ring-1 ring-white/15 hover:bg-white hover:text-ink',
-  light:
-    'bg-white text-ink ring-1 ring-gray-200 hover:-translate-y-0.5 hover:ring-brand/40 hover:text-brand',
-} as const;
+const ITEMS = [
+  {
+    href: SOCIAL_LINKS.instagram.href,
+    label: `${env.brandSEO} on Instagram (${SOCIAL_LINKS.instagram.handle})`,
+    icon: IconBrandInstagram,
+  },
+  {
+    href: SOCIAL_LINKS.facebook.href,
+    label: `${env.brandSEO} on Facebook`,
+    icon: IconBrandFacebook,
+  },
+];
 
 export function SocialMediaItems({
   classList,
-  variant = 'floating',
-  includeContact = true,
+  ground = 'limewash',
 }: SocialMediaItemsProps) {
-  const items = [
-    ...(includeContact
-      ? [
-          {
-            href: waLinkWithEnv(),
-            label: `WhatsApp ${CONTACT.phoneDisplay}`,
-            icon: IconBrandWhatsapp,
-            color: 'text-[#128C7E]',
-          },
-          {
-            href: `mailto:${CONTACT.email}`,
-            label: `Email ${CONTACT.email}`,
-            icon: IconMail,
-            color: 'text-[#D44638]',
-          },
-        ]
-      : []),
-    {
-      href: SOCIAL_LINKS.instagram.href,
-      label: `${env.brandSEO} on Instagram (${SOCIAL_LINKS.instagram.handle})`,
-      icon: IconBrandInstagram,
-      color: 'text-[#E1306C]',
-    },
-    {
-      href: SOCIAL_LINKS.facebook.href,
-      label: `${env.brandSEO} on Facebook`,
-      icon: IconBrandFacebook,
-      color: 'text-[#1877F2]',
-    },
-  ];
-
   return (
-    <ul className={cn('flex gap-2', classList)}>
-      {items.map(({ href, label, icon: Icon, color }) => (
+    <ul className={cn('flex gap-1', classList)}>
+      {ITEMS.map(({ href, label, icon: Icon }) => (
         <li key={href}>
           <a
             href={href}
-            target={href.startsWith('mailto:') ? undefined : '_blank'}
+            target='_blank'
             rel='noopener noreferrer'
             aria-label={label}
             title={label}
             className={cn(
-              'inline-flex size-11 items-center justify-center rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2',
-              VARIANT_CLASSES[variant],
-              variant === 'floating' && color
+              'inline-flex size-11 items-center justify-center transition-colors duration-200',
+              ground === 'poche'
+                ? 'text-on-poche hover:bg-limewash hover:text-poche'
+                : 'text-ink-soft hover:bg-poche hover:text-limewash'
             )}
           >
             <Icon
               size={22}
+              stroke={1.5}
               aria-hidden
             />
           </a>

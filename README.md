@@ -50,9 +50,11 @@ The tests block Server Actions, so running them never writes testimonials to the
 
 ## Editing content
 
-- Treatments: `src/data/services.ts`. `visible` controls which ones are shown and `isMain` marks the signature treatment, which gets the featured card.
+- Treatments: `src/data/services.ts`. `visible` controls which ones are shown and `isMain` marks the signature treatment, which is shown first and larger.
 - Contact details, social links and therapist details: `src/data/site.ts`
 - Navigation: `src/data/navigation.ts`
+- Visit hours offered in the hero and the closing section: `src/data/visit.ts`. The hour a visitor picks moves the sun in the section drawing and is appended to every WhatsApp message on the page.
+- Steps of a visit: `src/data/steps.ts`
 - FAQ: `src/data/faq.ts`, which also feeds the FAQ structured data. Keep each answer self-contained so search engines and AI assistants can quote it.
 - `SITE_UPDATED_AT` in `src/data/site.ts`: bump it whenever content changes. It feeds the sitemap, the structured data and the freshness signal; also update the date in `public/llms.txt`.
 - `public/llms.txt`: plain-text summary of the business for AI assistants (ChatGPT, Claude, Perplexity). Keep it in sync with the site copy.

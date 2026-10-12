@@ -16,6 +16,8 @@ type Props = {
   controls?: boolean;
   ariaHidden?: boolean;
   ariaLabel?: string;
+  /** Extra <track> elements. */
+  children?: React.ReactNode;
   loadOnVisible?: boolean;
   /**
    * Delay the stream download: `idle` waits until the page has loaded and the
@@ -52,6 +54,7 @@ export function LocalHlsVideo({
   controls = false,
   ariaHidden,
   ariaLabel,
+  children,
   loadOnVisible = false,
   deferUntil,
   rootMargin = '200px',
@@ -228,6 +231,8 @@ export function LocalHlsVideo({
       aria-hidden={ariaHidden}
       aria-label={ariaLabel}
       onPlaying={onPlaying}
-    />
+    >
+      {children}
+    </video>
   );
 }
