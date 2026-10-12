@@ -1,5 +1,4 @@
 import { About } from '@/components/ui/about/about';
-import { Closing } from '@/components/ui/closing';
 import { Faq } from '@/components/ui/faq';
 import { Hero } from '@/components/ui/hero';
 import { HowItWorks } from '@/components/ui/how-it-works/how-it-works';
@@ -33,17 +32,15 @@ export default function Home() {
 
       <SessionExperience />
 
-      <HowItWorks />
-
       <Services />
 
       <About />
 
+      <HowItWorks />
+
       <Testimonials />
 
       <Faq />
-
-      <Closing />
     </>
   );
 }

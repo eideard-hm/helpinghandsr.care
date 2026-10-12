@@ -1,30 +1,28 @@
-/**
- * The day of a visit. `when` labels each step on the time axis; the step
- * marked `arrival` shows the hour the visitor picked instead.
- */
-export const VISIT_STEPS = [
+import { IconCalendar, IconCheck, IconMassage, IconMessage } from '@tabler/icons-react';
+
+export const steps = [
   {
-    when: 'Any time',
-    title: 'You message on WhatsApp',
+    icon: IconMessage,
+    title: 'Instant WhatsApp Consultation',
     description:
-      'Say what hurts or what you would like, and where you are. You get a personal recommendation.',
+      'Message us directly to discuss your specific needs and receive personalized recommendations',
   },
   {
-    when: 'Same chat',
-    title: 'You agree the hour',
+    icon: IconCalendar,
+    title: 'Flexible Scheduling',
     description:
-      'Pick the date and time that suit you. Confirmation and preparation details arrive in the same conversation.',
+      'Choose the perfect date and time that works seamlessly with your schedule',
   },
   {
-    when: 'arrival',
-    title: 'Richard arrives, equipped',
+    icon: IconCheck,
+    title: 'Immediate Confirmation',
     description:
-      'He brings the table and everything the session needs. All you need is a quiet spot.',
+      'Receive instant booking confirmation with all necessary details and preparation guidelines',
   },
   {
-    when: 'Afterwards',
-    title: 'You stay where you are',
+    icon: IconMassage,
+    title: 'Premium At-Home Experience',
     description:
-      'No commute and no traffic. The session ends and you are already home.',
+      'Our certified therapist arrives fully equipped to deliver exceptional service at your location',
   },
-] as const;
+];

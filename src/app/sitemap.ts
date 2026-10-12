@@ -10,10 +10,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: `${siteUrl}/`,
+      url: siteUrl,
       lastModified,
       changeFrequency: 'weekly',
       priority: 1,
+    },
+    {
+      url: `${siteUrl}/testimonials`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    },
+    {
+      url: `${siteUrl}/llms.txt`,
+      lastModified,
+      changeFrequency: 'monthly',
+      priority: 0.2,
     },
   ];
 }

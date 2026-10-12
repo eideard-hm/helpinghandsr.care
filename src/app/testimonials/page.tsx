@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import Link from 'next/link';
 
-import { IconArrowLeft } from '@tabler/icons-react';
+import { IconArrowLeft, IconCircleCheck } from '@tabler/icons-react';
 
 import AddReviewForm from '@/components/ui/testimonials/add-review-form';
 import { env } from '@/config/env';
@@ -14,8 +14,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/testimonials',
   },
-  // A form page: linked from the site, kept out of search results.
-  robots: { index: false, follow: true },
 };
 
 const REVIEW_NOTES = [
@@ -26,51 +24,60 @@ const REVIEW_NOTES = [
 
 export default function TestimonialsPage() {
   return (
-    <section className='py-10 lg:py-16'>
-      <div className='mx-auto max-w-7xl px-4'>
+    <section className='bg-bg px-4 py-10 md:py-16'>
+      <div className='container mx-auto max-w-6xl'>
         <Link
           href='/#testimonials'
-          className='inline-flex min-h-11 items-center gap-3 text-xs font-medium text-poche lettering hover:underline'
+          className='mb-8 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand transition-colors hover:text-brand-700'
         >
           <IconArrowLeft
-            size={17}
-            stroke={1.5}
+            size={18}
             aria-hidden
           />
           Back to testimonials
         </Link>
 
-        <div className='mt-8 grid gap-x-10 gap-y-12 lg:grid-cols-12'>
-          <div className='lg:col-span-6'>
-            <h1 className='text-[clamp(2.25rem,9vw,4rem)] text-poche lettering-display'>
+        <div className='grid gap-10 lg:grid-cols-[minmax(0,1fr)_28rem] lg:items-start'>
+          <div className='max-w-2xl'>
+            <p className='mb-3 inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-brand-700 uppercase'>
+              <span
+                className='h-px w-8 bg-accent'
+                aria-hidden
+              />
+              Client testimonials
+            </p>
+            <h1 className='text-4xl leading-tight font-extrabold text-pretty text-title-indigo sm:text-5xl'>
               Share your massage experience
             </h1>
-            <p className='mt-6 max-w-[52ch] text-lg leading-8 text-ink'>
+            <p className='mt-4 max-w-xl text-base leading-7 text-gray-700 sm:text-lg'>
               A short testimonial helps new clients understand what to expect
               from a home massage session with {env.brandSEO}.
             </p>
 
-            <ul className='mt-10 max-w-[34rem] border-t border-poche'>
+            <ul className='mt-8 grid gap-3'>
               {REVIEW_NOTES.map((note) => (
                 <li
                   key={note}
-                  className='border-b border-mortar py-4 text-[1.0625rem] leading-7 text-ink-soft'
+                  className='flex items-start gap-3 rounded-2xl bg-white p-4 shadow-sm ring-1 ring-gray-200/70'
                 >
-                  {note}
+                  <IconCircleCheck
+                    size={20}
+                    className='mt-0.5 shrink-0 text-brand'
+                    aria-hidden
+                  />
+                  <p className='text-sm leading-6 text-gray-700'>{note}</p>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className='lg:col-span-5 lg:col-start-8'>
-            <FormLayout
-              formTitle='Write a testimonial'
-              brand={env.brand}
-              logotype={env.brandLogotype}
-            >
-              <AddReviewForm />
-            </FormLayout>
-          </div>
+          <FormLayout
+            formTitle='Write a testimonial'
+            brand={env.brand}
+            logotype={env.brandLogotype}
+          >
+            <AddReviewForm />
+          </FormLayout>
         </div>
       </div>
     </section>

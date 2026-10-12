@@ -1,16 +1,17 @@
 import Link from 'next/link';
 
-import { IconArrowRight, IconArrowUpRight } from '@tabler/icons-react';
+import {
+  IconBrandFacebook,
+  IconBrandInstagram,
+  IconPencil,
+} from '@tabler/icons-react';
 
 import { getReviews } from '@/actions/reviews/review';
-import { SOCIAL_LINKS } from '@/data/site';
 import { DEFAULT_TESTIMONIALS } from '@/data/testimonials';
+import { SOCIAL_LINKS } from '@/data/site';
 import type { Review } from '@/generated/prisma';
-import { SheetHeading } from '../../common/section-title';
+import { SectionTitle } from '../../common/section-title';
 import { TestimonialsSlider } from './testimonial-slider';
-
-const linkClass =
-  'flex min-h-14 items-center justify-between gap-4 border-b border-mortar text-poche transition-colors hover:border-poche';
 
 export async function Testimonials() {
   let reviews: Review[] = await getReviews();
@@ -22,76 +23,94 @@ export async function Testimonials() {
     <section
       id='testimonials'
       aria-labelledby='testimonials-title'
-      className='py-20 lg:py-28'
+      className='bg-brand-2/15 py-16 md:py-24'
     >
-      <div className='mx-auto grid max-w-7xl gap-x-10 gap-y-12 px-4 lg:grid-cols-12'>
-        <SheetHeading
-          id='testimonials-title'
-          className='lg:col-span-12'
-        >
-          {reviews.length > 1 ? 'From clients' : 'From a client'}
-        </SheetHeading>
+      <div className='container mx-auto max-w-7xl px-4'>
+        <div className='flex flex-wrap items-end justify-between gap-6'>
+          <SectionTitle
+            id='testimonials-title'
+            eyebrow='Client stories'
+            subTitle='What clients say after their home sessions.'
+            className='mb-0 md:mb-0'
+          >
+            Testimonials
+          </SectionTitle>
 
-        <TestimonialsSlider
-          items={reviews}
-          className='lg:col-span-7'
-        />
+          <Link
+            href='/testimonials'
+            className='inline-flex min-h-11 items-center gap-2 rounded-xl border border-brand bg-white px-5 font-semibold text-brand shadow-sm transition-colors hover:bg-brand hover:text-white'
+          >
+            <IconPencil
+              size={18}
+              aria-hidden
+            />
+            Write a review
+          </Link>
+        </div>
 
-        <aside
-          aria-label='More from clients'
-          className='lg:col-span-4 lg:col-start-9'
-        >
-          <p className='max-w-[40ch] text-[1.0625rem] leading-7 text-ink-soft'>
-            Sessions, assisted stretching and client stories are posted on
-            Instagram and Facebook.
-          </p>
+        <div className='mt-10 grid gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-8'>
+          <TestimonialsSlider items={reviews} />
 
-          <ul className='mt-5 border-t border-poche text-[1.0625rem] font-medium'>
-            <li>
+          <aside
+            aria-labelledby='social-stories-title'
+            className='relative isolate flex flex-col justify-between overflow-hidden rounded-3xl bg-ink p-8 text-white md:p-10'
+          >
+            <div
+              className='absolute -top-24 -right-24 -z-10 size-72 rounded-full bg-linear-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] opacity-35 blur-3xl'
+              aria-hidden
+            />
+
+            <div>
+              <span className='inline-flex size-12 items-center justify-center rounded-2xl bg-linear-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white shadow-lg'>
+                <IconBrandInstagram
+                  size={26}
+                  aria-hidden
+                />
+              </span>
+              <h3
+                id='social-stories-title'
+                className='mt-5 text-2xl font-bold !text-white'
+              >
+                See the results in motion
+              </h3>
+              <p className='mt-3 leading-7 text-white/80'>
+                Watch real sessions, sports massage, assisted stretching and
+                client testimonials on{' '}
+                <span className='font-semibold text-white'>
+                  {SOCIAL_LINKS.instagram.handle}
+                </span>
+                .
+              </p>
+            </div>
+
+            <div className='mt-8 grid gap-3'>
               <a
                 href={SOCIAL_LINKS.instagram.href}
                 target='_blank'
                 rel='noopener noreferrer'
-                className={linkClass}
+                className='inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-white px-5 font-semibold text-ink transition-colors hover:bg-brand-2'
               >
-                Watch on Instagram
-                <IconArrowUpRight
+                <IconBrandInstagram
                   size={20}
-                  stroke={1.5}
                   aria-hidden
                 />
+                Watch on Instagram
               </a>
-            </li>
-            <li>
               <a
                 href={SOCIAL_LINKS.facebook.href}
                 target='_blank'
                 rel='noopener noreferrer'
-                className={linkClass}
+                className='inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/25 px-5 font-semibold text-white transition-colors hover:bg-white/10'
               >
+                <IconBrandFacebook
+                  size={20}
+                  aria-hidden
+                />
                 Follow on Facebook
-                <IconArrowUpRight
-                  size={20}
-                  stroke={1.5}
-                  aria-hidden
-                />
               </a>
-            </li>
-            <li>
-              <Link
-                href='/testimonials'
-                className={linkClass}
-              >
-                Write a review
-                <IconArrowRight
-                  size={20}
-                  stroke={1.5}
-                  aria-hidden
-                />
-              </Link>
-            </li>
-          </ul>
-        </aside>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
   );

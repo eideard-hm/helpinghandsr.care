@@ -2,7 +2,7 @@
  * Date of the last content update (ISO). Feeds the sitemap, the structured
  * data and llms.txt, so bump it whenever copy, services or FAQs change.
  */
-export const SITE_UPDATED_AT = '2026-10-11';
+export const SITE_UPDATED_AT = '2026-09-28';
 
 export const CONTACT = {
   phoneDisplay: '+971 54 374 0644',

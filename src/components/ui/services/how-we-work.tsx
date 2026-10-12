@@ -1,17 +1,27 @@
+'use client';
+
+import { motion } from 'framer-motion';
+
 export function HowWeWork({ details }: { details: string[] }) {
   return (
     <div>
-      <h3 className='text-xl text-poche lettering-display'>What happens in a session</h3>
-      <ul className='mt-3 border-t border-poche'>
-        {details.map((detail) => (
-          <li
+      <h3 className='mb-4 text-lg font-bold text-title-indigo'>How we work</h3>
+      <ol className='space-y-3'>
+        {details.map((detail, i) => (
+          <motion.li
             key={detail}
-            className='border-b border-mortar py-4 text-[1.0625rem] leading-7 text-ink'
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.08 }}
+            className='flex items-start gap-3 rounded-xl border-l-4 border-brand bg-gray-50 p-4'
           >
-            {detail}
-          </li>
+            <span className='inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white'>
+              {i + 1}
+            </span>
+            <p className='leading-relaxed text-gray-700'>{detail}</p>
+          </motion.li>
         ))}
-      </ul>
+      </ol>
     </div>
   );
 }

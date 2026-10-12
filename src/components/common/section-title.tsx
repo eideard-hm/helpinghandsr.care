@@ -1,70 +1,88 @@
+'use client';
+
+import { motion } from 'framer-motion';
+
 import { cn } from '@/lib/cn';
-
-type SheetHeadingProps = {
-  children: React.ReactNode;
-  /** One or two sentences under the heading. */
-  lede?: React.ReactNode;
-  id?: string;
-  ground?: 'limewash' | 'poche';
-  className?: string;
-};
-
-/** A section heading in drafted capitals, with an optional lede. */
-export function SheetHeading({
-  children,
-  lede,
-  id,
-  ground = 'limewash',
-  className,
-}: SheetHeadingProps) {
-  const onPoche = ground === 'poche';
-
-  return (
-    <div className={cn('max-w-3xl', className)}>
-      <h2
-        id={id}
-        className={cn(
-          'text-[clamp(2rem,7vw,3.25rem)] lettering-display',
-          onPoche ? 'text-limewash' : 'text-poche'
-        )}
-      >
-        {children}
-      </h2>
-      {lede && (
-        <p
-          className={cn(
-            'mt-5 max-w-[62ch] text-lg leading-8',
-            onPoche ? 'text-on-poche' : 'text-ink-soft'
-          )}
-        >
-          {lede}
-        </p>
-      )}
-    </div>
-  );
-}
 
 type SectionTitleProps = {
   children: React.ReactNode;
   subTitle?: string;
+  eyebrow?: string;
   id?: string;
+  align?: 'start' | 'center';
   className?: string;
 };
 
-/** Kept for the sections that are currently hidden; new work uses SheetHeading. */
 export function SectionTitle({
   children,
   subTitle,
+  eyebrow,
   id,
+  align = 'start',
   className,
 }: SectionTitleProps) {
+  const centered = align === 'center';
+
   return (
-    <SheetHeading
-      id={id}
-      lede={subTitle}
-      className={cn('mb-10', className)}
+    <motion.div
+      className={cn('mb-10 md:mb-12', centered && 'text-center', className)}
+      initial='hidden'
+      whileInView='visible'
+      viewport={{ once: true, amount: 0.4 }}
+      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
     >
-      {children}
-    </SheetHeading>
+      {eyebrow && (
+        <motion.p
+          className={cn(
+            'mb-3 inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-brand-700 uppercase',
+            centered && 'justify-center'
+          )}
+          variants={{
+            hidden: { opacity: 0, y: 8 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+          }}
+        >
+          <span
+            className='h-px w-8 bg-accent'
+            aria-hidden
+          />
+          {eyebrow}
+        </motion.p>
+      )}
+
+      <motion.h2
+        id={id}
+        className='text-3xl font-bold text-balance text-title-indigo md:text-4xl'
+        variants={{
+          hidden: { opacity: 0, y: 12 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: 'easeOut' },
+          },
+        }}
+      >
+        {children}
+      </motion.h2>
+
+      {subTitle && (
+        <motion.p
+          className={cn(
+            'mt-4 max-w-2xl text-lg leading-8 text-gray-600',
+            centered && 'mx-auto'
+          )}
+          variants={{
+            hidden: { opacity: 0, y: 10 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.5, ease: 'easeOut' },
+            },
+          }}
+        >
+          {subTitle}
+        </motion.p>
+      )}
+    </motion.div>
   );
 }
